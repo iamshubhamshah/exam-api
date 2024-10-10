@@ -4,12 +4,12 @@ import axios from 'axios';
 
 class DistrictBlockSchoolService {
     getDistricts () {
-        const url = "http://localhost:8000/api/Fetch-districts"
+        const url = "https://exam-api-backend.vercel.app/api/Fetch-districts"
         return axios.get(url)
     };
 
     getBlocks () {
-        const url = "http://localhost:8000/api/Fetch-blocks"
+        const url = "https://exam-api-backend.vercel.app/api/Fetch-blocks"
         return axios.get(url)
 
     };
