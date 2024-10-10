@@ -15,7 +15,7 @@ class DistrictBlockSchoolService {
     };
 
     getSchools () {
-        const url = "http://localhost:8000/api/Fetch-schools"
+        const url = "https://exam-api-backend.vercel.app/api/Fetch-schools"
         return axios.get(url)
 
     }

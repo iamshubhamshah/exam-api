@@ -2,7 +2,7 @@ import axios from 'axios';
 
 class UserService {
     PostUser(formData) {
-        const url = "http://localhost:8000/api/user"
+        const url = "https://exam-api-backend.vercel.app/api/user"
         const config = {
             headers: {
                 'content-type':'multipart/form-data',
@@ -13,7 +13,7 @@ class UserService {
     }
 
     GetUser (mobile) {
-     const  url = `http://localhost:8000/api/userByMobile/${mobile}`
+     const  url = `https://exam-api-backend.vercel.app/api/userByMobile/${mobile}`
         
         return axios.get(url)
 
