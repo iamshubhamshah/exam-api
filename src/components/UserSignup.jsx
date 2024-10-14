@@ -104,7 +104,7 @@ export default function UserSignUp() {
             <label>Enter Your Designation:</label>
             <br />
 
-            <select   onChange={(e)=>(e.target.value)} >
+            <select   onChange={(e)=>setDesignation(e.target.value)} >
             <option value="">Select Designation</option>
               <option value="Teacher">Teacer</option>
               <option value="Principal">Principal</option>

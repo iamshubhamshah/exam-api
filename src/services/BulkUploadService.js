@@ -1,9 +1,12 @@
+
+
 import axios from 'axios';
+const BaseURL = process.env.REACT_APP_API_BASE_URL;
 
 class BulkUploadService {
 
     BulkPost (excelData) {
-        const url = "https://exam-api-backend.vercel.app/api/bulkupload"
+        const url = `${BaseURL}/api/bulkupload`
         return axios.post(url, excelData); // No need for custom headers
     }
 

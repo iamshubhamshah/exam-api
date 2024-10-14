@@ -1,8 +1,11 @@
+
+
 import axios from 'axios';
+const BaseURL = process.env.REACT_APP_API_BASE_URL;
 
 class UserService {
     PostUser(formData) {
-        const url = "https://exam-api-backend.vercel.app/api/user"
+        const url =`${BaseURL}/api/user`
         const config = {
             headers: {
                 'content-type':'multipart/form-data',
@@ -13,7 +16,7 @@ class UserService {
     }
 
     GetUser (mobile) {
-     const  url = `https://exam-api-backend.vercel.app/api/userByMobile/${mobile}`
+     const  url = `${BaseURL}/api/userByMobile/${mobile}`
         
         return axios.get(url)
 

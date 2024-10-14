@@ -1,10 +1,13 @@
 // Using Axios for http method
 
+
+
 import axios from 'axios';
+const BaseURL = process.env.REACT_APP_API_BASE_URL;
 
 class RegistrationService {
     RegistrationCreate (formData) {
-        const url = "https://exam-api-backend.vercel.app/api/MB-Form"
+        const url = `${BaseURL}/api/MB-Form`
         const config = {
             headers: {
                 'content-type': 'multipart/form-data',
@@ -14,22 +17,22 @@ class RegistrationService {
     }
 
     getPosts () {
-        const url = "https://exam-api-backend.vercel.app/api/MB-Form/all" //for dashboard component
+        const url = "${BaseURL}/api/MB-Form/all" //for dashboard component
         return axios.get(url)
     }
 
     deletePosts (id) {
-        const url = "https://exam-api-backend.vercel.app/api/MB-form/delete/"+id;
+        const url = `${BaseURL}/api/MB-form/delete/`+id;
         return axios.delete(url);
     }
 
     putPosts(srn) {
-        const url = `https://exam-api-backend.vercel.app/api/MB-form/getPostBySrn/${srn}`; //for input srn component, prefilled form
+        const url = `${BaseURL}/api/MB-form/getPostBySrn/${srn}`; //for input srn component, prefilled form
         return axios.get(url);
     }
 
     putPostsBySrn(srn, formData) {
-        const url = `https://exam-api-backend.vercel.app/api/MB-form/updatePostsBySrn/${srn}`;
+        const url = `${BaseURL}/api/MB-form/updatePostsBySrn/${srn}`;
         return axios.put(url, formData); // Pass the formData here
     }
 }

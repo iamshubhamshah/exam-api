@@ -14,6 +14,7 @@ import UserProvider from './components/ContextApi/UserContextAPI/UserContext';
 import RegistrationFormComponent from './components/RegistrationFormComponent';
 import LandingPage from './pages/LandingPage'
 import RegistrationPage from './pages/RegistrationPage';
+import BulkUploadWithDistBC from './components/BulkUploadWithDistBC';
 
 
 
@@ -56,6 +57,9 @@ function App() {
                   {/* BulkUpload */}
 
                   <Route path="/Bulkupload" element={<BulkUpload />} />
+                  <Route path="/BulkRegister" element={<BulkUploadWithDistBC />} />
+
+                  
                   {/*                   
                   <Route path="/contextsignin" element={<UserState />} />
                   <Route path="/usernewpage" element={<UserNewPage />} /> */}
