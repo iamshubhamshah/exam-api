@@ -1,9 +1,14 @@
 import React, {useState, useContext} from 'react';
 import * as XLSX from 'xlsx';
 import BulkUploadService from '../services/BulkUploadService';
-import {PDFDocument, rgb} from 'pdf-lib';
+import jsPDF from 'jspdf';
 
 import { UserContext } from "./ContextApi/UserContextAPI/UserContext";
+
+//____________________________________
+//Creating a modal component to show the popup for (i am keeping this on hold for the time being taking time)
+
+
 
 export default function BulkUpload() {
 
@@ -13,7 +18,7 @@ export default function BulkUpload() {
 
 
     const [file, setFile] = useState(null);
-    const [students, setStudents] = useState ([]);
+    const [uploadedData, setUploadedData] = useState(null)
 
     const handleFileChange =(e)=>{
         setFile(e.target.files[0]);
@@ -29,52 +34,58 @@ export default function BulkUpload() {
         try {
             const response = await BulkUploadService.BulkPost(formData);
             console.log('Response:', response.data);
-
-            //Here is the logic when the data is successfully updated in the backend, then from the frontend side only, we will show the user a pdf template having student names in it for official stamp of the school.
             
-            if(response.data.success){
-                const studentNames = response.data.data.map(student =>student.name);
-                setStudents(studentNames);
+            setUploadedData(response.data)
 
-                await generatePDF(studentNames);
+            console.log(uploadedData)
 
-            }
+
 
             
         } catch (error) {
             console.error('Error uploading file:', error);
             
         }
-    };
-
-    const generatePDF = async (studentNames) =>{
-        const pdfDoc = await PDFDocument.create();
-        const page = pdfDoc.addPage([600, 400]);
-        const {width, height} = page.getSize();
-
-        page.drawText('Registered Students', {
-            x: 50,
-            y: height - 50,
-            size: 30,
-            color: rgb(0, 0, 0),
-        });
-
-        studentNames.forEach((name, index)=>{
-            page.drawText(name, {
-                x: 50,
-                y: height - 100 - (index * 20),
-                size: 12,
-                color: rgb(0, 0, 0),
-            });
-        });
-        
     }
 
+
     return (
+        <div>
         <form onSubmit={handleSubmit}>
             <input type='file' accept='.xlsx, .xls' onChange={handleFileChange}/>
             <button type='submit'>Upload</button>
         </form>
+
+        
+            
+              
+                {/* <pre>{JSON.stringify(uploadedData.data.srn, null, 2)}</pre> Pretty print the uploaded data */}
+
+                
+       
+       
+       {uploadedData && uploadedData.data ? (
+         <div>
+         <table>
+             <tr>
+             <th>srn</th>
+             <th>name</th>
+             <th>school</th>
+             </tr>
+             <tbody>
+                 {uploadedData.data.map((student, index)=>(
+                     <tr key={index}>
+                         <td>{student.srn}</td>
+                         <td>{student.name}</td>
+                         <td>{student.father}</td>
+                     </tr>
+                 ))}
+           
+             </tbody>
+         </table>
+     </div>
+       ):(<p>No data available</p>)}
+        </div>
     )
 
 }

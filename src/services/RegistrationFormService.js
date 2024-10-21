@@ -26,15 +26,17 @@ class RegistrationService {
         return axios.delete(url);
     }
 
-    putPosts(srn) {
+    getPostsBySrn(srn) {
         const url = `${BaseURL}/api/MB-form/getPostBySrn/${srn}`; //for input srn component, prefilled form
         return axios.get(url);
     }
 
-    putPostsBySrn(srn, formData) {
-        const url = `${BaseURL}/api/MB-form/updatePostsBySrn/${srn}`;
+    updatePostsById(id, formData) {
+        const url = `${BaseURL}/api/MB-form/updatePostsBySrn/${id}`;
         return axios.put(url, formData); // Pass the formData here
     }
+
+    
 }
 
 

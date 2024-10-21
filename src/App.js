@@ -15,6 +15,10 @@ import RegistrationFormComponent from './components/RegistrationFormComponent';
 import LandingPage from './pages/LandingPage'
 import RegistrationPage from './pages/RegistrationPage';
 import BulkUploadWithDistBC from './components/BulkUploadWithDistBC';
+import StudentProvider from './components/ContextApi/StudentContextAPI/StudentContext';
+import AcknowledgementSlip from './components/AcknowledgementSlip';
+import StudentSignIn from './components/StudentSignIn';
+import StudentPage from './components/StudentPage';
 
 
 
@@ -23,11 +27,14 @@ function App() {
   return (
     <Router>
       <UserProvider>
+        <StudentProvider>
+        
         <Routes>
 
                 <Route path="/examination" element={<LandingPage />} />
 
                 <Route path="/srn" element={<InputSrn />} />
+                <Route path="/srn-100" element={<InputSrn />} />
 
 
                 {/* below are the self links */}
@@ -64,9 +71,16 @@ function App() {
                   <Route path="/contextsignin" element={<UserState />} />
                   <Route path="/usernewpage" element={<UserNewPage />} /> */}
                   <Route path = "/Registration-page" element ={<RegistrationPage/>}/>
+                  <Route path = "/Acknowledgement" element = {<AcknowledgementSlip/>}/>
 
+                  {/* StudentLogin page and Student Account */}
+
+                  <Route path='/Student-SignIN' element = {<StudentSignIn/>}/>
+                  <Route path = '/Student-dash' element = {<StudentPage/>}/>
                 
             </Routes>
+            </StudentProvider>
+            
             </UserProvider>
             
         </Router>

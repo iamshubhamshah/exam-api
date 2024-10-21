@@ -8,7 +8,7 @@ export default function UserRegistrationPage100 () {
             <div>Nav</div>
      
           
-          <Link to="/srn">
+          <Link to="/srn-100">
             <Button variant="dark" style={{ width: "20rem" }}>
               Register Students Individually: Class 10th Students
             </Button>

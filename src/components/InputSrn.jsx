@@ -1,13 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import registrationServiceInstance from "../services/RegistrationFormService";
+import AcknowledgementSlip from "./AcknowledgementSlip";
+import { StudentContext } from "./ContextApi/StudentContextAPI/StudentContext";
+import { UserContext } from "./ContextApi/UserContextAPI/UserContext";
+
+
 
 function InputSrn({}) {
-   
 
+  const location = useLocation();
+
+
+ let direcTo;
+ let PutDirectTo;
+
+ 
+if (location.pathname==='/srn-100'){
+  direcTo = "/Registration-form/S100"
+  PutDirectTo = "/Registration-form/put/S100"
+} else {
+
+    direcTo = "/Registration-form/MB"
+  PutDirectTo = "/Registration-form/put/MB"
+
+}
+   
+  const {setStudent} = useContext(StudentContext);
+  const {student} = useContext(StudentContext);
 
   const [inputSrn, setInputSrn] = useState(null);
+  const [id, setId] = useState('')
 //   const [srn, setSrn] = useState('');
   //it checks the input srn value and matches with db using if and else condition. if value matches
   //... then renders Prefilled form other wise blank form.
@@ -16,7 +40,11 @@ function InputSrn({}) {
   const [isSrnMatched, setIsSrnMatched] = useState(false);
   const [errorRedirect, setErrorRedirect] = useState(false);
 
+  const [ShowAck, setShowAck] = useState(false);
 
+  const [slipData, setSlipData]= useState({});
+
+ 
 
 
 
@@ -28,12 +56,20 @@ function InputSrn({}) {
 
    
     try {
-        const response = await registrationServiceInstance.putPosts(newSrn)
+        const response = await registrationServiceInstance.getPostsBySrn(newSrn)
         console.log(response.data.data.srn)
+        console.log(response.data.data._id)
+        console.log(response.data.data.isVerified)
+        setStudent(response.data.data)
+        sessionStorage.setItem('user', JSON.stringify(response.data.data)); // Store user data in localStorage
+        setSlipData(response.data.data); 
 
-        if(response.data.data){
+        if(response.data.data.isVerified != "" && response.data.data.isRegisteredBy === ""){
+            
             setIsSrnMatched(true)
+            setId(response.data.data._id)
         } else {
+            setShowAck(true)
             setIsSrnMatched(false)
 
         }
@@ -51,13 +87,23 @@ function InputSrn({}) {
 
   };
 
+
+  if (isSrnMatched==true){
+    return <Navigate to={PutDirectTo} state={{ srn: inputSrn, id:id}} />;
+  } else if (ShowAck)  {
+    return <AcknowledgementSlip slipData={slipData}/>;
+  } else if (errorRedirect) {
+    return <Navigate to={direcTo}/>; // Redirect to your error page
+  }
+    
+  
   
 
-  if (isSrnMatched==true) {
-    return <Navigate to="/Registration-form/put/MB" state={{ srn: inputSrn}} />;
-  } else if (errorRedirect) {
-    return <Navigate to="/Registration-form/MB" />; // Redirect to your error page
-  }
+  // if (isSrnMatched==true) {
+  //   return <Navigate to="/Registration-form/put/MB" state={{ srn: inputSrn, id:id}} />;
+  // } else if (errorRedirect) {
+  //   return <Navigate to="/Registration-form/MB"/>; // Redirect to your error page
+  // }
 
 
 
@@ -99,6 +145,7 @@ function InputSrn({}) {
         <button>Submit</button>
       </form>
       {console.log(inputSrn)}
+      
     </div>
   );
 }

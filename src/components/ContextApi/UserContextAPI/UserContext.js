@@ -16,9 +16,9 @@ const UserProvider = ({children})=>{
     useEffect(() => {
         // Update localStorage whenever user changes
         if (user) {
-            localStorage.setItem('user', JSON.stringify(user));
+            sessionStorage.setItem('user', JSON.stringify(user));
         } else {
-            localStorage.removeItem('user'); // Clear from localStorage on logout
+            sessionStorage.removeItem('user'); // Clear from localStorage on logout
         }
     }, [user]);
 

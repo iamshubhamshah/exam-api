@@ -40,7 +40,7 @@ export default function UserSignIn() {
         setIsUserMatched(true);
         const userData = response.data.data;
         setUser(userData); // Update context state
-        localStorage.setItem('user', JSON.stringify(userData)); // Store user data in localStorage
+        sessionStorage.setItem('user', JSON.stringify(userData)); // Store user data in localStorage
 
         alert("You are logged in");
         // onMobileSubmit(mobile)

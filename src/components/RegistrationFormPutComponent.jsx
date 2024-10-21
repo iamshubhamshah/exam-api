@@ -1,26 +1,46 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import RegistrationFormService from "../services/RegistrationFormService";
 // import InputSrn from "./InputSrn";
 import { Form, Navigate, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom"; 
 import DependentDropComponent from "./DependentDropComponent";
 import {Card} from 'react-bootstrap';
+import { StudentContext } from "./ContextApi/StudentContextAPI/StudentContext";
+import { UserContext } from "./ContextApi/UserContextAPI/UserContext";
+
+import AcknowledgementSlip from "./AcknowledgementSlip";
 
 function PreFilledRegistrationForm () {
 
-    const navigate = useNavigate();
+let isRegisteredBy;
 
+const {user} = useContext(UserContext)
+
+//Below varibale is the useNavigate function of react. it is used when a condtion is true then it helps to navigate to the desired route.
+    const navigate = useNavigate();
+//____________________________________________________________________
+
+
+//Below uses the useLocation state for passing the state values from other component to this component. it only happens when we come to this page immediately from previous page. 
+//in this case we come to this page onl after srn value in the input box matches with the db. For the prefilled form functionlaity.
+//Well we are getting value of srn and id of that srn from inputsrn component.
     const location = useLocation();
     const srnFromInput = location.state?.srn || ""; 
-   
-
-    
-
-
-  
+    const idFormInput = location.state?.id ||"";
+    const srnFromAck = location.state?.srn || "";
+    const idFromAck = location.state?.id || "";
+//______________________________________________________________
     
     
+    
+
+  //below useState hook is for setting StudentContext.js API...
+  const {setStudent} = useContext(StudentContext);
+//__________________________________________________________
+
+//Below are the useState hook for if the user updates his values then these hooks helps to set the state and post the data to db.
+    const [id, setId] = useState('');
     const [srn, setSrn] = useState('');
     const [name, setName] = useState('');
     const [father, setFather] = useState('');
@@ -38,18 +58,49 @@ function PreFilledRegistrationForm () {
     const [grade, setGrade] = useState('');
     const [image, setImage] = useState(''); // For file uploads
     const [message, setMessage] = useState('');
+    const [schoolCode, setSchoolCode] = useState('');
+
+    if(user){
+        isRegisteredBy = user.mobile;
+    } else {
+        isRegisteredBy = 'Self'
+    }
+
+    const [manualSchool, setshowManualSchool] = useState(false);
+
+    const [slipData, setSlipData] = useState({});
+
+    const [showAck, setShowAck] = useState(false);
+    //_________________________________________________________________
+
+    //Below states will be used to lift the state and pass it to DependentDropDown component for prefilling of <select> object.
 
 
+
+    //using StudentContex.js api...
+    const {student} = useContext(StudentContext);
+    //_______________________________________________
+
+    //If verification status Filled then show the Ack first:
+   ;
+//    setSrn(student.srn);
+    
+    
+
+// Below fetchPosts function is using the useLocation state to pass the 'srn' value in below fetchposts function.
     const fetchPosts = async (srn) => {
         
         if (!srn) return;
 
       try {
-        const response = await RegistrationFormService.putPosts(srn);
+        const response = await RegistrationFormService.getPostsBySrn(srn); //here we get the object of only passed srn, in a getPostsBySrn method.
         const pull = response.data.data;
-        
+        setStudent(pull) //Here we are updating StudentContext State.
+        sessionStorage.setItem('student', JSON.stringify(pull)) // Here we are storing student data (stored in pull const) in local storage.
+        console.log(pull)
 
-        
+// after successfully pulling the data from fetchPosts function. Now i am setting the states for prefilling the form value, it updates the useState above.
+        setId(pull._id)
         setSrn(pull.srn);
         setName(pull.name)
         setFather(pull.father)
@@ -66,6 +117,7 @@ function PreFilledRegistrationForm () {
         setSchool(pull.school)
         setGrade(pull.grade)
         setImage(pull.image)
+        setSchoolCode(pull.setSchoolCode)
 
     
 
@@ -75,14 +127,18 @@ function PreFilledRegistrationForm () {
       }
     };
   
+//_______________________________________________________
 
+//Below useEffect only runs and fetchPosts when the srnFormInput chages. 
     useEffect(() => {
         // Fetch data only if srnFromInput is available
-        if (srnFromInput) {
-            fetchPosts(srnFromInput);
+        if (student.srn) {
+            fetchPosts(student.srn);
         }
-    }, [srnFromInput]); // Run effect when srnFromInput changes
+    }, [student.srn]); // Run effect when srnFromInput changes
 
+
+//Below function runs when submit button is hit on the prefilled form functionality and updates the data in db.
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -103,17 +159,36 @@ function PreFilledRegistrationForm () {
         formData.append('block', block);
         formData.append('school', school);
         formData.append('grade', grade);
+        formData.append('isRegisteredBy', isRegisteredBy);
+        formData.append('schoolCode', schoolCode);
+        
         if (image) {
             formData.append('image', image);
         }
+
+        //Below piece of code converts the formData into JSON Object to show it in a Slip
+        const SlipData = {};
+        formData.forEach((value, key)=>{
+            SlipData[key] = value;
+        })
+        
+        console.log(SlipData)
+        setSlipData(SlipData)
+        console.log(slipData) //It will not directly log the data but, yes it will store the data in slipData hook(It is something related to useEffect hook)
+        //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     
+
+    //Below in the try catch block we are sending the formData using our updatePostById method on the based of student id.
+    // we are getting student id from InputSrn component.
         try {
-            const response = await RegistrationFormService.putPostsBySrn(srnFromInput, formData);
+            const response = await RegistrationFormService.updatePostsById(id, formData);
             console.log(response); // Debugging log
             if (response.data.updated_data) {
                 setMessage('Data updated successfully');
                 alert('Registration done succesfully')
-                navigate('/srn')  //after successfull updation of data it routes back to the inputsrn page
+                setShowAck(true);
+                
+               //navigate('/srn')  //after successfull updation of data it routes back to the inputsrn page
             } else {
                 setMessage('Failed to update data.');
             }
@@ -125,13 +200,15 @@ function PreFilledRegistrationForm () {
         
             
     };
-        console.log(gender)
+       
+
+
    
 
 return (
     <>
     
-        <div id="RegistrationFormComponent"> 
+        <div className="RegistrationFormComponent"> 
         <Card style={{border:'solid', border: 'solid' }}>
         <Card.Body>
         <p>Mission Buniyyad Registration Form</p>
@@ -205,14 +282,19 @@ return (
             <br/>
 
             
-                    <DependentDropComponent
-                    setDistrict={setDistrict}
-                    setBlock={setBlock}
-                    setSchool={setSchool}
-                    district={district}
-                    block={block}
-                    school={school}
-                    />
+            <div style={{display:'inline'}}>
+
+<DependentDropComponent
+    setDistrict={setDistrict}
+    setBlock={setBlock}
+    setSchool={setSchool}
+    setshowManualSchool={setshowManualSchool}
+    setSchoolCode={setSchoolCode}
+    />
+
+
+
+</div>
                
     
             {/* <label>Enter Your District: </label>
@@ -251,17 +333,24 @@ return (
         </form>
     
         <p>{message}</p>
+        <p>{student.name}</p>
+      
         </Card.Body>
             </Card>
 
     </div>
 
-
-
+    {showAck ? (
+         <AcknowledgementSlip showAck = {showAck} slipData = {slipData}/>
+         ):null} 
     
+   
 </>
 )
 
 }
 
 export default PreFilledRegistrationForm;
+
+
+
