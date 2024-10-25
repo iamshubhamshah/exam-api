@@ -26,6 +26,7 @@ const {setStudent} = useContext(StudentContext);
   const [error, setError] = useState(null);
   const [isSrnMatched, setIsSrnMatched] = useState(false);
   const [errorRedirect, setErrorRedirect] = useState(false);
+  const [RegisterFrist, setRegisterFrist] = useState(false)
 
 
 //After storing the data in setStudent ContextAPI we are updating student context
@@ -44,13 +45,18 @@ const {student} = useContext(StudentContext);
         console.log(response.data.data.srn)
         console.log(response.data.data._id)
 
-        if(response.data.data){
+        const SrnSlipId = response.data.srn || inputSrn;
+
+        if(response.data.data.srn === SrnSlipId && response.data.data.isVerified != ""){
             setIsSrnMatched(true)
             setId(response.data.data._id)
             setStudent(response.data.data);
+            sessionStorage.setItem('user', JSON.stringify(response.data.data)); // Store user data in localStorage
+            
             console.log(student)
 
         } else {
+            setErrorRedirect(true)
             setIsSrnMatched(false)
            
 
@@ -61,7 +67,7 @@ const {student} = useContext(StudentContext);
         console.error(error);
         setError("Correct SRN needed"); // Set error state for exceptions
         setErrorRedirect(true) // It gives the message if error arrives then says register first.
-
+        setRegisterFrist(true);
     }
 
    
@@ -128,3 +134,6 @@ const {student} = useContext(StudentContext);
 }
 
 export default StudentSignIn;
+
+
+

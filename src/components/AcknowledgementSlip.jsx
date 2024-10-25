@@ -3,12 +3,14 @@
 //I am using jspdf and html2canvas library to convert the following modal into pdf directly.
 
 
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { Card, Button, CardFooter } from 'react-bootstrap';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
+
 import {Navigate, useNavigate, useLocation} from 'react-router-dom';
+import { StudentContext } from './ContextApi/StudentContextAPI/StudentContext';
 
 
 export default function AcknowledgementSlip ({showAck, slipData}) {
@@ -23,9 +25,14 @@ if (location.pathname === '/srn-100'){
 } else {
     PutDirectTo = "/Registration-form/put/MB"
 }
+
     
 const [modal, setModal] = useState (true);
 const [EditForm, setEditForm] = useState(false);
+//Below hook handles the slip data if user comes here from the student account
+const {student} = useContext(StudentContext);
+
+
 
 // useEffect(()=>{
 //     setModal(showAck)
@@ -49,6 +56,14 @@ if(EditForm){
     return <Navigate to={PutDirectTo}/>;
 }
 
+//Hnadling below text dynamically...
+let examLevel;
+if (student.grade === "8" && slipData.grade === "8"){
+    examLevel = "Mission Buniyaad Batch 2025-27"
+} else {
+    examLevel = "Super 100 Batch 2025-27"
+}
+
 //Below logic is for downloading Acknowledgement sllip using html2canvas and jsPDF library.
 function DownloadPDF() {
     const pdf = new jsPDF('p', 'mm', 'a4');
@@ -56,7 +71,7 @@ function DownloadPDF() {
     const logo = '/HRlogo.png';
 
     const slipDataToShow = slipData || {}; // Get slip data or use empty object if not available
-    const { srn, name, father, dob, gender, category, grade } = slipDataToShow;
+    const { srn, name, father, dob, gender, category, grade, isVerified, slipId } = slipDataToShow;
 
     // Add logo to the PDF
     pdf.addImage(logo, 'PNG', 10, 10, 20, 20);
@@ -64,8 +79,11 @@ function DownloadPDF() {
     // Set font size and styles for header
     pdf.setFontSize(18);
     pdf.text("Acknowledgement Slip", 105, 20, { align: "center" });
+
+    
+
     pdf.setFontSize(12);
-    pdf.text("MB/S100 L1 Registration Done", 105, 30, { align: "center" });
+    pdf.text(examLevel, 105, 30, { align: "center" });
 
     // Draw underline below the header
     const headerY = 35; // Y-coordinate for the underline
@@ -75,14 +93,15 @@ function DownloadPDF() {
     // Add some spacing
     
     pdf.setFontSize(12);
-    pdf.text(`Slip ID: ${srn}`, 20, 50);
-    pdf.text(`SRN: ${srn}`, 20, 60);
-    pdf.text(`Name: ${name}`, 20, 70);
-    pdf.text(`Father's Name: ${father}`, 20, 80);
-    pdf.text(`D.O.B: ${dob}`, 20, 90);
-    pdf.text(`Gender: ${gender}`, 20, 100);
-    pdf.text(`Category: ${category}`, 20, 110);
-    pdf.text(`Class: ${grade}`, 20, 120);
+    pdf.text(`Slip ID: ${slipId || student.slipId}`, 20, 50);
+    pdf.text(`SRN: ${srn || student.srn}`, 20, 60);
+    pdf.text(`Name: ${name || student.name}`, 20, 70);
+    pdf.text(`Father's Name: ${father || student.father}`, 20, 80);
+    pdf.text(`D.O.B: ${dob || student.dob}`, 20, 90);
+    pdf.text(`Gender: ${gender || student.gender}`, 20, 100);
+    pdf.text(`Category: ${category || student.category}`, 20, 110);
+    pdf.text(`Class: ${grade || student.grade}`, 20, 120);
+    pdf.text(`Registration Status: ${isVerified || student.isVerified}`, 20, 120);
     
 
    
@@ -94,7 +113,7 @@ function DownloadPDF() {
     pdf.line(10, footerY + 5, 200, footerY + 5); // Draw line from (10, footerY + 5) to (200, footerY + 5)
 
     // Save the PDF
-    pdf.save(`${name}_${srn}_acknowledgement-slip.pdf`);
+    pdf.save(`${name || student.name}_${srn || student.srn}_acknowledgement-slip.pdf`);
     navigate('/srn'); // Navigate after downloading
 }
 
@@ -147,7 +166,7 @@ return (
                     marginRight: '20px'
                 }}>
                     <h1 style={{ margin: '0' }}>Acknowledgement Slip</h1>
-                    <h4 style={{ margin: '5px 0' }}>MB/S100 L1 Registration Done</h4>
+                    <h4 style={{ margin: '5px 0' }}>{examLevel}</h4>
                 </div>
                 <Button variant='close' onClick={CloseModal} style={{marginLeft: '20px'}}/>
             </header>
@@ -164,7 +183,7 @@ return (
                 }}>
                     <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
                         <p>Slip ID:</p>
-                        <p>{slipData.srn}</p>
+                        <p>{slipData.slipId}</p>
                     </section>
                     
                     <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
@@ -204,7 +223,7 @@ return (
             
                     <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
                         <p>Registration Status:</p>
-                        <p> </p>
+                        <p>{slipData.isVerified}</p>
                     </section>
                 </div>
             </div>
@@ -218,47 +237,47 @@ return (
                 }}>
                     <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
                         <p>Slip ID:</p>
-                        <p></p>
+                        <p>{student.slipId}</p>
                     </section>
                     
                     <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
                         <p>SRN:</p>
-                        <p></p>
+                        <p>{student.srn}</p>
                     </section>
             
                     <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
                         <p>Name:</p>
-                        <p></p>
+                        <p>{student.name}</p>
                     </section>
             
                     <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
                         <p>Father Name:</p>
-                        <p></p>
+                        <p>{student.father}</p>
                     </section>
             
                     <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
                         <p>D.O.B:</p>
-                        <p></p>
+                        <p>{student.dob}</p>
                     </section>
             
                     <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
                         <p>Gen:</p>
-                        <p></p>
+                        <p>{student.gender}</p>
                     </section>
             
                     <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
                         <p>Category:</p>
-                        <p></p>
+                        <p>{student.category}</p>
                     </section>
             
                     <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
                         <p>Class:</p>
-                        <p></p>
+                        <p>{student.grade}</p>
                     </section>
             
                     <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
                         <p>Registration Status:</p>
-                        <p> </p>
+                        <p>{student.isVerified}</p>
                     </section>
                 </div>
             </div>

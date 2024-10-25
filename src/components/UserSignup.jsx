@@ -4,7 +4,14 @@ import { Card } from "react-bootstrap";
 import { Navigate, useNavigate } from "react-router-dom";
 import DependentDropComponent from './DependentDropComponent';
 
+//importing TwilioService for verification of numbers;
+
+import TwilioService, { sendNotification } from '../services/TwilioService';
+
+
 export default function UserSignUp() {
+
+  let otp = "123456"
 
   const navigate = useNavigate();
 
@@ -15,10 +22,18 @@ export default function UserSignUp() {
   const [block, setBlock] = useState("");
   const [school, setSchool] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [SuccessMessage, setSuccessMessage] = useState("");
+  //below hook for sending message to user as otp
+  const message = `Enter this otp:  ${otp}  in registration portal and crete your password`
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    //Generating Otp and sending to user for verification then show create password field
+
+
+
+    //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     // Validation check (add your own validation logic)
     if (
@@ -30,7 +45,7 @@ export default function UserSignUp() {
       !school ||
       !password
     ) {
-      setMessage("Please fill in all fields.");
+      setSuccessMessage("Please fill in all fields.");
       return;
     }
 
@@ -48,7 +63,7 @@ export default function UserSignUp() {
       console.log(response);
 
       if (response.data.success) {
-        setMessage("User Registered Successfully");
+        setSuccessMessage("User Registered Successfully");
         alert("User Registered Successfully");
         navigate('/user-signin');
 
@@ -62,22 +77,36 @@ export default function UserSignUp() {
         setSchool("");
         setPassword("");
       } else {
-        setMessage("User not registered");
+        setSuccessMessage("User not registered");
       }
     } catch (error) {
       console.error("Error during registration:", error);
-      setMessage("An error occurred. Please try again.");
+      setSuccessMessage("An error occurred. Please try again.");
     }
 
     // Clear form fields
 
     setTimeout(() => {
-      setMessage("");
+      setSuccessMessage("");
     }, 2000);
 
     e.target.reset();
   };
 
+  //below function verifies the user number sendint the 6 digit otp on their phones;
+
+  async function handleVerifyNumberClick  (e) {
+    e.preventDefault();
+    try {
+      const response = await sendNotification(mobile, message);
+      alert(`Message sent: ${response.success ? "success":"Failed"}` );
+      
+    } catch (error) {
+      alert('Failed to send message');
+    }
+
+  };
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   return (
     <div className="userDiv"
       
@@ -178,8 +207,10 @@ export default function UserSignUp() {
             />
             <br />
             <button type="submit">Submit</button>
-            {message && <p>{message}</p>}
+            
+            {SuccessMessage && <p>{SuccessMessage}</p>}
           </form>
+          <button  onClick={handleVerifyNumberClick}>Verify Mobile Number</button>
         </Card.Body>
       </Card>
     </div>

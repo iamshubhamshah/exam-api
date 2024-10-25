@@ -14,12 +14,13 @@ code {
 
 
 .RegistrationFormComponent {
+  border: solid;
   flex-direction: column; /* Arrange children vertically */
   align-items: center; /* Center items horizontally */
   justify-content: center; /* Center items vertically */
    /* Full height of the viewport */
   text-align: center; /* Center text inside the div */
-  padding: 20px; /* Add some padding */
+  padding: 0px; /* Add some padding */
   background-color: #f9f9f9; /* Optional background color */
    /* Optional border */
   border-radius: 8px; /* Optional rounded corners */
@@ -43,7 +44,7 @@ code {
   justify-content: center; /* Center items vertically */
    /* Full height of the viewport */
   text-align: center; /* Center text inside the div */
-  padding: 20px; /* Add some padding */
+  padding: 0px; /* Add some padding */
 
    /* Optional border */
   border-radius: 8px; /* Optional rounded corners */
@@ -78,9 +79,9 @@ input {
   border-width: 3px;
   text-align: center;
   border: 3px solid black;
-  padding: 20px;
+  padding: 10px;
   transition: border-color 0.3s;
-  width: 35%;
+  width: 70%;
   box-sizing: border-box;
   border-color: grey;
   
@@ -103,7 +104,7 @@ select {
   border: 3px solid black;
   padding: 0px; /* Adjusted padding for better visibility */
   transition: border-color 0.3s;
-  width: 35%;
+  width: 70%;
   box-sizing: border-box;
   border-color: grey;
   background-color: white; /* Background color */

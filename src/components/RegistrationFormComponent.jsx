@@ -34,7 +34,11 @@ export default function RegistrationFormComponent () {
     let isRegisteredBy;
     let grade;
 
+    //Acknowledgment slip id generation
+
     
+
+
         
    
 
@@ -81,6 +85,20 @@ export default function RegistrationFormComponent () {
         isRegisteredBy = 'Self'
     }
 
+    //Acknowledgement id generation logic below.
+
+    //Logic goes: slicing three digits of name and slicing last 5 digits of srn and then combining it to create SlipID
+
+    let slicedName = name.slice(0,3)
+    let slicedSrn = srn.slice(5);
+
+
+    let slipId = (slicedName + slicedSrn).toUpperCase();
+
+    console.log(slipId);
+    //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
 useEffect(()=>{
     setUserObj(user)
 },[user])
@@ -111,6 +129,7 @@ useEffect(()=>{
         formData.append('image', image); 
         formData.append('isRegisteredBy', isRegisteredBy);
         formData.append('schoolCode', schoolCode);
+        formData.append('slipId' , slipId);
         
 
         //Below piece of code converts the formData into JSON Object to show it in a Slip
@@ -155,8 +174,8 @@ useEffect(()=>{
     return (
         <>
         <div className="RegistrationFormComponent" > 
-        <Card style={{border:'solid', border: 'solid' }}>
-        <Card.Body>
+      
+       
             <p>Mission Buniyyad Registration Form</p>
             <form onSubmit={handleSubmit}>
                 
@@ -277,9 +296,7 @@ useEffect(()=>{
                     data found
                 </div>
             ):(<p>not found data</p>)}
-            </Card.Body>
-            </Card>
-           
+          
 
         </div>
          {showAck ? (

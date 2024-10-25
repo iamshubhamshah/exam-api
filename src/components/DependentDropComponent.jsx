@@ -144,7 +144,7 @@ const prefilledSchool =()=>{
         boxSizing: 'border-box',
         transition: 'border-color 0.3s',
         backgroundColor: 'white',
-        width: '35%', // Set width as a percentage
+        width: '70%', // Set width as a percentage
         maxWidth: '500px', // Limit max width to avoid excessive stretching
         margin: '0 auto', // Center horizontally
         '&:hover': {

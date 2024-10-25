@@ -8,6 +8,7 @@ const customStyles ={
 
 export default function Navbar() {
     return (
+      
         <div style={{ textAlign: 'center' }}>
           <nav style={{
             background: "#079BF5",

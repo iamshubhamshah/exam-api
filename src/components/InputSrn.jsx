@@ -5,7 +5,8 @@ import registrationServiceInstance from "../services/RegistrationFormService";
 import AcknowledgementSlip from "./AcknowledgementSlip";
 import { StudentContext } from "./ContextApi/StudentContextAPI/StudentContext";
 import { UserContext } from "./ContextApi/UserContextAPI/UserContext";
-
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 
 function InputSrn({}) {
@@ -64,7 +65,7 @@ if (location.pathname==='/srn-100'){
         sessionStorage.setItem('user', JSON.stringify(response.data.data)); // Store user data in localStorage
         setSlipData(response.data.data); 
 
-        if(response.data.data.isVerified != "" && response.data.data.isRegisteredBy === ""){
+        if(response.data.data.isRegisteredBy === ""){
             
             setIsSrnMatched(true)
             setId(response.data.data._id)
@@ -109,14 +110,18 @@ if (location.pathname==='/srn-100'){
 
 
   return (
+    <>
+    <Navbar/>
     <div
       style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "100vh", // Full height of the viewport
+        height: "100vh", 
+      
       }}
     >
+      
       <form
         id="InputSrn"
         style={{
@@ -147,6 +152,9 @@ if (location.pathname==='/srn-100'){
       {console.log(inputSrn)}
       
     </div>
+    <br/>
+    <Footer/>
+    </>
   );
 }
 
