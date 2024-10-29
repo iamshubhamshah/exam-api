@@ -249,7 +249,7 @@ value={prefilledSchool()}
   <br/>
   <label>Enter School Code</label>
   <br/>
-  <input type="text" name="schoolCode" placeholder="Type Your School Code" onChange={(e)=>{setSchoolCode(e.target.value)}}/>
+  <input type="text" name="schoolCode" placeholder="Type Your School Code" onChange={(e)=>{setSchoolCode(e.target.value)}} required/>
 
 
 </div>)}

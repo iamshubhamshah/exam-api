@@ -17,7 +17,7 @@ class RegistrationService {
     }
 
     getPosts () {
-        const url = "${BaseURL}/api/MB-Form/all" //for dashboard component
+        const url = `${BaseURL}/api/MB-Form/all` //for dashboard component
         return axios.get(url)
     }
 

@@ -48,8 +48,11 @@ function CloseModal () {
 
 }
 
+
+
 function UpdateForm () {
    setEditForm(true);
+   
 }
 
 if(EditForm){
@@ -58,10 +61,10 @@ if(EditForm){
 
 //Hnadling below text dynamically...
 let examLevel;
-if (student.grade === "8" && slipData.grade === "8"){
-    examLevel = "Mission Buniyaad Batch 2025-27"
+if ((student && student.grade === "8") || (slipData && slipData.grade === "8") || slipData) {
+    examLevel = "Mission Buniyaad Batch 2025-27";
 } else {
-    examLevel = "Super 100 Batch 2025-27"
+    examLevel = "Super 100 Batch 2025-27";
 }
 
 //Below logic is for downloading Acknowledgement sllip using html2canvas and jsPDF library.
@@ -71,7 +74,7 @@ function DownloadPDF() {
     const logo = '/HRlogo.png';
 
     const slipDataToShow = slipData || {}; // Get slip data or use empty object if not available
-    const { srn, name, father, dob, gender, category, grade, isVerified, slipId } = slipDataToShow;
+    const { srn, name, father, dob, gender, category, isVerified, slipId } = slipDataToShow;
 
     // Add logo to the PDF
     pdf.addImage(logo, 'PNG', 10, 10, 20, 20);
@@ -100,7 +103,7 @@ function DownloadPDF() {
     pdf.text(`D.O.B: ${dob || student.dob}`, 20, 90);
     pdf.text(`Gender: ${gender || student.gender}`, 20, 100);
     pdf.text(`Category: ${category || student.category}`, 20, 110);
-    pdf.text(`Class: ${grade || student.grade}`, 20, 120);
+    // pdf.text(`Class: ${slipData.grade || student.grade}`, 20, 120);
     pdf.text(`Registration Status: ${isVerified || student.isVerified}`, 20, 120);
     
 
@@ -174,7 +177,7 @@ return (
         </Card.Title>
         <Card.Body>
 
-            {slipData ? (
+            {showAck ? (
                 <div>
                 <div style={{
                     display: 'flex',        // Parent container as flex
@@ -223,7 +226,7 @@ return (
             
                     <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
                         <p>Registration Status:</p>
-                        <p>{slipData.isVerified}</p>
+                        <p>Pending</p>
                     </section>
                 </div>
             </div>

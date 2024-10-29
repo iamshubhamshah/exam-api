@@ -2,7 +2,6 @@ import './App.css';
 import RegistrationForm from './components/RegistrationFormComponent';
 import InputSrn from './components/InputSrn'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import RegistrationDashComponent from './components/RegistrationDashComponent'
 import RegistrationFormPutComponent from './components/RegistrationFormPutComponent';
 import DependentDropComponent from './components/DependentDropComponent';
 import SearchableDropdown from './components/custdrop';
@@ -19,6 +18,7 @@ import StudentProvider from './components/ContextApi/StudentContextAPI/StudentCo
 import AcknowledgementSlip from './components/AcknowledgementSlip';
 import StudentSignIn from './components/StudentSignIn';
 import StudentPage from './components/StudentPage';
+import RegistrationDashComponent from './components/RegistrationDashComponent';
 
 
 
@@ -43,7 +43,7 @@ function App() {
                 <Route path="/Registration-form/S100" element={<RegistrationForm />} />
                 <Route path="/Registration-form/put/S100" element={<RegistrationFormPutComponent />} />
 
-                <Route path="/Registration-form/all" element={<RegistrationDashComponent />} />
+                <Route path='/Registration-dash' element = {<RegistrationDashComponent/>}/>
                 
                 <Route path="/dependent" element ={<DependentDropComponent/>}/>
             

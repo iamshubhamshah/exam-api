@@ -5,7 +5,8 @@ import DependentDropComponent from './DependentDropComponent';
 import { UserContext } from './ContextApi/UserContextAPI/UserContext';
 import AcknowledgementSlip from './AcknowledgementSlip';
 import '../index.css';
-
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -79,6 +80,11 @@ export default function RegistrationFormComponent () {
     const [showAck, setShowAck] =useState(false);
     //For managing the data of student on slip
     const [slipData, setSlipData] = useState({})
+
+  
+    
+    const [errors, setErrors] = useState('');
+
     if(user){
         isRegisteredBy = user.mobile;
     }else {
@@ -104,12 +110,216 @@ useEffect(()=>{
 },[user])
 
     
+  //Below logics puts the validation on the form.
+const [errSrn, setErrSrn] = useState(true);
+const [errName, setErrName] = useState(true);
+const [errFather, setErrFather] = useState(true);
+const [errMother, setErrMother] = useState(true);
+const [errDob, setErrDob] = useState(true);
+const [errGender, setErrGender] = useState(true);
+const [errCategory, setErrCategory] = useState(true);
+const [errAadhar, setErrAadhar] = useState(true);
+const [errMobile, setErrMobile] = useState(true);
+const [errWhatsapp, setErrWhatsapp] = useState(true);
+const [errAddress, setErrAddress] = useState(true);
+const [errDistrict, setErrDistrict] = useState(true);
+const [errBlock, setErrBlock] = useState(true);
+const [errSchool, setErrSchool] = useState(true);
+//if all the validation passes then below state hook lets the send data;
+const [formValidated, setFormValidated] = useState(false);
+
+
+
+  function formValidation () {
+
+
+    if(srn.length === 10 && /[^\d]/.test(srn)==false  ){
+       
+      
+        setErrSrn(false);
+    }else {
+         setErrSrn(true);
+         toast.error('Srn must contain only 10 digits')
+        
+    }
+
+    if (/\d/.test(name)==false && name.length != 0){
+        setErrName(false)
+    }else{
+        setErrName(true)
+        toast.error('Student Name must not contain any Number')
+    }
+    if(/\d/.test(father)==false && father.length != 0){
+        setErrFather(false)
+
+    }else{
+        setErrFather(true);
+        toast.error('Father name must not contain any Number')
+    }
+    if(/\d/.test(mother)==false && mother.length != 0){
+        setErrMother(false)
+
+    }else{
+        setErrMother(true);
+        toast.error('Mother name must not contain any Number')
+    }
+
+
+    //Below check is for dob.
+    if (dob !== ''){
+        setErrDob(false)
+    }else{
+        setErrDob(true)
+        toast.error('Selct your D.O.B')
+    }
+
+    if(gender !==''){
+        setErrGender(false)
+
+    }else{
+        setErrGender(true);
+        toast.error('Select Gender')
+    }
+
+    if(category !==''){
+        setErrCategory(false)
+
+    }else{
+        setErrCategory(true);
+        toast.error('Select Category')
+    }
+
+    //checks if the srn has exact 12 digits and does not contain any apphabet.
+
+    if(aadhar.length === 12 && /[^\d]/.test(aadhar)==false  ){
+       
+      
+        setErrAadhar(false);
+    }else {
+         setErrAadhar(true);
+        toast.error('Aadhar number should have 12 digits only and must not contain any alphabet')
+    }
+
+    //below check for mobile validation
+    if(mobile.length === 10 && /[^\d]/.test(mobile)==false  ){
+       
+      
+        setErrMobile(false);
+    }else {
+        setErrMobile(true);
+        toast.error('Mobile number should contain 10 digits only and must not contain any alphabet')
+    }
+
+    //below check for whatsapp validation
+
+    if(whatsapp.length === 10 && /[^\d]/.test(whatsapp)==false  ){
+       
+      
+        setErrWhatsapp(false);
+    }else {
+        setErrWhatsapp(true);
+        toast.error('Whatsapp number should contain 10 digits only and must not contain any alphabet')
+    }
+    
+    //below check for address validation
+    if(address.length !== 0  ){
+       
+      
+        setErrAddress(false);
+    }else {
+        setErrAddress(true);
+        toast.error('Please fill your address')
+    }
+
+    //below check for district validation
+    if(district.length !== 0 ){
+       
+      
+        setErrDistrict(false);
+    }else {
+        setErrDistrict(true);
+        toast.error('Please select your district')
+    }
+
+    //below check for block validation
+    if(block.length !== 0 ){
+       
+      
+        setErrBlock(false);
+    }else {
+        setErrBlock(true);
+        toast.error('Please select your block')
+    }
+
+    //below check for school validation
+    if(school.length !== 0 ){
+       
+      
+        setErrSchool(false);
+    }else {
+        setErrSchool(true);
+        toast.error('Please select your school')
+    }
+
+    
+    
   
+  }
+   
+  function formValidate (){
+    if (
+        errSrn === false && 
+        errName === false && 
+        errFather === false && 
+        errMother === false && 
+        errDob === false && 
+        errGender === false &&
+        errCategory === false && 
+        errAadhar === false && 
+        errMobile === false && 
+        errWhatsapp === false && 
+        errAddress === false &&
+        errDistrict === false && 
+        errBlock === false && 
+        errSchool === false
+    ) {
+        // All error states are 
+        setFormValidated(true)
+        console.log("All error states are clear.");
+        
+    } else {
+        setFormValidated(false)
+        console.log("All states are not cleared.");
+
+        
+    }
+  }
+  useEffect(()=>{
+    formValidate()
+    
+
+  }, [errSrn, errName, errFather, errMother, errDob, errGender, errCategory, errAadhar, errMobile, errWhatsapp, errAddress, errDistrict, errBlock, errSchool])
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+   
 
     const handleSubmit = async (e)=>{
-        
         e.preventDefault();
+
+         // Call the formValidation function
+    formValidation();
+
+    // Check if the form is validated
+    if (!formValidated) {
+        alert('Please fix the errors before submitting the form.');
+        return; // Stop execution if validation fails
+    } else{
+        toast.success('registration done')
+    }
         
+        try {
+
         const formData = new FormData ();
         formData.append('srn', srn);
         formData.append('name', name);
@@ -131,6 +341,7 @@ useEffect(()=>{
         formData.append('schoolCode', schoolCode);
         formData.append('slipId' , slipId);
         
+        console.log(slipId)
 
         //Below piece of code converts the formData into JSON Object to show it in a Slip
         const SlipData = {};
@@ -144,6 +355,7 @@ useEffect(()=>{
         //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         const response = await RegistrationFormService.RegistrationCreate(formData);
+        
         console.log(response.data.data);
         console.log(slipData)
 
@@ -165,9 +377,16 @@ useEffect(()=>{
         },2000);
 
         e.target.reset();
+        } catch (error) {
+            console.log('Some error occured')
+            
+            // alert('fill the form properly')
+        }
     }
 
     
+
+
 
 
     // It has a CSS in Index.css
@@ -178,14 +397,15 @@ useEffect(()=>{
        
             <p>Mission Buniyyad Registration Form</p>
             <form onSubmit={handleSubmit}>
-                
+        
                 <label>Enter Your SRN: </label>
                 <br/>
                 <input  type='text' name='srn' placeholder='Enter Your SRN' onChange={(e)=>setSrn(e.target.value)}/>
+             
                 <br/>
                 <label>Enter Your Name: </label>
                 <br/>
-                <input type='text' name='name' placeholder='Enter Your SRN' onChange={(e)=>setName(e.target.value)}/>
+                <input type='text' name='name' placeholder='Enter Your SRN' onChange={(e)=>setName(e.target.value)} />
                 <br/>
                 <label>Enter Your Fathers' Name: </label>
                 <br/>
@@ -197,7 +417,7 @@ useEffect(()=>{
                 <br/>
                 <label>Enter Your D.O.B: </label>
                 <br/>
-                <input type='date' name='dob' onChange={(e)=>setDob(e.target.value)}/>
+                <input type='date' name='dob' onChange={(e)=>setDob(e.target.value)} />
                 <br/>
                 
                 <label>Enter Your Gender: </label>
@@ -228,8 +448,12 @@ useEffect(()=>{
                 <br/>
                 <label>Enter Your 10 digits Mobile Number: </label>
                 <br/>
-                <input type='text' name='mobile' placeholder='Enter Your Mobile Number' onChange={(e)=>setMobile(e.target.value)}/>
+                <input type='text' name='mobile' placeholder='Enter Your Mobile Number' onChange={(e)=>{setMobile(e.target.value)} }/>
+               
+                  <br/>
+                
                 <br/>
+                
                 <label>Enter Your 10 digits Whatsapp Number: </label>
                 <br/>
                 <input type='text' name='whatsapp' placeholder='Enter Your Whatsapp Number' onChange={(e)=>setWhatsapp(e.target.value)}/>
@@ -300,7 +524,7 @@ useEffect(()=>{
 
         </div>
          {showAck ? (
-         <AcknowledgementSlip showAck = {showAck} slipData = {slipData}/>
+         <AcknowledgementSlip showAck={showAck} slipData = {slipData}/>
          ):null} 
         </>
        

@@ -93,7 +93,7 @@ export default function UserSignUp() {
     e.target.reset();
   };
 
-  //below function verifies the user number sendint the 6 digit otp on their phones;
+  //below function verifies the user number sending the 6 digit otp on their phones;
 
   async function handleVerifyNumberClick  (e) {
     e.preventDefault();
@@ -107,6 +107,35 @@ export default function UserSignUp() {
 
   };
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+//Below api uses Gooadvert api to send otp.
+const [otpStatus, setOtpStatus] = useState('');
+
+  
+
+const handleGooadvertOtp = async () => {
+  const phoneNumber = '918191839118'; 
+  const otpUrl = `http://sms.gooadvert.com/vendorsms/pushsms.aspx?APIKey=PupWft0zck6Q9nAYjvHCAg&msisdn=${phoneNumber}&sid=IHMBGA&msg=Dear User your OTP For Verification Is 278291.This Will Expire In 5 Min. Please Do Not Share your OTP With Anyone Regards BGroop.&fl=0&gwid=2`;
+
+  try {
+    const response = await fetch(otpUrl, {
+      method: 'GET',
+      mode: 'no-cors',
+    });
+    if (response.ok) {
+      setOtpStatus('OTP sent successfully!');
+    } else {
+      setOtpStatus('Failed to send OTP. Please try again.');
+    }
+  } catch (error) {
+    console.error('Error sending OTP:', error);
+    setOtpStatus('An error occurred. Please try again.');
+  }
+};
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   return (
     <div className="userDiv"
       
@@ -211,6 +240,7 @@ export default function UserSignUp() {
             {SuccessMessage && <p>{SuccessMessage}</p>}
           </form>
           <button  onClick={handleVerifyNumberClick}>Verify Mobile Number</button>
+         <button onClick={handleGooadvertOtp}> Verify OTP By goadvert</button>
         </Card.Body>
       </Card>
     </div>

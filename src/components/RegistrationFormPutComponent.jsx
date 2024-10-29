@@ -84,6 +84,20 @@ const {user} = useContext(UserContext)
     //If verification status Filled then show the Ack first:
    ;
 //    setSrn(student.srn);
+
+   //Acknowledgement id generation logic below.
+
+    //Logic goes: slicing three digits of name and slicing last 5 digits of srn and then combining it to create SlipID
+
+    let slicedName = name.slice(0,3)
+    let slicedSrn = srn.slice(5);
+
+
+    let slipId = (slicedName + slicedSrn).toUpperCase();
+
+    console.log(slipId);
+    //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
     
     
 
@@ -161,6 +175,10 @@ const {user} = useContext(UserContext)
         formData.append('grade', grade);
         formData.append('isRegisteredBy', isRegisteredBy);
         formData.append('schoolCode', schoolCode);
+        formData.append('slipId' , slipId);
+        
+        console.log(slipId)
+        
         
         if (image) {
             formData.append('image', image);
@@ -341,7 +359,7 @@ return (
     </div>
 
     {showAck ? (
-         <AcknowledgementSlip showAck = {showAck} slipData = {slipData}/>
+         <AcknowledgementSlip showAck = {showAck} slipData = {slipData}/> //showAck = {showAck} slipData = {slipData} <= these are the props if needed i can use from here.
          ):null} 
     
    
