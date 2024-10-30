@@ -3,6 +3,11 @@ import Select from "react-select";
 import DistrictBlockSchoolService from "../services/DistrictBlockSchoolService";
 import { StudentContext } from "./ContextApi/StudentContextAPI/StudentContext";
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+
 
 export default function DependentDropComponent({
   setDistrict = () => {},
@@ -136,33 +141,44 @@ const prefilledSchool =()=>{
   }
 
   const customStyles = {
-    control: (provided) => ({
-        ...provided,
-        borderRadius: '10px',
-        border: '3px solid grey',
-        height: '50px',
-        boxSizing: 'border-box',
-        transition: 'border-color 0.3s',
-        backgroundColor: 'white',
-        width: '70%', // Set width as a percentage
-        maxWidth: '500px', // Limit max width to avoid excessive stretching
-        margin: '0 auto', // Center horizontally
-        '&:hover': {
-          borderColor: 'black',
+    control: (provided, state) => ({
+      ...provided,
+      fontSize: '1rem',
+      lineHeight: '1.5',
+      color: '#495057', // Default Bootstrap text color
+      backgroundColor: 'white',
+      borderColor: state.isFocused ? '#86b7fe' : '#ced4da', // Bootstrap border color and focus color
+      borderRadius: '0.375rem', // Match Bootstrap's rounded border
+      padding: '0.375rem 0.75rem', // Bootstrap padding
+      minHeight: 'calc(1.5em + 0.75rem + 2px)', // Height calculation to match
+      boxShadow: state.isFocused ? '0 0 0 0.25rem rgba(13, 110, 253, 0.25)' : 'none', // Match Bootstrap's focus shadow
+      transition: 'border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out',
+      '&:hover': {
+        borderColor: '#86b7fe', // Hover border color
       },
     }),
     placeholder: (provided) => ({
       ...provided,
-      color: 'grey',
+      color: '#6c757d', // Bootstrap's placeholder color
+      fontSize: '1rem',
     }),
-    option: (provided) => ({
+    option: (provided, state) => ({
       ...provided,
-      backgroundColor: 'white',
+      backgroundColor: state.isFocused ? '#e9ecef' : 'white', // Hover color for options
       color: 'black',
-      '&:hover':{
-        backgroundColor:'teal'
+      padding: '0.375rem 0.75rem', // Match Bootstrap option padding
+      fontSize: '1rem',
+      '&:hover': {
+        backgroundColor: '#e9ecef', // Hover background for options
+        color: '#495057',
       },
-      
+    }),
+    menu: (provided) => ({
+      ...provided,
+      borderRadius: '0.375rem', // Border radius to match Bootstrap
+      borderColor: '#ced4da',
+      boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15)', // Bootstrap shadow style
+      marginTop: '0.25rem',
     }),
   };
 
@@ -193,12 +209,18 @@ const [handleClickCount, setHandleClickCount] = useState(0)
 
   return (
     <>
+     <Form>
+      <Container>
+        <Row>
+          <Col>
+          
     <div style={{ display: '', flexDirection: 'column', alignItems: 'center' }}>
+
+      <Form.Group className="mb-3" controlId="districtSelect">
      
         <label>Select District</label>
-       
+        
         <Select
-       
        placeholder="Select District"
        value={prefilledDistrict()} // Call the function to get the prefilled value
           
@@ -210,10 +232,10 @@ const [handleClickCount, setHandleClickCount] = useState(0)
           onChange={handleDistirctChange} styles={customStyles}
           
         />
-      
+      </Form.Group>
 
-    
-        <label>Select Block</label>
+      <Form.Group className="mb-3" controlId="blockSelect">
+        <Form.Label>Select Block</Form.Label>
     
         <Select
         placeholder='Select Block'
@@ -226,10 +248,11 @@ const [handleClickCount, setHandleClickCount] = useState(0)
           
           styles={customStyles} />
       
-       
+      </Form.Group>
        
           {showSchoolDropDown ? (<>
-            <label>Select School</label>
+            <Form.Group className="mb-3" controlId="schoolSelect">
+            <Form.Label>Select School</Form.Label>
 
 <Select
 placeholder='Selct School'
@@ -241,17 +264,30 @@ value={prefilledSchool()}
   }))}
  
   styles={customStyles}   /> 
+  </Form.Group>
 
-</> ):(<div className="RegistrationFormComponent" style={{backgroundColor:'white'}} >
-  <label>Enter School Manually</label>
-  <br/>
-  <input type="text" name="school" placeholder="Type Your School Name" onChange={(e)=>setSchool(e.target.value)}/>
-  <br/>
-  <label>Enter School Code</label>
-  <br/>
-  <input type="text" name="schoolCode" placeholder="Type Your School Code" onChange={(e)=>{setSchoolCode(e.target.value)}} required/>
+</> ):(
+  <div >
+  <Form.Group className="mb-3">
+    <Form.Label>Enter School Manually</Form.Label>
+    <Form.Control 
+      type="text" 
+      name="school" 
+      placeholder="Type Your School Name" 
+      onChange={(e) => setSchool(e.target.value)} 
+    />
+  </Form.Group>
 
-
+  <Form.Group className="mb-3">
+    <Form.Label>Enter School Code</Form.Label>
+    <Form.Control 
+      type="text" 
+      name="schoolCode" 
+      placeholder="Type Your School Code" 
+      onChange={(e) => setSchoolCode(e.target.value)} 
+      required 
+    />
+  </Form.Group>
 </div>)}
 
         
@@ -263,6 +299,11 @@ value={prefilledSchool()}
     <div className="checkbox" id="DependentCheckbox"><input type="checkbox" id="myCheckbox" onClick={handleOnClilck}/></div>
       
     </div>
+    </Col>
+    
+    </Row>
+    </Container>
+    </Form>
     </>
   );
 }

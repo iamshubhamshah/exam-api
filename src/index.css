@@ -14,6 +14,7 @@ code {
 
 
 .RegistrationFormComponent {
+
   border: solid;
   flex-direction: column; /* Arrange children vertically */
   align-items: center; /* Center items horizontally */
@@ -21,7 +22,7 @@ code {
    /* Full height of the viewport */
   text-align: center; /* Center text inside the div */
   padding: 0px; /* Add some padding */
-  background-color: #f9f9f9; /* Optional background color */
+  background-color: white; /* Optional background color #f9f9f9 */
    /* Optional border */
   border-radius: 8px; /* Optional rounded corners */
 }
