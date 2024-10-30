@@ -7,10 +7,7 @@ import AcknowledgementSlip from "./AcknowledgementSlip";
 import "../index.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
+
 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -18,7 +15,7 @@ import jsPDF from "jspdf";
 //React boottrap css-------------------
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Card, Button, CardFooter } from "react-bootstrap";
+import {Container, Row, Col, Form, Card, Button, CardFooter } from "react-bootstrap";
 //_____________________________
 
 //-----------------------------------
@@ -113,6 +110,7 @@ export default function RegistrationFormComponent() {
   const [errDistrict, setErrDistrict] = useState(true);
   const [errBlock, setErrBlock] = useState(true);
   const [errSchool, setErrSchool] = useState(true);
+
   //if all the validation passes then below state hook lets the send data;
   const [formValidated, setFormValidated] = useState(false);
 

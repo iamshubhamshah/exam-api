@@ -4,13 +4,14 @@
 
 
 import React, {useState, useEffect, useContext} from 'react';
-import { Card, Button, CardFooter } from 'react-bootstrap';
+import { Card, Button, CardFooter, Container, Col, Row } from 'react-bootstrap';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 
 import {Navigate, useNavigate, useLocation} from 'react-router-dom';
 import { StudentContext } from './ContextApi/StudentContextAPI/StudentContext';
+
 
 
 export default function AcknowledgementSlip ({showAck, slipData}) {
@@ -62,9 +63,9 @@ if(EditForm){
 //Hnadling below text dynamically...
 let examLevel;
 if ((student && student.grade === "8") || (slipData && slipData.grade === "8") || slipData) {
-    examLevel = "Mission Buniyaad Batch 2025-27";
+    examLevel = "Mission Buniyaad Acknowledgement Slip_Batch 2025-27";
 } else {
-    examLevel = "Super 100 Batch 2025-27";
+    examLevel = "Super 100 Acknowledgement Slip_Batch 2025-27";
 }
 
 //Below logic is for downloading Acknowledgement sllip using html2canvas and jsPDF library.
@@ -74,19 +75,19 @@ function DownloadPDF() {
     const logo = '/HRlogo.png';
 
     const slipDataToShow = slipData || {}; // Get slip data or use empty object if not available
-    const { srn, name, father, dob, gender, category, isVerified, slipId } = slipDataToShow;
+    const { srn, name, father, dob, gender, category, isVerified, slipId, district, block, school } = slipDataToShow;
 
     // Add logo to the PDF
     pdf.addImage(logo, 'PNG', 10, 10, 20, 20);
 
     // Set font size and styles for header
-    pdf.setFontSize(18);
-    pdf.text("Acknowledgement Slip", 105, 20, { align: "center" });
+    pdf.setFontSize(14);
+    pdf.text(examLevel, 105, 20, { align: "center" });
 
     
 
     pdf.setFontSize(12);
-    pdf.text(examLevel, 105, 30, { align: "center" });
+    pdf.text(`Registration Status: ${slipData.isVerified || student.isVerified}`, 105, 30, { align: "center" });
 
     // Draw underline below the header
     const headerY = 35; // Y-coordinate for the underline
@@ -104,7 +105,10 @@ function DownloadPDF() {
     pdf.text(`Gender: ${gender || student.gender}`, 20, 100);
     pdf.text(`Category: ${category || student.category}`, 20, 110);
     // pdf.text(`Class: ${slipData.grade || student.grade}`, 20, 120);
-    pdf.text(`Registration Status: ${isVerified || student.isVerified}`, 20, 120);
+    pdf.text(`District: ${district || student.district}`, 20, 120);
+    pdf.text(`District: ${block || student.block}`, 20, 130);
+    pdf.text(`District: ${school || student.school}`, 20, 140);
+    pdf.text(`Registration Status: ${isVerified || student.isVerified}`, 20, 150);
     
 
    
@@ -124,21 +128,15 @@ function DownloadPDF() {
     
 
 return (
-    <>
-{/*        
-  <button onClick={OpenModal}>Open Modal</button>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet tempora reprehenderit vel animi deleniti voluptatem assumenda a mollitia nihil porro, aliquam quis quaerat facere libero enim accusantium unde esse itaque?</p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet tempora reprehenderit vel animi deleniti voluptatem assumenda a mollitia nihil porro, aliquam quis quaerat facere libero enim accusantium unde esse itaque?</p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet tempora reprehenderit vel animi deleniti voluptatem assumenda a mollitia nihil porro, aliquam quis quaerat facere libero enim accusantium unde esse itaque?</p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet tempora reprehenderit vel animi deleniti voluptatem assumenda a mollitia nihil porro, aliquam quis quaerat facere libero enim accusantium unde esse itaque?</p>
-  */}
+    <Container>
+
 
   {modal  ? (
     <>
      <div className='modalAck'> 
     
         <div className='modal-contentAck' style={{
-    display: 'flex',
+    display: 'grid',
     justifyContent: 'center',  // Centers the div horizontally
     alignItems: 'center',      // Centers the div vertically
     minHeight: '100%',        // Ensures the div takes the full height of the viewport
@@ -149,7 +147,7 @@ return (
     <Card id = 'acknowledgementSlip' style={{
         width: '100%',           // Make the card width responsive
         maxWidth: '1000px',      // Limit the max width to 1000px
-        border: 'solid',
+        border: '',
         display:'flex',
     
     }}>
@@ -168,129 +166,167 @@ return (
                     textAlign: 'center',
                     marginRight: '20px'
                 }}>
-                    <h1 style={{ margin: '0' }}>Acknowledgement Slip</h1>
-                    <h4 style={{ margin: '5px 0' }}>{examLevel}</h4>
+                    <h4>{examLevel}</h4>
+                    <h5>{`Registration Status: ${slipData.isVerified || student.isVerified}`}</h5>
+                    <h6 style={{fontSize:'12px'}}>Your Form Is Under Verification. Once Your form is verified, your Registration status will be updated</h6>
                 </div>
                 <Button variant='close' onClick={CloseModal} style={{marginLeft: '20px'}}/>
             </header>
             <hr />
         </Card.Title>
         <Card.Body>
+  {showAck ? (
+    <div>
+      <Container>
+        <Row xs={1} md={2} style={{ gap: '10px' }}>
+          <Col>
+            <Row>
+              <Col>Slip ID:</Col>
+              <Col>{slipData.slipId}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>SRN:</Col>
+              <Col>{slipData.srn}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Name:</Col>
+              <Col>{slipData.name}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Father Name:</Col>
+              <Col>{slipData.father}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>D.O.B:</Col>
+              <Col>{slipData.dob}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Gen:</Col>
+              <Col>{slipData.gender}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Category:</Col>
+              <Col>{slipData.category}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Class:</Col>
+              <Col>{slipData.grade}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>District:</Col>
+              <Col>{slipData.district}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Block:</Col>
+              <Col>{slipData.block}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>School:</Col>
+              <Col>{slipData.school}</Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  ) : (
+    <div>
+      <Container>
+        <Row xs={1} md={2} style={{ gap: '10px' }}>
+          <Col>
+            <Row>
+              <Col>Slip ID:</Col>
+              <Col>{student.slipId}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>SRN:</Col>
+              <Col>{student.srn}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Name:</Col>
+              <Col>{student.name}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Father Name:</Col>
+              <Col>{student.father}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>D.O.B:</Col>
+              <Col>{student.dob}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Gen:</Col>
+              <Col>{student.gender}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Category:</Col>
+              <Col>{student.category}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Class:</Col>
+              <Col>{student.grade}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>District:</Col>
+              <Col>{student.district}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Block:</Col>
+              <Col>{student.block}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>School:</Col>
+              <Col>{student.school}</Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  )}
+</Card.Body>
 
-            {showAck ? (
-                <div>
-                <div style={{
-                    display: 'flex',        // Parent container as flex
-                    flexDirection: 'column', // Stack sections in a column
-                    gap: '10px',            // Adds space between the sections
-                }}>
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>Slip ID:</p>
-                        <p>{slipData.slipId}</p>
-                    </section>
-                    
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>SRN:</p>
-                        <p>{slipData.srn}</p>
-                    </section>
-            
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>Name:</p>
-                        <p>{slipData.name}</p>
-                    </section>
-            
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>Father Name:</p>
-                        <p>{slipData.father}</p>
-                    </section>
-            
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>D.O.B:</p>
-                        <p>{slipData.dob}</p>
-                    </section>
-            
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>Gen:</p>
-                        <p>{slipData.gender}</p>
-                    </section>
-            
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>Category:</p>
-                        <p>{slipData.category}</p>
-                    </section>
-            
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>Class:</p>
-                        <p>{slipData.grade}</p>
-                    </section>
-            
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>Registration Status:</p>
-                        <p>Pending</p>
-                    </section>
-                </div>
-            </div>
-
-            ):(
-                <div>
-                <div style={{
-                    display: 'flex',        // Parent container as flex
-                    flexDirection: 'column', // Stack sections in a column
-                    gap: '10px',            // Adds space between the sections
-                }}>
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>Slip ID:</p>
-                        <p>{student.slipId}</p>
-                    </section>
-                    
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>SRN:</p>
-                        <p>{student.srn}</p>
-                    </section>
-            
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>Name:</p>
-                        <p>{student.name}</p>
-                    </section>
-            
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>Father Name:</p>
-                        <p>{student.father}</p>
-                    </section>
-            
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>D.O.B:</p>
-                        <p>{student.dob}</p>
-                    </section>
-            
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>Gen:</p>
-                        <p>{student.gender}</p>
-                    </section>
-            
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>Category:</p>
-                        <p>{student.category}</p>
-                    </section>
-            
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>Class:</p>
-                        <p>{student.grade}</p>
-                    </section>
-            
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
-                        <p>Registration Status:</p>
-                        <p>{student.isVerified}</p>
-                    </section>
-                </div>
-            </div>
-            )}
-
-            
-        </Card.Body>
         <Card.Footer>
             <footer>
-                Basic instructions will be here
+                Note: If you have filled any details incorrectly in the form, click on edit details button below and Edit your details.
             </footer>
         </Card.Footer>
         
@@ -317,7 +353,9 @@ return (
    </>
    
   ):<p>No data</p>}
-    </>
+  
+  
+    </Container>
   
 );
 
