@@ -15,6 +15,8 @@ export default function DependentDropComponent({
   setSchool = () => {},
   setshowManualSchool = () => {},
   setSchoolCode = () => {},
+  setManualSchoolNameIsChecked = () =>{}
+
 }) {
   const [districtList, setDistrictList] = useState([]);
   const [blockList, setBlockList] = useState([]);
@@ -27,6 +29,8 @@ export default function DependentDropComponent({
 
   // Getting student object from StudentContext.js Api.
   const {student} = useContext(StudentContext);
+
+
 
   //Fetching district by calling the api in DistricBlockSchoolService which in return calls the api in  backend.
   const fetchDistrict = async () => {
@@ -196,9 +200,11 @@ const [handleClickCount, setHandleClickCount] = useState(0)
     if (handleClickCount%2===0 ){
       setshowManualSchool(true)
       setShowSchoolDropDonw(false)
+      setManualSchoolNameIsChecked(true) //It is a prop that checks if the checkbox clicked or not.
     } else{
       setshowManualSchool(false)
       setShowSchoolDropDonw(true)
+      setManualSchoolNameIsChecked(false);//It is a prop that checks if the checkbox clicked or not.
     }
 
     
@@ -218,7 +224,7 @@ const [handleClickCount, setHandleClickCount] = useState(0)
 
       <Form.Group className="mb-3" controlId="districtSelect">
      
-        <label>Select District</label>
+        <Form.Label>Select District</Form.Label>
         
         <Select
        placeholder="Select District"

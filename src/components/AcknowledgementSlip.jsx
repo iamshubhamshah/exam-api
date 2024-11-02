@@ -11,6 +11,7 @@ import jsPDF from 'jspdf';
 
 import {Navigate, useNavigate, useLocation} from 'react-router-dom';
 import { StudentContext } from './ContextApi/StudentContextAPI/StudentContext';
+import { UserContext } from './ContextApi/UserContextAPI/UserContext';
 
 
 
@@ -27,11 +28,15 @@ if (location.pathname === '/srn-100'){
     PutDirectTo = "/Registration-form/put/MB"
 }
 
-    
+//Below UserContext checks if the User uses the ackslip and if so, then routes the user accordingly.
+
+const {user} = useContext(UserContext);
+
 const [modal, setModal] = useState (true);
 const [EditForm, setEditForm] = useState(false);
 //Below hook handles the slip data if user comes here from the student account
 const {student} = useContext(StudentContext);
+let isVerified = 'Pending'
 
 
 
@@ -45,15 +50,37 @@ const {student} = useContext(StudentContext);
 
 function CloseModal () {
     setModal(false )
-    navigate('/srn');
+    // navigate('/srn');
+
+    if( user && location.pathname === '/acknowledgementslip-mb'){
+        navigate ('/srn')
+
+    } else if (user && location.pathname === '/acknowledgementslip-100'){
+        navigate ('/srn-100')
+    }
+
+    else if (location.pathname === '/acknowledgementslip-mb' 
+        || location.pathname === '/acknowledgementslip-100' ||
+        location.pathname === '/Registration-form/put/MB' ||
+        location.pathname === '/Registration-form/put/S100'
+    ){
+        navigate('/examination'); // Navigate after downloading
+    } 
+
+
+
+
+
+
+
 
 }
 
 
-
+//This below code directs to the prefilled from and data for prefilled form is...
+//... filled by StudentContextApi
 function UpdateForm () {
-   setEditForm(true);
-   
+   setEditForm(true);   
 }
 
 if(EditForm){
@@ -75,7 +102,7 @@ function DownloadPDF() {
     const logo = '/HRlogo.png';
 
     const slipDataToShow = slipData || {}; // Get slip data or use empty object if not available
-    const { srn, name, father, dob, gender, category, isVerified, slipId, district, block, school } = slipDataToShow;
+    const { srn, name, father, dob, gender, category, slipId, district, block, school } = slipDataToShow;
 
     // Add logo to the PDF
     pdf.addImage(logo, 'PNG', 10, 10, 20, 20);
@@ -87,7 +114,7 @@ function DownloadPDF() {
     
 
     pdf.setFontSize(12);
-    pdf.text(`Registration Status: ${slipData.isVerified || student.isVerified}`, 105, 30, { align: "center" });
+    pdf.text(`Registration Status: ${isVerified || student.isVerified}`, 105, 30, { align: "center" });
 
     // Draw underline below the header
     const headerY = 35; // Y-coordinate for the underline
@@ -97,35 +124,109 @@ function DownloadPDF() {
     // Add some spacing
     
     pdf.setFontSize(12);
-    pdf.text(`Slip ID: ${slipId || student.slipId}`, 20, 50);
-    pdf.text(`SRN: ${srn || student.srn}`, 20, 60);
-    pdf.text(`Name: ${name || student.name}`, 20, 70);
-    pdf.text(`Father's Name: ${father || student.father}`, 20, 80);
-    pdf.text(`D.O.B: ${dob || student.dob}`, 20, 90);
-    pdf.text(`Gender: ${gender || student.gender}`, 20, 100);
-    pdf.text(`Category: ${category || student.category}`, 20, 110);
-    // pdf.text(`Class: ${slipData.grade || student.grade}`, 20, 120);
-    pdf.text(`District: ${district || student.district}`, 20, 120);
-    pdf.text(`District: ${block || student.block}`, 20, 130);
-    pdf.text(`District: ${school || student.school}`, 20, 140);
-    pdf.text(`Registration Status: ${isVerified || student.isVerified}`, 20, 150);
+
+    // Define a maximum label width
+    const labelWidth = 70; // Adjust this value based on your needs
+    const xStart = 10; // Starting X-coordinate
+    const yPositionStart = 50; // Starting Y-coordinate
+    const lineHeight = 10; // Height between lines
+    
+    // Draw the texts
+    pdf.text(`1. Slip ID:`, xStart, yPositionStart);
+    pdf.text(`${slipId || student.slipId}`, xStart + labelWidth, yPositionStart);
+    
+    pdf.text(`2. SRN:`, xStart, yPositionStart + lineHeight);
+    pdf.text(`${srn || student.srn}`, xStart + labelWidth, yPositionStart + lineHeight);
+    
+    pdf.text(`3. Name:`, xStart, yPositionStart + 2 * lineHeight);
+    pdf.text(`${name || student.name}`, xStart + labelWidth, yPositionStart + 2 * lineHeight);
+    
+    pdf.text(`4. Father's Name:`, xStart, yPositionStart + 3 * lineHeight);
+    pdf.text(`${father || student.father}`, xStart + labelWidth, yPositionStart + 3 * lineHeight);
+    
+    pdf.text(`5. D.O.B:`, xStart, yPositionStart + 4 * lineHeight);
+    pdf.text(`${dob || student.dob}`, xStart + labelWidth, yPositionStart + 4 * lineHeight);
+    
+    pdf.text(`6. Gender:`, xStart, yPositionStart + 5 * lineHeight);
+    pdf.text(`${gender || student.gender}`, xStart + labelWidth, yPositionStart + 5 * lineHeight);
+    
+    pdf.text(`7. Category:`, xStart, yPositionStart + 6 * lineHeight);
+    pdf.text(`${category || student.category}`, xStart + labelWidth, yPositionStart + 6 * lineHeight);
+    
+    pdf.text(`8. District:`, xStart, yPositionStart + 7 * lineHeight);
+    pdf.text(`${district || student.district}`, xStart + labelWidth, yPositionStart + 7 * lineHeight);
+    
+    pdf.text(`9. Block:`, xStart, yPositionStart + 8 * lineHeight);
+    pdf.text(`${block || student.block}`, xStart + labelWidth, yPositionStart + 8 * lineHeight);
+    
+    pdf.text(`10. School:`, xStart, yPositionStart + 9 * lineHeight);
+    pdf.text(`${school || student.school}`, xStart + labelWidth, yPositionStart + 9 * lineHeight);
+    
+    pdf.text(`11. Registration Status:`, xStart, yPositionStart + 10 * lineHeight);
+    pdf.text(`${isVerified || student.isVerified}`, xStart + labelWidth, yPositionStart + 10 * lineHeight);
+    
+    // Draw a gray header line
+    const lineY = 155; // Y-coordinate for the header line
+    pdf.setDrawColor(169, 169, 169); // Set color to gray (RGB)
+    pdf.setLineWidth(1); // Set line width
+    pdf.line(10, lineY, 200, lineY); // Draw line from (10, lineY) to (200, lineY)
+    
+    // Add instructions below the header line
+    pdf.setFontSize(10); // Optionally, set a smaller font size for the instructions
+    pdf.text("General Instructions:", 10, lineY + 10);
+    pdf.text("1. Use your Slip ID or SRN Number to login to your account", 10, lineY + 20);
+    pdf.text("2. Student Account Will be used to check the registration status and for Admit card downlaod.", 10, lineY + 30);
+    pdf.text("3. Submission of wrong details can lead to rejection of registration form:", 10, lineY + 40);
+    pdf.text("General Instructions:", 10, lineY + 50);
+    pdf.text("General Instructions:", 10, lineY + 60);
+    pdf.text("General Instructions:", 10, lineY + 70);
+    pdf.text("General Instructions:", 10, lineY + 80);
     
 
    
     // Footer instructions
     const footerY = pdf.internal.pageSize.height - 20; // Y-coordinate for the footer
-    pdf.text("Instructions: Please keep this slip safe and present it on the day of the exam.", 10, footerY);
+    pdf.text("Note: If you have any doubt regarding registration, then contact us: 9999999999, 8888888888.", 10, footerY);
     
     // Draw line in the footer
     pdf.line(10, footerY + 5, 200, footerY + 5); // Draw line from (10, footerY + 5) to (200, footerY + 5)
 
     // Save the PDF
     pdf.save(`${name || student.name}_${srn || student.srn}_acknowledgement-slip.pdf`);
-    navigate('/srn'); // Navigate after downloading
-}
-
-
     
+
+    //Neeche wale routes phle ye check krte hai ki slip download krne wala person user hai ya fir sel, then accordingly...
+    //... user route karaya jaata hai. Agar Self registration hai, to acknowledgemen download krne k baad, user...
+    //... direct landing page pr route ho jata hai. Or agar User-logged in hai to usko input srn pr route kara dete hai.    
+   
+    
+    // if (location.pathname === '/acknowledgementslip-mb' 
+    //     || location.pathname === '/acknowledgementslip-100' ||
+    //     location.pathname === '/Registration-form/put/MB' ||
+    //     location.pathname === '/Registration-form/put/S100'
+    // ){
+    //     navigate('/examination'); // Navigate after downloading
+    // } 
+    
+
+    if( user && location.pathname === '/acknowledgementslip-mb'){
+        navigate ('/srn')
+
+    } else if (user && location.pathname === '/acknowledgementslip-100'){
+        navigate ('/srn-100')
+    }
+
+    else if (location.pathname === '/acknowledgementslip-mb' 
+        || location.pathname === '/acknowledgementslip-100' ||
+        location.pathname === '/Registration-form/put/MB' ||
+        location.pathname === '/Registration-form/put/S100'
+    ){
+        navigate('/examination'); // Navigate after downloading
+    } 
+} 
+//^^^Acknowledgement Slip Template^^^^^^
+
+console.log(user)
 
 return (
     <Container>
@@ -167,7 +268,7 @@ return (
                     marginRight: '20px'
                 }}>
                     <h4>{examLevel}</h4>
-                    <h5>{`Registration Status: ${slipData.isVerified || student.isVerified}`}</h5>
+                    <h5>{`Registration Status: ${isVerified || student.isVerified}`}</h5>
                     <h6 style={{fontSize:'12px'}}>Your Form Is Under Verification. Once Your form is verified, your Registration status will be updated</h6>
                 </div>
                 <Button variant='close' onClick={CloseModal} style={{marginLeft: '20px'}}/>
@@ -175,80 +276,7 @@ return (
             <hr />
         </Card.Title>
         <Card.Body>
-  {showAck ? (
-    <div>
-      <Container>
-        <Row xs={1} md={2} style={{ gap: '10px' }}>
-          <Col>
-            <Row>
-              <Col>Slip ID:</Col>
-              <Col>{slipData.slipId}</Col>
-            </Row>
-          </Col>
-          <Col>
-            <Row>
-              <Col>SRN:</Col>
-              <Col>{slipData.srn}</Col>
-            </Row>
-          </Col>
-          <Col>
-            <Row>
-              <Col>Name:</Col>
-              <Col>{slipData.name}</Col>
-            </Row>
-          </Col>
-          <Col>
-            <Row>
-              <Col>Father Name:</Col>
-              <Col>{slipData.father}</Col>
-            </Row>
-          </Col>
-          <Col>
-            <Row>
-              <Col>D.O.B:</Col>
-              <Col>{slipData.dob}</Col>
-            </Row>
-          </Col>
-          <Col>
-            <Row>
-              <Col>Gen:</Col>
-              <Col>{slipData.gender}</Col>
-            </Row>
-          </Col>
-          <Col>
-            <Row>
-              <Col>Category:</Col>
-              <Col>{slipData.category}</Col>
-            </Row>
-          </Col>
-          <Col>
-            <Row>
-              <Col>Class:</Col>
-              <Col>{slipData.grade}</Col>
-            </Row>
-          </Col>
-          <Col>
-            <Row>
-              <Col>District:</Col>
-              <Col>{slipData.district}</Col>
-            </Row>
-          </Col>
-          <Col>
-            <Row>
-              <Col>Block:</Col>
-              <Col>{slipData.block}</Col>
-            </Row>
-          </Col>
-          <Col>
-            <Row>
-              <Col>School:</Col>
-              <Col>{slipData.school}</Col>
-            </Row>
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  ) : (
+  {location.pathname === '/acknowledgementslip-100' || location.pathname === '/acknowledgementslip-mb' ? (
     <div>
       <Container>
         <Row xs={1} md={2} style={{ gap: '10px' }}>
@@ -316,6 +344,79 @@ return (
             <Row>
               <Col>School:</Col>
               <Col>{student.school}</Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  ) : (
+    <div>
+      <Container>
+        <Row xs={1} md={2} style={{ gap: '10px' }}>
+          <Col>
+            <Row>
+              <Col>Slip ID:</Col>
+              <Col>{student.slipId}</Col> {/*slipid supposed to be unq id for student so itwon't change*/}
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>SRN:</Col>
+              <Col>{slipData.srn}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Name:</Col>
+              <Col>{slipData.name}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Father Name:</Col>
+              <Col>{slipData.father}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>D.O.B:</Col>
+              <Col>{slipData.dob}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Gen:</Col>
+              <Col>{slipData.gender}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Category:</Col>
+              <Col>{slipData.category}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Class:</Col>
+              <Col>{slipData.grade}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>District:</Col>
+              <Col>{slipData.district}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Block:</Col>
+              <Col>{slipData.block}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>School:</Col>
+              <Col>{slipData.school}</Col>
             </Row>
           </Col>
         </Row>

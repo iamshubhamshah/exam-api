@@ -14,6 +14,11 @@ class DashBoardService {
         const url = `${BaseURL}/api/Dashboard-10`
         return axios.get(url)
     }
+
+    GetAllStudentData (query) {
+        const url = `${BaseURL}/api/Students-data?${query}`
+        return axios.get(url);
+    }
 }
 
 export default new DashBoardService();

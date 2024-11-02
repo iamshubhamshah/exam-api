@@ -14,10 +14,11 @@ export default function Footer() {
             justifyContent: 'space-between',
             padding: '10px', // Adjust padding as needed
             border: 'solid',
-            marginTop:'68vh'
+            // marginTop:'50vh',
+            height:'50vh'
           }}>
             
-            <div style={{ textAlign: 'center' }}>
+            <div >
               <h6 >पंजीकरण से संबंधित किसी भी प्रश्न और समस्या के लिए, नीचे दिए गए नंबर पर हमसे संपर्क करें।</h6>
               <h6>8191819181, 8191819181</h6>
             

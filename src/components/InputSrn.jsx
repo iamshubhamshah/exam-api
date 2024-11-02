@@ -1,17 +1,20 @@
 import React, { useEffect, useContext } from "react";
 import { useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import registrationServiceInstance from "../services/RegistrationFormService";
 import AcknowledgementSlip from "./AcknowledgementSlip";
 import { StudentContext } from "./ContextApi/StudentContextAPI/StudentContext";
 import { UserContext } from "./ContextApi/UserContextAPI/UserContext";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import UserNavBar from "./UserNavBar";
+import {Nav} from 'react-bootstrap';
 
 
 function InputSrn({}) {
 
   const location = useLocation();
+  const navigate = useNavigate();
 
 
  let direcTo;
@@ -40,6 +43,9 @@ if (location.pathname==='/srn-100'){
   const [error, setError] = useState(null);
   const [isSrnMatched, setIsSrnMatched] = useState(false);
   const [errorRedirect, setErrorRedirect] = useState(false);
+
+
+  const {user} = useContext(UserContext);
 
   const [ShowAck, setShowAck] = useState(false);
 
@@ -92,11 +98,17 @@ if (location.pathname==='/srn-100'){
   if (isSrnMatched==true){
     return <Navigate to={PutDirectTo} state={{ srn: inputSrn, id:id}} />;
   } else if (ShowAck)  {
-    return <AcknowledgementSlip slipData={slipData}/>;
+      if (location.pathname === '/srn'){
+        navigate('/acknowledgementslip-mb')
+      } else if (location.pathname === '/srn-100'){
+        navigate('/acknowledgementslip-100')
+      }
+
+    // return <AcknowledgementSlip slipData={slipData}/>;
   } else if (errorRedirect) {
     return <Navigate to={direcTo}/>; // Redirect to your error page
-  }
-    
+  } 
+
   
   
 
@@ -111,7 +123,27 @@ if (location.pathname==='/srn-100'){
 
   return (
     <>
-    <Navbar/>
+
+    {user ? (
+      
+      <UserNavBar/>
+  
+  
+  
+  ):(
+  
+    <>
+  <Navbar/>
+
+  <Nav defaultActiveKey="/userprofile" as="ul">
+        <Nav.Item as="li">
+          <Nav.Link href="/examination">Go To Home Page</Nav.Link>
+        </Nav.Item>
+      </Nav>
+    
+  
+  </>)}
+ 
     <div
       style={{
         display: "flex",

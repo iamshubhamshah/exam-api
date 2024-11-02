@@ -1,32 +1,43 @@
 import React from "react";
-import { Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import UserNavBar from "../components/UserNavBar";
 
 export default function UserRegistrationPageMB () {
     
     return(
-        <div>
-            <div>Nav</div>
-     
-          
-          <Link to="/srn">
-            <Button variant="dark" style={{ width: "20rem" }}>
-              Register Students Individually: Class 8th Students
-            </Button>
-          </Link>
-          <br />
-          <br />
-          <Link>
-          <Link to ='/BulkRegister'>  <Button variant="dark" style={{ width: "20rem" }}>
-              Bulk Upload Class 8th Students
-            </Button></Link>
-          </Link>
-         
-       
-      
+        
+
+
+<div
+    >
+    <UserNavBar />
+    <Container style={{
+      display: 'flex',
+      flexDirection:'column',
+      justifyContent: 'center',   // Centers horizontally
+      alignItems: 'center',       // Centers vertically
+      height: '50vh'             // Takes full viewport height
+    }}>
     
-            <div>Footer</div>
-        </div>
+    <Row >
+      <Col >
+      <Link to="/srn"><Button style={{width:'300px'}} >Register Students Individually: Class 8th</Button></Link>
+      <br></br>
+      <br></br>
+      <Link to ='/userprofile/bulkregister-mb'> <Button style={{width:'300px'}}>Bulk Upload Class 8th Students</Button></Link>
+      <br></br>
+      <br></br>
+      <Button style={{width:'300px'}}>DashBoard</Button>
+      </Col>
+      
+    </Row>
+    
+    
+    
+    </Container>
+    </div>
+    
     )
 
 

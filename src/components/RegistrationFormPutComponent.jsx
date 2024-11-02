@@ -397,9 +397,14 @@ const {user} = useContext(UserContext)
             console.log(response); // Debugging log
             if (response.data.updated_data) {
                 setMessage('Data updated successfully');
-                alert('Registration done succesfully')
-                setShowAck(true);
-                
+                alert('Form updated succesfully')
+                setShowAck(true); //this was for showing Acknowledgement slip dynamically.
+                // if (location.pathname === '/Registration-form/put/MB'){
+                //     navigate('/acknowledgementslip-mb')
+                // } else if (location.pathname === '/Registration-form/put/S100'){
+                //     navigate('/acknowledgementslip-100')
+                // }
+                 
                //navigate('/srn')  //after successfull updation of data it routes back to the inputsrn page
             } else {
                 setMessage('Failed to update data.');

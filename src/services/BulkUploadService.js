@@ -7,7 +7,14 @@ class BulkUploadService {
 
     BulkPost (excelData) {
         const url = `${BaseURL}/api/bulkupload`
-        return axios.post(url, excelData); // No need for custom headers
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data',
+            }
+        };
+
+
+        return axios.post(url, excelData, config); // No need for custom headers
     }
 
 }

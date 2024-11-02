@@ -1,31 +1,45 @@
-import React from 'react';
-import { Card, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import UserNavBar from "../components/UserNavBar";
 
 export default function UserRegistrationPage100 () {
+    
     return(
-        <div>
-            <div>Nav</div>
-     
-          
-          <Link to="/srn-100">
-            <Button variant="dark" style={{ width: "20rem" }}>
-              Register Students Individually: Class 10th Students
-            </Button>
-          </Link>
-          <br />
-          <br />
-          <Link>
-          <Link to ='/BulkRegister'>  <Button variant="dark" style={{ width: "20rem" }}>
-              Bulk Upload Class 10th Students
-            </Button></Link>
-          </Link>
-         
-       
+        
+
+
+<div
+    >
+    <UserNavBar />
+    <Container style={{
+      display: 'flex',
+      flexDirection:'column',
+      justifyContent: 'center',   // Centers horizontally
+      alignItems: 'center',       // Centers vertically
+      height: '50vh'             // Takes full viewport height
+    }}>
+    
+    <Row >
+      <Col >
+      <Link to="/srn-100"><Button style={{width:'300px'}} >Register Students Individually: Class 10th</Button></Link>
+      <br></br>
+      <br></br>
+      <Link to ='/userprofile/bulkregister-100'> <Button style={{width:'300px'}}>Bulk Upload Class 10th Students</Button></Link>
+      <br></br>
+      <br></br>
+      <Button style={{width:'300px'}}>DashBoard</Button>
+      </Col>
       
+    </Row>
     
-            <div>Footer</div>
-        </div>
-    );
     
+    
+    </Container>
+    </div>
+    
+    )
+
+
+
 }

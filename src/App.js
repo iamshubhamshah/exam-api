@@ -19,6 +19,11 @@ import AcknowledgementSlip from './components/AcknowledgementSlip';
 import StudentSignIn from './components/StudentSignIn';
 import StudentPage from './components/StudentPage';
 import RegistrationDashComponent from './components/RegistrationDashComponent';
+import UserDash8 from './components/UserDash';
+import UserRegistrationPageMB from './pages/UserRegistrationPageMB';
+import UserRegistrationPage100 from './pages/UserRegistrationPage100';
+import UserDash from './components/UserDash'
+
 
 
 
@@ -56,15 +61,20 @@ function App() {
                 <Route path = '/user-page' element = {<UserPage/>}/>
 
                 <Route path="/user-srn" element = {<InputSrn/>}/>
-                <Route path = '/user-page' element = {<UserPage/>}/>
+                <Route path = '/userprofile' element = {<UserPage/>}/>
 
                 <Route path="/user-Registration-form/MB" element={<RegistrationForm />} />
                 <Route path="/user-Registration-form/put/MB" element={<RegistrationFormPutComponent />} />
 
+                <Route path='/userprofile/registration-mb' element ={<UserRegistrationPageMB/>}/> 
+                <Route path='/userprofile/registration-100' element ={<UserRegistrationPage100/>}/>
+
                   {/* BulkUpload */}
 
                   <Route path="/Bulkupload" element={<BulkUpload />} />
-                  <Route path="/BulkRegister" element={<BulkUploadWithDistBC />} />
+                  <Route path="/userprofile/bulkregister-mb" element={<BulkUploadWithDistBC />} />
+                  <Route path="/userprofile/bulkregister-100" element={<BulkUploadWithDistBC />} />  
+
 
                   
                   {/*                   
@@ -77,7 +87,19 @@ function App() {
 
                   <Route path='/Student-SignIN' element = {<StudentSignIn/>}/>
                   <Route path = '/Student-dash' element = {<StudentPage/>}/>
-                
+
+                  {/* Dashboard routes below */}
+                  <Route path='/User-dash' element = {<UserDash8/>}/>
+
+                  {/* Acknowledgement slip routes for mb and 100 */}
+                  <Route path='/acknowledgementslip-mb' element = {<AcknowledgementSlip/>}/>
+                  <Route path='/acknowledgementslip-100' element = {<AcknowledgementSlip/>}/>
+
+
+
+                  {/* Dasdhboar routes */}
+                  <Route path='/userprofile/dashboard-mb' element = {<UserDash/>}/>
+                  <Route path='/userprofile/dashboard-100' element = {<UserDash/>}/>
             </Routes>
             </StudentProvider>
             

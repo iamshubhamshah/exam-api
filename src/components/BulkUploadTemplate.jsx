@@ -7,7 +7,7 @@ import * as XLSX from 'xlsx';
 
 //accepting th props as district, block , school coming from BulkUploadWithDistBC component
 
-export default function BulkUploadTemplate ({district, block, school}) {
+export default function BulkUploadTemplate ({district, block, school, grade, manualSchoolNameIsChecked, schoolCode}) {
     
     const TemplateData = [];
 
@@ -32,10 +32,13 @@ for (let i = 0; i<10; i++){
                 district: district || '', // Prefilled district names
                 block: block || '', // Prefilled block names
                 school: school || '', // Prefilled school names
-                schoolCode: '' // Empty field for school code
+                schoolCode: schoolCode, // Empty field for school code
+                grade: grade
+
     })
 }
 
+console.log(manualSchoolNameIsChecked)
 const worksheet = XLSX.utils.json_to_sheet(TemplateData);
 const workbook = XLSX.utils.book_new();
 XLSX.utils.book_append_sheet(workbook, worksheet, 'Template');

@@ -323,3 +323,21 @@ modal css */
 }
 
 
+
+
+
+/* User Container css for dynamically responsiveness of the view */
+
+
+.blinking-link {
+  font-size: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  animation: blinker 1s linear infinite; /* Adjust duration for blinking speed */
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

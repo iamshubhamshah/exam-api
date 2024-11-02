@@ -1,9 +1,16 @@
+//Below api bulk uploads the student data, from the bulktemplate. Bulktemplate.jsx in the Components folder has the Bulkupload template.
+
+
 import React, {useState, useContext} from 'react';
 import * as XLSX from 'xlsx';
 import BulkUploadService from '../services/BulkUploadService';
 import jsPDF from 'jspdf';
 
 import { UserContext } from "./ContextApi/UserContextAPI/UserContext";
+
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //____________________________________
 //Creating a modal component to show the popup for (i am keeping this on hold for the time being taking time)
@@ -36,7 +43,7 @@ export default function BulkUpload() {
             console.log('Response:', response.data);
             
             setUploadedData(response.data)
-
+            toast.success('Students Registered Successfully');
             console.log(uploadedData)
 
 
@@ -64,27 +71,7 @@ export default function BulkUpload() {
                 
        
        
-       {uploadedData && uploadedData.data ? (
-         <div>
-         <table>
-             <tr>
-             <th>srn</th>
-             <th>name</th>
-             <th>school</th>
-             </tr>
-             <tbody>
-                 {uploadedData.data.map((student, index)=>(
-                     <tr key={index}>
-                         <td>{student.srn}</td>
-                         <td>{student.name}</td>
-                         <td>{student.father}</td>
-                     </tr>
-                 ))}
-           
-             </tbody>
-         </table>
-     </div>
-       ):(<p>No data available</p>)}
+       
         </div>
     )
 

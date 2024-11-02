@@ -1,9 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import UserService from "../services/UserService";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useLocation} from "react-router-dom";
 
 import {UserContext} from "./ContextApi/UserContextAPI/UserContext";
-import { Card } from "react-bootstrap";
+import { Button, Card, Container, Col, Nav, Row } from "react-bootstrap";
 
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -13,6 +13,12 @@ import Footer from "./Footer";
 
 export default function UserSignIn() {
 
+  const location = useLocation();
+
+  
+
+
+
     const {setUser} = useContext(UserContext);
   const [mobile, setMobile] = useState(null);
   const [password, setPassword] = useState(null);
@@ -20,7 +26,22 @@ export default function UserSignIn() {
   const [errorRedirect, setErrorRedirect] = useState(false);
 
 
+
+
+  useEffect(() => {
+    // Check if we're landing on the /user-signin page
+    if (location.pathname === "/user-signin") {
+      setUser('')
+
+      console.log("UserContext api set to 0 so that user can't use forward navigation for loggin in");
+
+      // Perform the action you want when returning to /user-signin
+      // For example, you could reset a state, call an API, or redirect
+    }
+  }, [location.pathname]); // Triggers whenever the path changes
+
  
+  
 
   
 
@@ -62,17 +83,31 @@ export default function UserSignIn() {
 //   state={{mobile:mobile}}
 
   if (isUserMatched === true) {
-    return <Navigate to="/user-page" />;  
+    return <Navigate to="/userprofile" />;  
   }
 
   return (
+    <Container fluid>
+       <Row>
+      <Navbar/>
+     
+      <Nav defaultActiveKey="/userprofile" as="ul">
+      
+      <Nav.Item as="li">
+        <Nav.Link href="/examination">Go To Main Page</Nav.Link>
+      </Nav.Item>
+     
+    </Nav>
+    
+      
+      
     
     <div style={{ display: "flex",
         alignItems: "center", // Center vertically
         justifyContent: "center", // Center horizontally
-        height: "100vh", // Full viewport height
-        textAlign: "center", // Center text
-        backgroundColor: "#f5f5f5"}}>
+        height: "65vh", // Full viewport height
+        textAlign: "center" // Center text
+        }}>
               <Card style={{width:'50rem', height:'30rem', alignContent:"center", borderRadius:"30px",
                 borderColor: 'grey',
                 border: 'solid'
@@ -118,7 +153,9 @@ export default function UserSignIn() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <br />
-          <button>Login</button>
+          <Button onClick={handleSubmit}>Login</Button>
+
+          
 
           {errorRedirect && (
             <div>
@@ -129,11 +166,19 @@ export default function UserSignIn() {
             </div>
           )}
         </form>
+        
+        <br/>
+        <Button>Create your account</Button>
       </div>
   
       </Card.Body>
       </Card> 
     </div>
+    </Row>
+    <br></br>
+    <br></br>
+    <Footer/>
+    </Container>
  
         
   );

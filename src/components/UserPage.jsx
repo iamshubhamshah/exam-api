@@ -1,3 +1,5 @@
+//This component is linked with pages/UserRegistrationPage100 and UserRegistrationMB
+
 import React, { useState, useEffect, useContext } from "react";
 import UserService from "../services/UserService";
 import UserSignUp from "./UserSignup";
@@ -10,15 +12,21 @@ import {
 } from "react-router-dom";
 import UserParentComponent from "./UserParentComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import RegistrationFormComponent from "./RegistrationFormComponent";
 
 import { UserContext } from "./ContextApi/UserContextAPI/UserContext";
 import UserRegistrationPageMB from "../pages/UserRegistrationPageMB";
 import UserRegistrationPage100 from "../pages/UserRegistrationPage100";
-
+import UserNavBar from "./UserNavBar";
 
 export default function UserPage() {
+
+  try {
+    
+  } catch (error) {
+    
+  }
   const [mb, setMB] = useState(false);
   const [s100, setS100] = useState(false);
   const [is8ButtonVisible, setIs8ButtonVisible] = useState(true);
@@ -26,38 +34,35 @@ export default function UserPage() {
 
   const { user } = useContext(UserContext);
 
-  const name = user.userName; //taking the value from userContext api. 
+   //taking the value from userContext api.
 
-  useEffect (()=>{
-    const button8State = sessionStorage.getItem('button8Visible')
-    if(button8State === 'false'){
-        setIs8ButtonVisible(false)
-        setIs10ButtonVisible(false)
-        setMB(true)
-        
+  useEffect(() => {
+    const button8State = sessionStorage.getItem("button8Visible");
+    if (button8State === "false") {
+      setIs8ButtonVisible(false);
+      setIs10ButtonVisible(false);
+      setMB(true);
     }
-  },[mb])
+  }, [mb]);
 
-  useEffect (()=>{
-    const button10State = sessionStorage.getItem('button10Visible')
-    if(button10State === 'false'){
-        setIs10ButtonVisible(false);
-        setIs8ButtonVisible(false);
-        setS100(true)
+  useEffect(() => {
+    const button10State = sessionStorage.getItem("button10Visible");
+    if (button10State === "false") {
+      setIs10ButtonVisible(false);
+      setIs8ButtonVisible(false);
+      setS100(true);
     }
-  })
+  });
 
-
-  // Below function use the sessionStorageg so that on the page refresh the usestate don't change and hides the button and 
+  // Below function use the sessionStorageg so that on the page refresh the usestate don't change and hides the button and
   // renders desired data conditionally.
 
   const handleClick8 = () => {
     setMB(true);
     setIs8ButtonVisible(false);
     setIs10ButtonVisible(false);
-    sessionStorage.setItem('button8Visible', 'false');
+    sessionStorage.setItem("button8Visible", "false");
   };
-
 
   //conditionally handles condition when user clicks on the class 10th button.
 
@@ -65,58 +70,42 @@ export default function UserPage() {
     setS100(true);
     setIs10ButtonVisible(false);
     setIs8ButtonVisible(false);
-    sessionStorage.setItem('button10Visible', 'false')
+    sessionStorage.setItem("button10Visible", "false");
   };
-
-
-
 
   return (
     <div
-      className="d-flex justify-content-center align-items-center"
-      style={{ height: "100vh" }}
     >
-      <Card style={{ width: "50rem", height: "45rem" }} className="text-center">
-        <Card.Body>
-          <Card.Title>Hello</Card.Title>
-          <Card.Text>
-            <p>{name}</p>
-          </Card.Text>
-          <hr></hr>
-          <div>
-          {is10ButtonVisible ? (
-    <div>
- <br />
-          <br />
-          <Button onClick={handleClick10}>
-            Register Missino Buinyaad: Class 10th Students
-          </Button>
+    <UserNavBar />
+    <Container style={{
+      display: 'flex',
+      flexDirection:'column',
+      justifyContent: 'center',   // Centers horizontally
+      alignItems: 'center',       // Centers vertically
+      height: '50vh'             // Takes full viewport height
+    }}>
+    
+    <Row >
+      <Col >
+     <Link to={'/userprofile/registration-mb'}><Button style={{width:'300px'}} >Click Here for 8th Class Registratoin</Button></Link> 
+      <br></br>
+      <br></br>
+      <Link to={'/userprofile/registration-100'}> <Button style={{width:'300px'}}>Click Here for 10th Class Registratoin</Button></Link> 
+      <br></br>
+      <br></br>
+      <Link to={'/userprofile/dashboard-mb'}><Button style={{width:'300px'}}>DashBoard</Button></Link> 
+      </Col>
+      
+    </Row>
+    <br></br>
+    <Row>
+      <Col>Video Grid here for How to</Col>
+     
+    </Row>
+    
+    
+    </Container>
+    
     </div>
-):null}
-
-<br/>
-          </div>
-
-         
-
-          {is8ButtonVisible ? (
-            <div>
-              <Button onClick={handleClick8}>
-                Register Missino Buinyaad: Class 8th Students
-              </Button>
-            </div>
-          ) : null}
-
-          {mb ? <div><UserRegistrationPageMB/></div> : null}
-
-          {s100 ? (
-            <div>
-                <UserRegistrationPage100/>
-            </div>
-          ):null}
-
-        </Card.Body>
-      </Card>
-    </div>
-  );
+  )
 }

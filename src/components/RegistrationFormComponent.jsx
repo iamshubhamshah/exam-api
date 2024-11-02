@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import RegistrationFormService from "../services/RegistrationFormService";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
 import DependentDropComponent from "./DependentDropComponent";
 import { UserContext } from "./ContextApi/UserContextAPI/UserContext";
 import AcknowledgementSlip from "./AcknowledgementSlip";
 import "../index.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { StudentContext } from "./ContextApi/StudentContextAPI/StudentContext";
 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -22,6 +22,7 @@ import {Container, Row, Col, Form, Card, Button, CardFooter } from "react-bootst
 
 export default function RegistrationFormComponent() {
   const { user } = useContext(UserContext);
+  const {setStudent} = useContext(StudentContext); // it updates, on the basis of SlipData
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -320,6 +321,7 @@ export default function RegistrationFormComponent() {
 
       console.log(SlipData);
       setSlipData(SlipData);
+      setStudent(SlipData);
       console.log(slipData); //It will not directly log the data but, yes it will store the data in slipData hook(It is something related to useEffect hook)
       //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -333,7 +335,14 @@ export default function RegistrationFormComponent() {
       if (response.data.success === true) {
         setMessage("Post created successfully");
         alert("Registration done succesfully");
-        setShowAck(true);
+        if(location.pathname==='/Registration-form/S100'){
+            navigate('/acknowledgementslip-100')
+            console.log('true is s100')
+        }else if (location.pathname ==='/Registration-form/MB'){
+            navigate('/acknowledgementslip-mb')
+            console.log('true is mbs')
+        }
+        // setShowAck(true);
 
         // navigate('/srn')  //after successfull updation of data it routes back to the inputsrn page
       } else {
@@ -532,9 +541,9 @@ export default function RegistrationFormComponent() {
       <p>{message}</p>
       {manualSchool ? <div>Data found</div> : <p>Not found data</p>}
 
-      {showAck ? (
+      {/* {showAck ? (
         <AcknowledgementSlip showAck={showAck} slipData={slipData} />
-      ) : null}
+      ) : null} */}
     </Container>
   );
 }
