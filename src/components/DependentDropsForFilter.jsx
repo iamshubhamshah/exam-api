@@ -9,6 +9,9 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
 export default function DependentDropComponent({
+district,
+block,
+school,
   setDistrict = () => {},
   setBlock = () => {},
   setSchool = () => {},
@@ -154,6 +157,23 @@ export default function DependentDropComponent({
     }
   };
 
+  const styles = {
+    control: (base) => ({
+      ...base,
+      minHeight: 32,
+    }),
+    dropdownIndicator: (base) => ({
+      ...base,
+      paddingTop: 0,
+      paddingBottom: 0,
+    }),
+    clearIndicator: (base) => ({
+      ...base,
+      paddingTop: 0,
+      paddingBottom: 0,
+    }),
+  };
+
   return (
     <>
       <Form>
@@ -165,36 +185,13 @@ export default function DependentDropComponent({
 
                 <Select
                   placeholder="Select District"
-                  
+                  value={district ? { label: district, value: district } : null}
                   options={districtList.map((d) => ({
                     value: d.d_id,
                     label: d.d_name,
                   }))}
                   onChange={handleDistirctChange}
-                  styles={{
-                    control: (provided) => ({
-                      ...provided,
-                      width: '50%',          // Width of the select box
-                      minHeight: '30px',     // Minimum height of the control
-                      padding: '0 6px',      // Adjust padding to reduce overall height
-                      fontSize: '0.875rem',   // Font size
-                      
-                      
-                    }),
-                    // You can customize other parts if needed
-                    dropdownIndicator: (provided) => ({
-                      ...provided,
-                      padding: '0', // Remove padding to make it smaller
-                    }),
-                    clearIndicator: (provided) => ({
-                      ...provided,
-                      padding: '0', // Remove padding to make it smaller
-                    }),
-                    indicatorSeparator: () => ({
-                      display: 'none', // Hide the separator if desired
-                    }),
-                  }}
-                />
+                   styles={styles}              />
               </Form.Group>
             </Col>
 
@@ -205,6 +202,7 @@ export default function DependentDropComponent({
 
               <Select
                 placeholder="Select Block"
+                value = {block ? {label: block, value: block}: null}
                
                 onChange={handleBlockChange}
                 options={filteredBlock.map((b) => ({
@@ -225,7 +223,7 @@ export default function DependentDropComponent({
 
                   <Select
                     placeholder="Selct School"
-                   
+                    value = {school ? {label: school, value: school}:null}
                     onChange={handleSchoolChange}
                     options={filteredSchool.map((s) => ({
                       value: s.b_id,
@@ -261,7 +259,7 @@ export default function DependentDropComponent({
             )}
             </Col>
 
-            <div className="checkbox" id="DependentLabel">
+            {/* <div className="checkbox" id="DependentLabel">
               <div>
                 <label htmlFor="myCheckbox">
                   Agar aapka school upr list m nhi h to yaha:
@@ -275,7 +273,7 @@ export default function DependentDropComponent({
                   onClick={handleOnClilck}
                 />
               </div>
-            </div>
+            </div> */}
           </Row>
         </Container>
       </Form>

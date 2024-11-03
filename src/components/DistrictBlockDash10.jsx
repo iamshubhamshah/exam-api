@@ -7,14 +7,14 @@ import Table from 'react-bootstrap/Table';
 
 
 
-export default function DistrictDash () {
+export default function DistrictBlockDash10 () {
 
 const [stateDash, setStateDash] = useState([]);
 
 const fetchPosts = async () =>{
     try {
         
-        const response = await DashBoardServices.getDashBoard8();
+        const response = await DashBoardServices.getDashBoard10();
         setStateDash(response.data);
         console.log(response.data)
         
@@ -33,7 +33,7 @@ console.log(stateDash)
 
     return (
         <div>
-           
+            <Table responsive>
             
            
             {stateDash.length>0 ? (
@@ -42,10 +42,10 @@ console.log(stateDash)
                  
                     
                         
-                    <Accordion key={index} defaultActiveKey={['0']} alwaysOpen>
+                    <Accordion key={index} >
       <Accordion.Item eventKey="0">
         <Accordion.Header>
-        <div >
+        <div>
             <p>District: {eachDistrict.district}</p>
             <p>L-1 Registration Count: {eachDistrict.districtCount}</p>
         </div>
@@ -83,7 +83,7 @@ console.log(stateDash)
                 </>
             ):(null)}
            
-              
+              </Table>
         </div>
 
     )

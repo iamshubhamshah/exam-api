@@ -19,11 +19,17 @@ import AcknowledgementSlip from './components/AcknowledgementSlip';
 import StudentSignIn from './components/StudentSignIn';
 import StudentPage from './components/StudentPage';
 import RegistrationDashComponent from './components/RegistrationDashComponent';
-import UserDash8 from './components/UserDash';
 import UserRegistrationPageMB from './pages/UserRegistrationPageMB';
 import UserRegistrationPage100 from './pages/UserRegistrationPage100';
 import UserDash from './components/UserDash'
-
+import UserDash8 from './components/UserDash';
+import DistrictBlockDash8 from './components/DistrictBlockDash8';
+import DistrictBlockDash10 from './components/DistrictBlockDash10';
+import BlockSchoolDash8 from './components/BlockSchoolDash8';
+import BlockSchoolDash10 from './components/BlockSchoolDash10';
+import SchoolDash8 from './components/SchoolDash8';
+import SchoolDash10 from './components/SchoolDash10';
+import DashBoardPage from './pages/DashBoardPage';
 
 
 
@@ -98,8 +104,15 @@ function App() {
 
 
                   {/* Dasdhboar routes */}
+                  <Route path = '/examination/dashboard' element = {<DashBoardPage/>}/>
                   <Route path='/userprofile/dashboard-mb' element = {<UserDash/>}/>
                   <Route path='/userprofile/dashboard-100' element = {<UserDash/>}/>
+                  <Route path='/districtblockdash-mb' element = {<DistrictBlockDash8/>}/>
+                  <Route path = '/districtblockdash-100' element = {<DistrictBlockDash10/>}/>
+                  <Route path = '/blockschooldash-mb' element = {<BlockSchoolDash8/>}/>
+                  <Route path='/blockschooldash-100' element = {<BlockSchoolDash10/>}/>
+                  <Route path = '/schooldash-mb' element = {<SchoolDash8/>}/>
+                  <Route path = '/schooldash-100' element = {<SchoolDash10/>}/>
             </Routes>
             </StudentProvider>
             
