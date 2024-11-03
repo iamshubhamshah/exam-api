@@ -6,10 +6,6 @@ import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import StudentSignIn from "../components/StudentSignIn";
-import DistrictDash from "../components/DistrictDash";
-import DistrictDash10 from "../components/DistrictDash10";
-import BlockSchoolDash8 from "../components/BlockSchoolDash8";
-import BlockSchoolDash10 from "../components/BlockSchoolDash10";
 import { Nav, Col, Row, Container } from "react-bootstrap";
 import { BsArrowRight } from "react-icons/bs";
 
@@ -67,21 +63,7 @@ export default function LandingPage() {
           <StudentSignIn />
         </div>
       ) : null}
-      {/* <div>
-                <DistrictDash/>
-            </div>
-            <h1>Class 10th Dash</h1>
-            <div>
-                <DistrictDash10/>
-            </div> */}
-      {/* <h1>Class 8th Block School Dash</h1>
-            <div>
-                <BlockSchoolDash8/>
-            </div>
-            <h1>Class 10th Block School Dash</h1>
-            <div>
-                <BlockSchoolDash10/>
-            </div> */}
+
     </div>
   );
 }

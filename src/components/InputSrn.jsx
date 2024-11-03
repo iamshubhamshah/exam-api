@@ -8,7 +8,7 @@ import { UserContext } from "./ContextApi/UserContextAPI/UserContext";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import UserNavBar from "./UserNavBar";
-import {Nav} from 'react-bootstrap';
+import {Container, Nav} from 'react-bootstrap';
 
 
 function InputSrn({}) {
@@ -144,7 +144,7 @@ if (location.pathname==='/srn-100'){
   
   </>)}
  
-    <div
+    <Container
       style={{
         display: "flex",
         alignItems: "center",
@@ -158,7 +158,7 @@ if (location.pathname==='/srn-100'){
         id="InputSrn"
         style={{
           width: "500px",
-          height: "500px",
+          height: "50vh",
           border: "1px solid #000",
           display: "flex",
           flexDirection: "column", // Stack elements vertically
@@ -180,10 +180,11 @@ if (location.pathname==='/srn-100'){
         />
         <br />
         <button>Submit</button>
+        <p>made changese</p>
       </form>
       {console.log(inputSrn)}
       
-    </div>
+    </Container>
     <br/>
     <Footer/>
     </>
