@@ -170,14 +170,14 @@ export default function UserSignUp() {
             </Form.Group>
             </Col>
             
-          {designation === 'Teacher' || designation === 'Principal' ? (
+        
             <DependentDropComponent
             setDistrict={setDistrict}
             setBlock={setBlock}
             setSchool={setSchool}
             setSchoolCode={setSchoolCode}
           />
-          ):(null)}
+        
             
         <Form.Group>
               <Form.Label>Enter Your Mobile:</Form.Label>
@@ -207,7 +207,7 @@ export default function UserSignUp() {
 
 <Col>
             
-            {inputOtp === otp ? (
+            
               <Form.Group>
               <Form.Label>Enter Your Password:</Form.Label>
              
@@ -219,7 +219,7 @@ export default function UserSignUp() {
               />
               <small>Your otp is correct. Please create your password</small>
             </Form.Group>
-            ):(null)}
+  
 
 
            
@@ -234,8 +234,8 @@ export default function UserSignUp() {
           
         </Row>
       </Form>
-      <button onClick={handleVerifyNumberClick}>Verify Mobile Number</button>
-      <button onClick={handleGooadvertOtp}> Verify OTP By goadvert</button>
+      {/* <button onClick={handleVerifyNumberClick}>Verify Mobile Number</button>
+      <button onClick={handleGooadvertOtp}> Verify OTP By goadvert</button> */}
     </Container>
    
   );

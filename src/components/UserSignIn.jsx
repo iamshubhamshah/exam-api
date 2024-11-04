@@ -168,7 +168,7 @@ export default function UserSignIn() {
         </form>
         
         <br/>
-        <Button>Create your account</Button>
+        <Link to={'/user-signup'}><Button>Create your account</Button></Link>
       </div>
   
       </Card.Body>

@@ -43,6 +43,16 @@ export default function RegistrationFormComponent() {
     console.log("i am s100 registration form");
     grade = "10";
   }
+
+//Dynamically sets the header in the form
+let FormHeader;
+if (location.pathname === '/Registration-form/MB'){
+  FormHeader = 'Mission Buinyaad Registration 2025-27'
+} else if (location.pathname === '/Registration-form/S100'){
+    FormHeader = 'Super 100 Registration 2025-27'
+}
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   //---------------------------------------------------------------------------------------------------
   const [userObj, setUserObj] = useState(null);
   const [srn, setSrn] = useState("");
@@ -254,11 +264,14 @@ export default function RegistrationFormComponent() {
       console.log("All states are not cleared.");
     }
   }
+
   useEffect(() => {
     formValidate();
+   
+  
   }, [
     errSrn,
-    errName,
+    name,
     errFather,
     errMother,
     errDob,
@@ -273,17 +286,27 @@ export default function RegistrationFormComponent() {
     errSchool,
   ]);
 
+  console.log("Blow  if formValidated")
+  console.log(formValidated)
+  //Belwo useEffect only runs when formvalidated is true
+  useEffect(() => {
+    // Only call handleSubmit if formValidated is true
+    if (formValidated) {
+        handleSubmit();
+    }
+}, [formValidated]);
+
   //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+   if(e) e.preventDefault();
 
     // Call the formValidation function
     formValidation();
 
     // Check if the form is validated
     if (!formValidated) {
-      alert("Please fix the errors before submitting the form.");
+    //   toast.error("Please fix the errors before submitting the form.");
       return; // Stop execution if validation fails
     } else {
       toast.success("registration done");
@@ -334,7 +357,7 @@ export default function RegistrationFormComponent() {
 
       if (response.data.success === true) {
         setMessage("Post created successfully");
-        alert("Registration done succesfully");
+        toast.success("Registration done succesfully");
         if(location.pathname==='/Registration-form/S100'){
             navigate('/acknowledgementslip-100')
             console.log('true is s100')
@@ -365,7 +388,7 @@ export default function RegistrationFormComponent() {
   // It has a CSS in Index.css
   return (
     <Container>
-      <h1>Mission Buniyyad Registration Form</h1>
+      <h1>{FormHeader}</h1>
       <Form onSubmit={handleSubmit}>
         <Row className="border mb-3 rounded-2">
           <Col xs={12} >

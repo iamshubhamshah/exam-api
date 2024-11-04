@@ -14,14 +14,15 @@ export default function LandingPage() {
   const [ShowStudentSignIn, setShowStudentSignIn] = useState(false);
 
   const handleClickforStudentSignin = () => {
-    setShowStudentSignIn(true);
+    // setShowStudentSignIn(true);
+    // 
   };
   return (
     <div>
       <Navbar /> 
       <Nav defaultActiveKey="/userprofile" as="ul">
         <Nav.Item as="li">
-          <Nav.Link href="/examination">Officials Login</Nav.Link>
+          <Nav.Link href="/user-signup">Officials/Staff Signup</Nav.Link>
         </Nav.Item>
 
         <Nav.Item as="li">
@@ -42,11 +43,11 @@ export default function LandingPage() {
             <br />
             <br />
             <BsArrowRight className="blinking-link" />
-            <Link to="/srn-100" style={{textDecoration:'none', fontSize:'25px'}}>Mission Buniyaad Registration Class 10th</Link>
+            <Link to="/srn-100" style={{textDecoration:'none', fontSize:'25px'}}>Super 100 Registration Class 10th</Link>
             <br />
             <br />
             <BsArrowRight className="blinking-link" />
-            <Link to="/user-signin" style={{textDecoration:'none', fontSize:'25px'}}>School/ABR/Teachr Login</Link>
+            <Link to="/user-signin" style={{textDecoration:'none', fontSize:'25px'}}>SCHOOL/ABRC/TEACHER Login</Link>
 
             <br />
             <br />

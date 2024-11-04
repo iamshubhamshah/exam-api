@@ -306,13 +306,20 @@ const {user} = useContext(UserContext)
       // All error states are
       setFormValidated(true);
       console.log("All error states are clear.");
+
     } else {
       setFormValidated(false);
       console.log("All states are not cleared.");
     }
   }
+
+ 
+
+
+
+
   useEffect(() => {
-    formValidate();
+    formValidate(); 
   }, [
     errSrn,
     errName,
@@ -329,21 +336,31 @@ const {user} = useContext(UserContext)
     errBlock,
     errSchool,
   ]);
-
+  console.log('below form validation')
+  console.log(formValidated)
+ 
+  useEffect(() => {
+    // Only call handleSubmit if formValidated is true
+    if (formValidated) {
+        handleSubmit();
+    }
+}, [formValidated]);
   //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
 
 
 //Below function runs when submit button is hit on the prefilled form functionality and updates the data in db.
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+
+        if (e) e.preventDefault();
+        // e.preventDefault();
 
         // Call the formValidation function
     formValidation();
 
     // Check if the form is validated
     if (!formValidated) {
-      alert("Please fix the errors before submitting the form.");
+    //  toast.error('Please fill the form correctly')
       return; // Stop execution if validation fails
     } else {
       toast.success("registration done");
@@ -397,7 +414,7 @@ const {user} = useContext(UserContext)
             console.log(response); // Debugging log
             if (response.data.updated_data) {
                 setMessage('Data updated successfully');
-                alert('Form updated succesfully')
+                toast.success('Form updated succesfully')
                 setShowAck(true); //this was for showing Acknowledgement slip dynamically.
                 // if (location.pathname === '/Registration-form/put/MB'){
                 //     navigate('/acknowledgementslip-mb')
