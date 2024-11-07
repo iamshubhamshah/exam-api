@@ -52,11 +52,11 @@ try {
         
         </Row>
         <Nav defaultActiveKey="/userprofile" as="ul">
-      <Nav.Item as="li">
-        <Nav.Link href="/userprofile">Home</Nav.Link>
+        <Nav.Item as="li">
+        <Nav.Link href="/examination">Home Page</Nav.Link>
       </Nav.Item>
       <Nav.Item as="li">
-        <Nav.Link href="/examination">Landing Page</Nav.Link>
+        <Nav.Link href="/userprofile">Go Back</Nav.Link>
       </Nav.Item>
       <Nav.Item as="li">
         <Nav.Link onClick={handleSignOut}>SignOut</Nav.Link>

@@ -9,9 +9,10 @@ import DependentDropComponent from "./DependentDropComponent";
 import { StudentContext } from "./ContextApi/StudentContextAPI/StudentContext";
 import { UserContext } from "./ContextApi/UserContextAPI/UserContext";
 import { toast } from "react-toastify";
-import {Container, Row, Col, Form, Card, Button, CardFooter } from "react-bootstrap";
+import {Container, Row, Col, Form, Card, Button, CardFooter, Nav } from "react-bootstrap";
 
 import AcknowledgementSlip from "./AcknowledgementSlip";
+
 
 function PreFilledRegistrationForm () {
 
@@ -34,6 +35,20 @@ const {user} = useContext(UserContext)
     const idFromAck = location.state?.id || "";
 //______________________________________________________________
     
+
+
+
+  //Dynamically sets the header in the form
+  let FormHeader1;
+  let FormHeader2;
+  if (location.pathname === "/Registration-form/put/MB") {
+    FormHeader1 = "Registration Form";
+    FormHeader2 = "Mission Buniyaad Batch 2025-27";
+  } else if (location.pathname === "/Registration-form/put/S100") {
+    FormHeader1 = "Registration Form";
+    FormHeader2 = "Haryana Super 100 Batch 2025-27";
+  }
+  //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     
     
 
@@ -53,11 +68,30 @@ const {user} = useContext(UserContext)
     const [aadhar, setAadhar] = useState('');
     const [mobile, setMobile] = useState('');
     const [whatsapp, setWhatsapp] = useState('');
-    const [address, setAddress] = useState('');
+    // const [address, setAddress] = useState('');
+
+
+    //below hooks added new on 7th of November and for house address
+  const [houseNumber, setHouseNumber] = useState('');
+  const [cityTownVillage, setCityTownVillage] = useState('');
+  const [addressBlock, setAddressBlock] = useState('');
+  const [addressDistrict, setAddressDistrict] = useState('');
+  const [addressState, setAddressState] = useState('')
+
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
     const [district, setDistrict] = useState('');
     const [block, setBlock] = useState('');
     const [school, setSchool] = useState('');
     const [grade, setGrade] = useState('');
+
+  //Added on 7 nov
+  const [previousClassAnnualExamPercentage, setPreviousClassAnnualExamPercentage] = useState('')
+
+  //^^^^^^^^^^^^^^^^^^^^^
+
     const [image, setImage] = useState(''); // For file uploads
     const [message, setMessage] = useState('');
     const [schoolCode, setSchoolCode] = useState('');
@@ -127,11 +161,22 @@ const {user} = useContext(UserContext)
         setAadhar(pull.aadhar)
         setMobile(pull.mobile)
         setWhatsapp(pull.whatsapp)
-        setAddress(pull.address)
+        // setAddress(pull.address)
+        //below added on 7 nov
+        setHouseNumber(pull.houseNumber)
+        setCityTownVillage(pull.cityTownVillage)
+        setAddressBlock(pull.addressBlock)
+        setAddressDistrict(pull.addressDistrict)
+        setAddressState(pull.addressState)
+
+        //^^^^^^^^^^^^
+
+
         setDistrict(pull.district)
         setBlock(pull.block)
         setSchool(pull.school)
         setGrade(pull.grade)
+        setPreviousClassAnnualExamPercentage(pull.previousClassAnnualExamPercentage)
         setImage(pull.image)
         setSchoolCode(pull.setSchoolCode)
 
@@ -165,187 +210,273 @@ const {user} = useContext(UserContext)
   const [errAadhar, setErrAadhar] = useState(true);
   const [errMobile, setErrMobile] = useState(true);
   const [errWhatsapp, setErrWhatsapp] = useState(true);
-  const [errAddress, setErrAddress] = useState(true);
+
+
+  // const [errAddress, setErrAddress] = useState(true);
+  //Below validatino for home address and added on 7 nov
+  const [errHouseNumber, setErrHouseNumber] = useState(true);
+  const [errCityTownVillage, setErrCityTownVillage] = useState(true);
+  const [errAddressBlock, setErrAddressBlock] = useState(true);
+  const [errAddressDistrict, setErrAddressDistrict] = useState(true);
+  const [errAddressState, setErrAddressState] = useState(true);
+
+  //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+
+
+
+
+
   const [errDistrict, setErrDistrict] = useState(true);
   const [errBlock, setErrBlock] = useState(true);
   const [errSchool, setErrSchool] = useState(true);
-  //if all the validation passes then below state hook lets the send data;
-  const [formValidated, setFormValidated] = useState(false);
 
-  function formValidation() {
-    if (srn.length === 10 && /[^\d]/.test(srn) == false) {
-      setErrSrn(false);
-    } else {
-      setErrSrn(true);
-      toast.error("Srn must contain only 10 digits");
-    }
+ //added on 7 nov
+ const [errPreviousClassAnnualExamPercentage, setErrPreviousClassAnnualExamPercentage] = useState(true);
 
-    if (/\d/.test(name) == false && name.length != 0) {
-      setErrName(false);
-    } else {
-      setErrName(true);
-      toast.error("Student Name must not contain any Number");
-    }
-    if (/\d/.test(father) == false && father.length != 0) {
-      setErrFather(false);
-    } else {
-      setErrFather(true);
-      toast.error("Father name must not contain any Number");
-    }
-    if (/\d/.test(mother) == false && mother.length != 0) {
-      setErrMother(false);
-    } else {
-      setErrMother(true);
-      toast.error("Mother name must not contain any Number");
-    }
+ //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    //Below check is for dob.
-    if (dob !== "") {
-      setErrDob(false);
-    } else {
-      setErrDob(true);
-      toast.error("Selct your D.O.B");
-    }
+   //if all the validation passes then below state hook lets the send data;
+   const [formValidated, setFormValidated] = useState(false);
 
-    if (gender !== "") {
-      setErrGender(false);
-    } else {
-      setErrGender(true);
-      toast.error("Select Gender");
-    }
-
-    if (category !== "") {
-      setErrCategory(false);
-    } else {
-      setErrCategory(true);
-      toast.error("Select Category");
-    }
-
-    //checks if the srn has exact 12 digits and does not contain any apphabet.
-
-    if (aadhar.length === 12 && /[^\d]/.test(aadhar) == false) {
-      setErrAadhar(false);
-    } else {
-      setErrAadhar(true);
-      toast.error(
-        "Aadhar number should have 12 digits only and must not contain any alphabet"
-      );
-    }
-
-    //below check for mobile validation
-    if (mobile.length === 10 && /[^\d]/.test(mobile) == false) {
-      setErrMobile(false);
-    } else {
-      setErrMobile(true);
-      toast.error(
-        "Mobile number should contain 10 digits only and must not contain any alphabet"
-      );
-    }
-
-    //below check for whatsapp validation
-
-    if (whatsapp.length === 10 && /[^\d]/.test(whatsapp) == false) {
-      setErrWhatsapp(false);
-    } else {
-      setErrWhatsapp(true);
-      toast.error(
-        "Whatsapp number should contain 10 digits only and must not contain any alphabet"
-      );
-    }
-
-    //below check for address validation
-    if (address.length !== 0) {
-      setErrAddress(false);
-    } else {
-      setErrAddress(true);
-      toast.error("Please fill your address");
-    }
-
-    //below check for district validation
-    if (district.length !== 0) {
-      setErrDistrict(false);
-    } else {
-      setErrDistrict(true);
-      toast.error("Please select your district");
-    }
-
-    //below check for block validation
-    if (block.length !== 0) {
-      setErrBlock(false);
-    } else {
-      setErrBlock(true);
-      toast.error("Please select your block");
-    }
-
-    //below check for school validation
-    if (school.length !== 0) {
-      setErrSchool(false);
-    } else {
-      setErrSchool(true);
-      toast.error("Please select your school");
-    }
-  }
-
-  function formValidate() {
-    if (
-      errSrn === false &&
-      errName === false &&
-      errFather === false &&
-      errMother === false &&
-      errDob === false &&
-      errGender === false &&
-      errCategory === false &&
-      errAadhar === false &&
-      errMobile === false &&
-      errWhatsapp === false &&
-      errAddress === false &&
-      errDistrict === false &&
-      errBlock === false &&
-      errSchool === false
-    ) {
-      // All error states are
-      setFormValidated(true);
-      console.log("All error states are clear.");
-
-    } else {
-      setFormValidated(false);
-      console.log("All states are not cleared.");
-    }
-  }
-
+   function formValidation() {
+     if (srn.length === 10 && /[^\d]/.test(srn) == false) {
+       setErrSrn(false);
+     } else {
+       setErrSrn(true);
+       toast.error("Srn must contain only 10 digits");
+     }
  
-
-
-
-
-  useEffect(() => {
-    formValidate(); 
-  }, [
-    errSrn,
-    errName,
-    errFather,
-    errMother,
-    errDob,
-    errGender,
-    errCategory,
-    errAadhar,
-    errMobile,
-    errWhatsapp,
-    errAddress,
-    errDistrict,
-    errBlock,
-    errSchool,
-  ]);
-  console.log('below form validation')
-  console.log(formValidated)
+     if (/\d/.test(name) == false && name.length != 0) {
+       setErrName(false);
+     } else {
+       setErrName(true);
+       toast.error("Student Name must not contain any Number");
+     }
+     if (/\d/.test(father) == false && father.length != 0) {
+       setErrFather(false);
+     } else {
+       setErrFather(true);
+       toast.error("Father name must not contain any Number");
+     }
+     if (/\d/.test(mother) == false && mother.length != 0) {
+       setErrMother(false);
+     } else {
+       setErrMother(true);
+       toast.error("Mother name must not contain any Number");
+     }
  
-  useEffect(() => {
-    // Only call handleSubmit if formValidated is true
-    if (formValidated) {
-        handleSubmit();
-    }
-}, [formValidated]);
-  //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+     //Below check is for dob.
+     if (dob !== "") {
+       setErrDob(false);
+     } else {
+       setErrDob(true);
+       toast.error("Selct your D.O.B");
+     }
+ 
+     if (gender !== "") {
+       setErrGender(false);
+     } else {
+       setErrGender(true);
+       toast.error("Select Gender");
+     }
+ 
+     if (category !== "") {
+       setErrCategory(false);
+     } else {
+       setErrCategory(true);
+       toast.error("Select Category");
+     }
+ 
+     //checks if the srn has exact 12 digits and does not contain any apphabet.
+ 
+     if (aadhar.length === 12 && /[^\d]/.test(aadhar) == false) {
+       setErrAadhar(false);
+     } else {
+       setErrAadhar(true);
+       toast.error(
+         "Aadhar number should have 12 digits only and must not contain any alphabet"
+       );
+     }
+ 
+     //below check for mobile validation
+     if (mobile.length === 10 && /[^\d]/.test(mobile) == false) {
+       setErrMobile(false);
+     } else {
+       setErrMobile(true);
+       toast.error(
+         "Mobile number should contain 10 digits only and must not contain any alphabet"
+       );
+     }
+ 
+     //below check for whatsapp validation
+ 
+     if (whatsapp.length === 10 && /[^\d]/.test(whatsapp) == false) {
+       setErrWhatsapp(false);
+     } else {
+       setErrWhatsapp(true);
+       toast.error(
+         "Whatsapp number should contain 10 digits only and must not contain any alphabet"
+       );
+     }
+ 
+     //below check for home address validation
+     //new validation on 7 nov
+     if (houseNumber.length !== 0) {
+       setErrHouseNumber(false);
+     } else {
+       setErrHouseNumber(true);
+       toast.error("Please fill your House Number");
+     }
+ 
+     if (cityTownVillage.length !== 0) {
+       setErrCityTownVillage(false);
+     } else {
+       setErrCityTownVillage(true);
+       toast.error("Please fill your City/Town/Village");
+     }
+ 
+     if (addressBlock.length !== 0) {
+       setErrAddressBlock(false);
+     } else {
+       setErrAddressBlock(true);
+       toast.error("Please fill your Block");
+     }
+ 
+     if (addressDistrict.length !== 0) {
+       setErrAddressDistrict(false);
+     } else {
+       setErrAddressDistrict(true);
+       toast.error("Please fill your District");
+     }
+ 
+     if (addressState.length !== 0) {
+       setErrAddressState(false);
+     } else {
+       setErrAddressState(true);
+       toast.error("Please fill your state");
+     }
+ 
+ 
+ 
+ 
+ 
+     //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     //below check for district validation
+     if (district.length !== 0) {
+       setErrDistrict(false);
+     } else {
+       setErrDistrict(true);
+       toast.error("Please select your district");
+     }
+ 
+     //below check for block validation
+     if (block.length !== 0) {
+       setErrBlock(false);
+     } else {
+       setErrBlock(true);
+       toast.error("Please select your block");
+     }
+ 
+     //below check for school validation
+     if (school.length !== 0) {
+       setErrSchool(false);
+     } else {
+       setErrSchool(true);
+       toast.error("Please select your school");
+     }
+ 
+     if (previousClassAnnualExamPercentage.length === 2 && /[^\d]/.test(previousClassAnnualExamPercentage) == false) {
+       setErrPreviousClassAnnualExamPercentage(false);
+     } else {
+       setErrPreviousClassAnnualExamPercentage(true);
+       toast.error("Percentage must contain only 2 digits");
+     }
+ 
+   }
+ 
+   function formValidate() {
+     if (
+       errSrn === false &&
+       errName === false &&
+       errFather === false &&
+       errMother === false &&
+       errDob === false &&
+       errGender === false &&
+       errCategory === false &&
+       errAadhar === false &&
+       errMobile === false &&
+       errWhatsapp === false &&
+       // errAddress === false &&
+ 
+       //below added on 7 nov
+ 
+       errHouseNumber === false &&
+       errCityTownVillage === false &&
+       errAddressBlock === false &&
+       errAddressDistrict === false &&
+       errAddressState === false &&
+ 
+       //^^^^^^^^^^^^^^^^
+       errDistrict === false &&
+       errBlock === false &&
+       errSchool === false &&
+       errPreviousClassAnnualExamPercentage === false
+     ) {
+       // All error states are
+       setFormValidated(true);
+       console.log("All error states are clear.");
+     } else {
+       setFormValidated(false);
+       console.log("All states are not cleared.");
+     }
+   }
+ 
+   useEffect(() => {
+     formValidate();
+   }, [
+     errSrn,
+     name,
+     errFather,
+     errMother,
+     errDob,
+     errGender,
+     errCategory,
+     errAadhar,
+     errMobile,
+     errWhatsapp,
+     // errAddress,
+ 
+     //Below added on 7 nov
+ 
+     errHouseNumber,
+     errCityTownVillage,
+     errAddressBlock,
+     errAddressDistrict,
+     errAddressState,
+ 
+     //^^^^^^^^^^^^^^^^^^^^^^
+ 
+ 
+     errDistrict,
+     errBlock,
+     errSchool,
+     errPreviousClassAnnualExamPercentage
+   ]);
+ 
+   console.log("Blow  if formValidated");
+   console.log(formValidated);
+   //Belwo useEffect only runs when formvalidated is true
+   useEffect(() => {
+     // Only call handleSubmit if formValidated is true
+     if (formValidated) {
+       handleSubmit();
+     }
+   }, [formValidated]);
+ 
+   //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 //Below function runs when submit button is hit on the prefilled form functionality and updates the data in db.
@@ -379,10 +510,26 @@ const {user} = useContext(UserContext)
         formData.append('aadhar', aadhar);
         formData.append('mobile', mobile);
         formData.append('whatsapp', whatsapp);
-        formData.append('address', address);
+
+
+        //new on 7th nov
+      formData.append("houseNumber", houseNumber);
+      formData.append("cityTownVillage", cityTownVillage);
+      formData.append("addressBlock", addressBlock);
+      formData.append("addressDistrict", addressDistrict);
+      formData.append("addressState", addressState);
+
+
+      //^^^^^^^^^^^^
+
+
+
+        
+        // formData.append('address', address);
         formData.append('district', district);
         formData.append('block', block);
         formData.append('school', school);
+        formData.append("previousClassAnnualExamPercentage",previousClassAnnualExamPercentage);
         formData.append('grade', grade);
         formData.append('isRegisteredBy', isRegisteredBy);
         formData.append('schoolCode', schoolCode);
@@ -437,28 +584,60 @@ const {user} = useContext(UserContext)
         console.log("Some error occured");
         
     }
-       
+   
             
     };
 
     
        
 
-
+    
    
 
 return (
     <Container>
+
+<Container fluid >
+        <Row className="d-flex justify-content-center align-items-center">
+          <img
+            style={{
+              width: 100,
+              height: 100,
+              textAlign: "center",
+              alignContent: "center",
+            }}
+            src="../HRlogo.png"
+          />
+        </Row>
+        <Row>
+          <h3 style={{ textAlign: "center" }}>{FormHeader1}</h3>
+        </Row>
+        <Row>
+          <h3 style={{ textAlign: "center" }}>{FormHeader2}</h3>
+        </Row>
+        <hr></hr>
+
+        <Nav defaultActiveKey="/userprofile" as="ul">
+          <Nav.Item as="li">
+            <Nav.Link href="/examination">Home</Nav.Link>
+          </Nav.Item>
+          <Nav.Item as="li">
+            <Nav.Link href="/examination">How to fill form</Nav.Link>
+          </Nav.Item>
+        </Nav>
+        </Container>
+
+        <hr></hr>
     
-        <h1>Mission Buniyaad Registration Form</h1>
+        
         <Form onSubmit={handleSubmit}>
 
         <Row className="border mb-3 rounded-2">
         <Col xs={12} >
         <Form.Group className="mb-3" controlId="srnInput">
-        <Form.Label>Enter Your SRN:</Form.Label>
+        <Form.Label>SRN (एस.आर.एन.) :</Form.Label>
                     <Form.Control
-                    type='text' name='srn' placeholder='Enter Your SRN' value={srn} onChange={(e) => setSrn(e.target.value)} 
+                    type='text' name='srn' placeholder='SRN (एस.आर.एन.)' value={srn} onChange={(e) => setSrn(e.target.value)} 
                     
                     />   
                 </Form.Group>
@@ -469,34 +648,34 @@ return (
             <Col xs={12} md={6} className="border-end p-3">
             <h2>Personal Details:</h2>
             <Form.Group className="mb-3" controlId="nameInput">
-            <Form.Label>Enter Your Name:</Form.Label>
+            <Form.Label>Student Name (छात्र का नाम) :</Form.Label>
             
-            <Form.Control type='text' name='name' placeholder='Enter Your Name' value={name} onChange={(e) => setName(e.target.value)} />
+            <Form.Control type='text' name='name' placeholder='Student Name (छात्र का नाम)' value={name} onChange={(e) => setName(e.target.value)} />
          
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="fatherInput">
-              <Form.Label>Enter Your Father's Name:</Form.Label>
+              <Form.Label>Father's Name (पिता का नाम) :</Form.Label>
             
-            <Form.Control type='text' name='father' placeholder='Enter Your Father Name' value={father} onChange={(e) => setFather(e.target.value)} />
+            <Form.Control type='text' name='father' placeholder="Father's Name (पिता का नाम)" value={father} onChange={(e) => setFather(e.target.value)} />
             
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="motherInput">
-            <Form.Label>Enter Your Mother's Name:</Form.Label>
+            <Form.Label>Mother's Name (मां का नाम) ::</Form.Label>
             
-            <Form.Control type='text' name='mother' placeholder='Enter Your Mother Name' value={mother} onChange={(e) => setMother(e.target.value)} />
+            <Form.Control type='text' name='mother' placeholder="Mother's Name (मां का नाम)" value={mother} onChange={(e) => setMother(e.target.value)} />
             
             </Form.Group>
             <Form.Group className="mb-3" controlId="dobInput">
-            <Form.Label>Enter Your D.O.B:</Form.Label>
+            <Form.Label>D.O.B (जन्म तिथि) :</Form.Label>
             
             <Form.Control type='date' name='dob' value={dob} onChange={(e) => setDob(e.target.value)} />
             
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="genderSelect">
-            <Form.Label>Enter Your Gender:</Form.Label>
+            <Form.Label>Gender (लिंग) :</Form.Label>
             
             <Form.Select value={gender} onChange={(e)=>setGender(e.target.value)}>
                 <option value="">Select Your Gender</option>
@@ -507,7 +686,7 @@ return (
             </Form.Group>
            
             <Form.Group className="mb-3" controlId="categorySelect">
-            <Form.Label>Enter Your Category:</Form.Label>
+            <Form.Label>Category (वर्ग) :</Form.Label>
             
             <Form.Select value={category} onChange={(e)=>setCategory(e.target.value)}>
                 <option value="">Select Your Category</option>
@@ -521,7 +700,7 @@ return (
             </Form.Group>
             
             <Form.Group className="mb-3" controlId="aadharInput">
-            <Form.Label>Enter Your 12 digits Aadhar Number:</Form.Label>
+            <Form.Label>Aadhar Number (आधार नंबर) :</Form.Label>
             <Form.Control type='text' name='aadhar' placeholder='Enter Your Aadhar Number' value={aadhar} onChange={(e) => setAadhar(e.target.value)} />
             
             </Form.Group>
@@ -532,19 +711,74 @@ return (
               <Col className="border-end p-3">
               <h2>Contact Details:</h2>
               <Form.Group className="mb-3" controlId="mobileInput">
-              <Form.Label>Enter Your 10 digits Mobile Number:</Form.Label>
+              <Form.Label>Mobile Number (मोबाइल नंबर) :</Form.Label>
             <Form.Control type='text' name='mobile' placeholder='Enter Your Mobile Number' value={mobile} onChange={(e) => setMobile(e.target.value)} />
             </Form.Group>
     
             <Form.Group className="mb-3" controlId="whatsappInput">
-              <Form.Label>Enter Your 10 digits Whatsapp Number:</Form.Label>
+              <Form.Label>Whatsapp Number (व्हाट्सएप नंबर) :</Form.Label>
             <Form.Control type='text' name='whatsapp' placeholder='Enter Your Whatsapp Number' value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} />
             </Form.Group>
     
-            <Form.Group className="mb-3" controlId="addressInput">
-              <Form.Label>Enter Your Address:</Form.Label>
-            <Form.Control type='text' name='address' placeholder='Enter Your Address' value={address} onChange={(e) => setAddress(e.target.value)} />
-            </Form.Group>
+             {/* BELOW FIELDS ADDED ON 7TH NOV AND ARE NEW */}
+             <Form.Group className="mb-3" controlId="addressInput">
+                <Form.Label>House Number (घर का नंबर):</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="houseNumber"
+                  placeholder="House Number (घर का नंबर)"
+                  value={houseNumber}
+                  onChange={(e) => setHouseNumber(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="addressInput">
+                <Form.Label>City/Town/Village (शहर/कस्बा/गाँव):</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="cityTownVillage"
+                  placeholder="City/Town/Village (शहर/कस्बा/गाँव)"
+                  value={cityTownVillage}
+                  onChange={(e) => setCityTownVillage(e.target.value)}
+                />
+              </Form.Group>
+
+             
+              <Form.Group className="mb-3" controlId="addressInput">
+                <Form.Label>Block (ब्लॉक):</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="addressBlock"
+                  placeholder="Block"
+                  value={addressBlock}
+                  onChange={(e) => setAddressBlock(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="addressInput">
+                <Form.Label>District (ज़िला):</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="addressDistrict"
+                  placeholder="District (ज़िला)"
+                  value={addressDistrict}
+                  onChange={(e) => setAddressDistrict(e.target.value)}
+                />
+
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="addressInput">
+                <Form.Label>State (राज्य):</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="state"
+                  placeholder="State (राज्य)"
+                  value={addressState}
+                  onChange={(e) => setAddressState(e.target.value)}
+                />
+              </Form.Group>
+
+
+              {/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */}
+
+
         {/* Nested Row inside a second column of the second Row    */}
             
         <h2>Academic Details:</h2>     
@@ -557,6 +791,18 @@ return (
     setSchoolCode={setSchoolCode}
     />
 
+
+              <Form.Group className="mb-3" controlId="addressInput">
+                <Form.Label>{location.pathname === '/Registration-form/MB' ||
+                  location.pathname === '/Registration-form/put/MB' ? ("Class 7th Annual Examination Percentage (कक्षा 7वीं की वार्षिक परीक्षा का प्रतिशत)"):("Class 10th Annual Examination Percentage (कक्षा 10वीं की वार्षिक परीक्षा का प्रतिशत.)")}</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="previousClassAnnualExamPercentage"
+                  placeholder="Enter Percentage"
+                  value={previousClassAnnualExamPercentage}
+                  onChange={(e) => setPreviousClassAnnualExamPercentage(e.target.value)}
+                />
+              </Form.Group>
 
 
 
@@ -578,7 +824,7 @@ return (
             <br/> */}
     
     <Form.Group className="mb-3" controlId="gradeSelect">
-    <Form.Label>Enter Your Grade:</Form.Label>
+    <Form.Label>Class (कक्षा) :</Form.Label>
  
                 <Form.Select value={grade} onChange={(e)=>setGrade(e.target.value)}>
                     <option value="8">8</option>
@@ -595,7 +841,7 @@ return (
             <Row className="border mb-3 rounded-2">
           <Col xs={12} md={6}>
             <Form.Group className="mb-3" controlId="photoInput">
-              <Form.Label>Upload your photo:</Form.Label>
+              <Form.Label>Upload Your Image (अपनी प्रोफाइल पिक्चर अपलोड करें।) :</Form.Label>
             <Form.Control type='file' name='image' onChange={(e) => setImage(e.target.files[0])} />
             </Form.Group>
              

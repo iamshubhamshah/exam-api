@@ -224,10 +224,10 @@ const [handleClickCount, setHandleClickCount] = useState(0)
 
       <Form.Group className="mb-3" controlId="districtSelect">
      
-        <Form.Label>Select District</Form.Label>
+        <Form.Label>Select School's District (स्कूल का जिला चुनें) :</Form.Label>
         
         <Select
-       placeholder="Select District"
+       placeholder="Select School's District (स्कूल का जिला चुनें) :"
        value={prefilledDistrict()} // Call the function to get the prefilled value
           
           options={districtList.map((d) => ({
@@ -241,10 +241,10 @@ const [handleClickCount, setHandleClickCount] = useState(0)
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="blockSelect">
-        <Form.Label>Select Block</Form.Label>
+        <Form.Label>Select School's Block (स्कूल का ब्लॉक चुनें) :</Form.Label>
     
         <Select
-        placeholder='Select Block'
+        placeholder="Select School's Block (स्कूल का ब्लॉक चुनें) :"
         value={prefilledBlock()}
           onChange={handleBlockChange}
           options={filteredBlock.map((b) => ({
@@ -258,10 +258,10 @@ const [handleClickCount, setHandleClickCount] = useState(0)
        
           {showSchoolDropDown ? (<>
             <Form.Group className="mb-3" controlId="schoolSelect">
-            <Form.Label>Select School</Form.Label>
+            <Form.Label>Select School (स्कूल चुनें) :</Form.Label>
 
 <Select
-placeholder='Selct School'
+placeholder='Select School (स्कूल चुनें) :'
 value={prefilledSchool()}
   onChange={handleSchoolChange}
   options={filteredSchool.map((s) => ({
@@ -275,7 +275,7 @@ value={prefilledSchool()}
 </> ):(
   <div >
   <Form.Group className="mb-3">
-    <Form.Label>Enter School Manually</Form.Label>
+    <Form.Label>School Name (स्कूल का नाम) :</Form.Label>
     <Form.Control 
       type="text" 
       name="school" 
@@ -285,7 +285,7 @@ value={prefilledSchool()}
   </Form.Group>
 
   <Form.Group className="mb-3">
-    <Form.Label>Enter School Code</Form.Label>
+    <Form.Label>Enter School's Code (स्कूल कोड दर्ज करें) :</Form.Label>
     <Form.Control 
       type="text" 
       name="schoolCode" 

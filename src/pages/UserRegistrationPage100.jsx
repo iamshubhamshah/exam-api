@@ -20,15 +20,21 @@ export default function UserRegistrationPage100 () {
       height: '50vh'             // Takes full viewport height
     }}>
     
+    <Row>
+        <h3>Super 100 Registrations Batch 2025-27</h3>
+        <hr></hr>
+      </Row>
+      <br></br>
     <Row >
+      
       <Col >
-      <Link to="/srn-100"><Button style={{width:'300px'}} >Register Students Individually: Class 10th</Button></Link>
+      <Link to="/srn-100"><Button style={{width:'300px'}} >Super 100 Individual</Button></Link>
       <br></br>
       <br></br>
-      <Link to ='/userprofile/bulkregister-100'> <Button style={{width:'300px'}}>Bulk Upload Class 10th Students</Button></Link>
+      <Link to ='/userprofile/bulkregister-100'> <Button style={{width:'300px'}}>Super 100 Bulk Registrations</Button></Link>
       <br></br>
       <br></br>
-      <Button style={{width:'300px'}}>DashBoard</Button>
+      
       </Col>
       
     </Row>

@@ -91,10 +91,13 @@ values form drop down only which are district, block, school.  */}
     !manualSchoolNameIsChecked && district && block && school ? (
       <>
        <Row > 
-        <BulkUploadTemplate
+       <BulkUploadTemplate
           district={district}
           block={block}
           school={school}
+          grade={grade}
+          manualSchoolNameIsChecked={manualSchoolNameIsChecked}
+          schoolCode={schoolCode}
         />
         <br></br>
         <br></br>

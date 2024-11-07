@@ -3,11 +3,12 @@ import UserService from "../services/UserService";
 
 import { Navigate, useNavigate } from "react-router-dom";
 import DependentDropComponent from "./DependentDropComponent";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
-
+import { Container, Row, Col, Form, Button, Nav } from "react-bootstrap";
+import Navbar from "./Navbar";
 //importing TwilioService for verification of numbers;
 
 import TwilioService, { sendNotification } from "../services/TwilioService";
+import Footer from "./Footer";
 
 export default function UserSignUp() {
   let otp = "123456";
@@ -134,14 +135,26 @@ export default function UserSignUp() {
   //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   return (
+    <>
+    <Navbar/>
+    <Nav defaultActiveKey="/userprofile" as="ul">
+      <Nav.Item as="li">
+        <Nav.Link href="/examination">Home</Nav.Link>
+      </Nav.Item>
+      <Nav.Item as="li">
+        <Nav.Link href="/user-signin">Already Registred (Sign-in)</Nav.Link>
+      </Nav.Item>
+    
+    </Nav>
     
     <Container style={{width:"60%"}}>
       
       <Form onSubmit={handleSubmit}>
         
         <Row className="border mb-3 rounded-2">
-        <img src="" alt=" goes here" />
-         <h1 style={{textAlign:'center'}}>User Signup Page</h1>
+       
+         <h1 style={{textAlign:'center'}}>OFFICIALS SIGN-UP</h1>
+         <small style={{textAlign:'center'}}>(Only for Govt. officials, ABRC/BRP/Teacher/School Staff/Vikalpa Staff)</small>
         </Row>
         <Row className="border mb-3 rounded-2" >
           <Col>
@@ -237,6 +250,7 @@ export default function UserSignUp() {
       {/* <button onClick={handleVerifyNumberClick}>Verify Mobile Number</button>
       <button onClick={handleGooadvertOtp}> Verify OTP By goadvert</button> */}
     </Container>
-   
+    <Footer/>
+    </>
   );
 }

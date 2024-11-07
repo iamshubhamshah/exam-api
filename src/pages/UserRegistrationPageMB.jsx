@@ -19,16 +19,21 @@ export default function UserRegistrationPageMB () {
       alignItems: 'center',       // Centers vertically
       height: '50vh'             // Takes full viewport height
     }}>
+
+      <Row>
+        <h3>Mission Buniyaad Registrations Batch 2025-27</h3>
+        <hr></hr>
+      </Row>
     
     <Row >
       <Col >
-      <Link to="/srn"><Button style={{width:'300px'}} >Register Students Individually: Class 8th</Button></Link>
+      <Link to="/srn"><Button style={{width:'300px'}} >Mission Buniyaad Individual</Button></Link>
       <br></br>
       <br></br>
-      <Link to ='/userprofile/bulkregister-mb'> <Button style={{width:'300px'}}>Bulk Upload Class 8th Students</Button></Link>
+      <Link to ='/userprofile/bulkregister-mb'> <Button style={{width:'300px'}}>Bulk Registrations</Button></Link>
       <br></br>
       <br></br>
-      <Button style={{width:'300px'}}>DashBoard</Button>
+      
       </Col>
       
     </Row>

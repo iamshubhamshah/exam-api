@@ -77,32 +77,7 @@ const {student} = useContext(StudentContext);
             <div className='Student-basic-details'>
                 <Link to = {'/Acknowledgement'}>Click to download L1 Ack slip</Link>
             </div>
-            <style>
-          <style>
-                {`
-                  @media (max-width: 600px) {
-                    nav {
-                      flex-direction: column; 
-                      align-items: center; 
-                    }
-                    img {
-                      margin: 5px 0;
-                      width: 80px;
-                      height: auto
-                    }
-                    h1 {
-                      font-size: 24px; /* Adjust as needed */
-                    }
-                    h2 {
-                      font-size: 20px; /* Adjust as needed */
-                    }
-                    h3 {
-                      font-size: 18px; /* Adjust as needed */
-                    }
-                  }
-                `}
-            </style>
-          </style>
+            
         </div>
         <Footer/>
         </>

@@ -4,8 +4,11 @@ import React, { useState, useEffect, useContext} from "react";
 import DashBoardServices from "../services/DashBoardServices";
 import { Table, Row, Col, Container, Button } from "react-bootstrap";
 import DependentDropsForFilter from './DependentDropsForFilter';
+import Select from "react-select";
 
 import { UserContext } from "./ContextApi/UserContextAPI/UserContext";
+import UserNavBar from "./UserNavBar";
+import Footer from "./Footer";
 
 
 const BaseURL = process.env.REACT_APP_API_BASE_URL;
@@ -22,6 +25,7 @@ const AllData = () => {
 
   const {user} = useContext(UserContext);
   
+  const [grade, setGrade] = useState('');
 
 
 
@@ -33,10 +37,11 @@ const AllData = () => {
   
   const fetchAllData = async () => {
 
-    let query = `isRegisteredBy=${user.mobile}&district=${district}&block=${block}&school=${school}`.trim();
+    let query = `isRegisteredBy=${user.mobile}&district=${district}&block=${block}&school=${school}&grade=${grade}`.trim();
     
     try {
       const response = await DashBoardServices.GetAllStudentData(query);
+      
       setAllData(response.data || []);
     } catch (error) 
        { console.log("Error fetching data:", error);
@@ -46,18 +51,24 @@ const AllData = () => {
 
   useEffect((e) => {
     fetchAllData();
-  }, [ district, block, school]);
+  }, [ district, block, school, grade]);
 
   
   function handleClearFilter() {
     setDistrict('')
     setBlock('')
     setSchool('')
+    setGrade('')
   }
 
-
+//Below vairables are for showing users registrations' count
+  const count10 =  allData.filter(each10thSutdent=>each10thSutdent.grade === '10').length
+  const count8 =  allData.filter(each8thSutdent=>each8thSutdent.grade === '8').length
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   return (
+    <>
+    <UserNavBar/>
     <Container>
       <Row>
         <Col >
@@ -69,10 +80,35 @@ const AllData = () => {
         
         </Col>
 
-        <Button onClick={handleClearFilter}>Clear Filter</Button>
-       
       </Row>
       <Row>
+        <Col>
+        <label>Select Class</label>
+        <Select
+        placeholder="Select Class"        
+        options={[{value:'8', label: '8'}, {value:'10', label:'10'}]}              
+        value={grade ? { value: grade, label: grade } : null}
+        onChange={(selectedOption) => setGrade(selectedOption.value)} // Set only the value (8 or 10)
+      />
+                             
+       
+        </Col>
+        
+        </Row>
+        <br></br>
+        <Row><Button onClick={handleClearFilter}>Clear Filter</Button></Row>
+        <br></br>
+        <Row>
+          <Col>
+          <p>Class 8th Count: {count8}</p>
+          </Col>
+          <Col>
+          <p>Class 10th Count: {count10}</p>
+          </Col>
+
+        </Row>
+      <Row>
+        
         <Col>
           <Table responsive >
             <thead>
@@ -130,6 +166,8 @@ const AllData = () => {
         </Col>
       </Row>
     </Container>
+   
+    </>
   );
 };
 

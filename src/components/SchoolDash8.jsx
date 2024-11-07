@@ -131,7 +131,7 @@ const SchoolDash8 = () => {
                                     <td>{eachStudent.grade}</td>
                                     <td>
                                         <img
-                                        src={`${BaseURL}/api/postimages/${eachStudent.image}`}
+                                        src={`https://vikalpaexamination.blr1.digitaloceanspaces.com/postImages/${eachStudent.imageUrl}`}
                                         alt={eachStudent.name}
                                         style={{width:100, height:100}}/>
                                     </td>

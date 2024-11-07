@@ -11,7 +11,7 @@ export default function Navbar() {
       
         <div style={{ textAlign: 'center' }}>
           <nav style={{
-            background: "#079BF5",
+            background: "#50C878",
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',

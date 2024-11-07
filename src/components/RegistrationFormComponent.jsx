@@ -15,14 +15,25 @@ import jsPDF from "jspdf";
 //React boottrap css-------------------
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import {Container, Row, Col, Form, Card, Button, CardFooter } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Card,
+  Button,
+  CardFooter,
+  Nav,
+} from "react-bootstrap";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 //_____________________________
 
 //-----------------------------------
 
 export default function RegistrationFormComponent() {
   const { user } = useContext(UserContext);
-  const {setStudent} = useContext(StudentContext); // it updates, on the basis of SlipData
+  const { setStudent } = useContext(StudentContext); // it updates, on the basis of SlipData
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -44,14 +55,17 @@ export default function RegistrationFormComponent() {
     grade = "10";
   }
 
-//Dynamically sets the header in the form
-let FormHeader;
-if (location.pathname === '/Registration-form/MB'){
-  FormHeader = 'Mission Buinyaad Registration 2025-27'
-} else if (location.pathname === '/Registration-form/S100'){
-    FormHeader = 'Super 100 Registration 2025-27'
-}
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  //Dynamically sets the header in the form
+  let FormHeader1;
+  let FormHeader2;
+  if (location.pathname === "/Registration-form/MB") {
+    FormHeader1 = "Registration Form";
+    FormHeader2 = "Mission Buniyaad Batch 2025-27";
+  } else if (location.pathname === "/Registration-form/S100") {
+    FormHeader1 = "Registration Form";
+    FormHeader2 = "Haryana Super 100 Batch 2025-27";
+  }
+  //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   //---------------------------------------------------------------------------------------------------
   const [userObj, setUserObj] = useState(null);
@@ -65,11 +79,27 @@ if (location.pathname === '/Registration-form/MB'){
   const [aadhar, setAadhar] = useState("");
   const [mobile, setMobile] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
-  const [address, setAddress] = useState("");
+
+  //below hooks added new on 7th of November and for house address
+  const [houseNumber, setHouseNumber] = useState('');
+              const [cityTownVillage, setCityTownVillage] = useState('');
+              const [addressBlock, setAddressBlock] = useState('');
+              const [addressDistrict, setAddressDistrict] = useState('');
+              const [addressState, setAddressState] = useState('')
+
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              
   const [district, setDistrict] = useState("");
   const [block, setBlock] = useState("");
   const [school, setSchool] = useState("");
   // const [grade, setGrade] = useState('');
+
+  //Added on 7 nov
+  const [previousClassAnnualExamPercentage, setPreviousClassAnnualExamPercentage] = useState("");
+
+
+  //^^^^^^^^^^^^^^^^^^^^^
   const [image, setImage] = useState(""); // For file uploads
   // const [isRegisteredBy] = useState('Self')
   const [message, setMessage] = useState("");
@@ -117,10 +147,23 @@ if (location.pathname === '/Registration-form/MB'){
   const [errAadhar, setErrAadhar] = useState(true);
   const [errMobile, setErrMobile] = useState(true);
   const [errWhatsapp, setErrWhatsapp] = useState(true);
-  const [errAddress, setErrAddress] = useState(true);
+  // const [errAddress, setErrAddress] = useState(true);
+  //Below validatino for home address and added on 7 nov
+  const [errHouseNumber, setErrHouseNumber] = useState(true);
+  const [errCityTownVillage, setErrCityTownVillage] = useState(true);
+  const [errAddressBlock, setErrAddressBlock] = useState(true);
+  const [errAddressDistrict, setErrAddressDistrict] = useState(true);
+  const [errAddressState, setErrAddressState] = useState(true);
+
+  //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   const [errDistrict, setErrDistrict] = useState(true);
   const [errBlock, setErrBlock] = useState(true);
   const [errSchool, setErrSchool] = useState(true);
+
+  //added on 7 nov
+  const [errPreviousClassAnnualExamPercentage, setErrPreviousClassAnnualExamPercentage] = useState(true);
+
+  //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   //if all the validation passes then below state hook lets the send data;
   const [formValidated, setFormValidated] = useState(false);
@@ -206,14 +249,48 @@ if (location.pathname === '/Registration-form/MB'){
       );
     }
 
-    //below check for address validation
-    if (address.length !== 0) {
-      setErrAddress(false);
+    //below check for home address validation
+    //new validation on 7 nov
+    if (houseNumber.length !== 0) {
+      setErrHouseNumber(false);
     } else {
-      setErrAddress(true);
-      toast.error("Please fill your address");
+      setErrHouseNumber(true);
+      toast.error("Please fill your House Number");
     }
 
+    if (cityTownVillage.length !== 0) {
+      setErrCityTownVillage(false);
+    } else {
+      setErrCityTownVillage(true);
+      toast.error("Please fill your City/Town/Village");
+    }
+
+    if (addressBlock.length !== 0) {
+      setErrAddressBlock(false);
+    } else {
+      setErrAddressBlock(true);
+      toast.error("Please fill your Block");
+    }
+
+    if (addressDistrict.length !== 0) {
+      setErrAddressDistrict(false);
+    } else {
+      setErrAddressDistrict(true);
+      toast.error("Please fill your District");
+    }
+
+    if (addressState.length !== 0) {
+      setErrAddressState(false);
+    } else {
+      setErrAddressState(true);
+      toast.error("Please fill your state");
+    }
+
+
+
+
+
+    //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     //below check for district validation
     if (district.length !== 0) {
       setErrDistrict(false);
@@ -237,6 +314,14 @@ if (location.pathname === '/Registration-form/MB'){
       setErrSchool(true);
       toast.error("Please select your school");
     }
+
+    if (previousClassAnnualExamPercentage.length === 2 && /[^\d]/.test(previousClassAnnualExamPercentage) == false) {
+      setErrPreviousClassAnnualExamPercentage(false);
+    } else {
+      setErrPreviousClassAnnualExamPercentage(true);
+      toast.error("Percentage must contain only 2 digits");
+    }
+
   }
 
   function formValidate() {
@@ -251,10 +336,21 @@ if (location.pathname === '/Registration-form/MB'){
       errAadhar === false &&
       errMobile === false &&
       errWhatsapp === false &&
-      errAddress === false &&
+      // errAddress === false &&
+
+      //below added on 7 nov
+
+      errHouseNumber === false &&
+      errCityTownVillage === false &&
+      errAddressBlock === false &&
+      errAddressDistrict === false &&
+      errAddressState === false &&
+
+      //^^^^^^^^^^^^^^^^
       errDistrict === false &&
       errBlock === false &&
-      errSchool === false
+      errSchool === false &&
+      errPreviousClassAnnualExamPercentage === false
     ) {
       // All error states are
       setFormValidated(true);
@@ -267,8 +363,6 @@ if (location.pathname === '/Registration-form/MB'){
 
   useEffect(() => {
     formValidate();
-   
-  
   }, [
     errSrn,
     name,
@@ -280,33 +374,46 @@ if (location.pathname === '/Registration-form/MB'){
     errAadhar,
     errMobile,
     errWhatsapp,
-    errAddress,
+    // errAddress,
+
+    //Below added on 7 nov
+
+    errHouseNumber,
+    errCityTownVillage,
+    errAddressBlock,
+    errAddressDistrict,
+    errAddressState,
+
+    //^^^^^^^^^^^^^^^^^^^^^^
+
+
     errDistrict,
     errBlock,
     errSchool,
+    errPreviousClassAnnualExamPercentage
   ]);
 
-  console.log("Blow  if formValidated")
-  console.log(formValidated)
+  console.log("Blow  if formValidated");
+  console.log(formValidated);
   //Belwo useEffect only runs when formvalidated is true
   useEffect(() => {
     // Only call handleSubmit if formValidated is true
     if (formValidated) {
-        handleSubmit();
+      handleSubmit();
     }
-}, [formValidated]);
+  }, [formValidated]);
 
   //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   const handleSubmit = async (e) => {
-   if(e) e.preventDefault();
+    if (e) e.preventDefault();
 
     // Call the formValidation function
     formValidation();
 
     // Check if the form is validated
     if (!formValidated) {
-    //   toast.error("Please fix the errors before submitting the form.");
+      //   toast.error("Please fix the errors before submitting the form.");
       return; // Stop execution if validation fails
     } else {
       toast.success("registration done");
@@ -324,10 +431,23 @@ if (location.pathname === '/Registration-form/MB'){
       formData.append("aadhar", aadhar);
       formData.append("mobile", mobile);
       formData.append("whatsapp", whatsapp);
-      formData.append("address", address);
+      //new on 7th nov
+      formData.append("houseNumber", houseNumber);
+      formData.append("cityTownVillage", cityTownVillage);
+      formData.append("addressBlock", addressBlock);
+      formData.append("addressDistrict", addressDistrict);
+      formData.append("addressState", addressState);
+
+
+      //^^^^^^^^^^^^
+
+
+
+    //   formData.append("address", address);
       formData.append("district", district);
       formData.append("block", block);
       formData.append("school", school);
+      formData.append("previousClassAnnualExamPercentage",previousClassAnnualExamPercentage);
       formData.append("grade", grade);
       formData.append("image", image);
       formData.append("isRegisteredBy", isRegisteredBy);
@@ -358,13 +478,17 @@ if (location.pathname === '/Registration-form/MB'){
       if (response.data.success === true) {
         setMessage("Post created successfully");
         toast.success("Registration done succesfully");
-        if(location.pathname==='/Registration-form/S100'){
-            navigate('/acknowledgementslip-100')
-            console.log('true is s100')
-        }else if (location.pathname ==='/Registration-form/MB'){
-            navigate('/acknowledgementslip-mb')
-            console.log('true is mbs')
+        if (location.pathname === "/Registration-form/S100") {
+          navigate("/acknowledgementslip-100");
+          console.log("true is s100");
+        } else if (location.pathname === "/Registration-form/MB") {
+          navigate("/acknowledgementslip-mb");
+          console.log("true is mbs");
         }
+
+        //Resets the district block, school dropdown vales
+        
+        //^^^^^^^^^^^^^^^^^^^^^^^^^^^
         // setShowAck(true);
 
         // navigate('/srn')  //after successfull updation of data it routes back to the inputsrn page
@@ -385,188 +509,284 @@ if (location.pathname === '/Registration-form/MB'){
     }
   };
 
-  // It has a CSS in Index.css
+  
   return (
-    <Container>
-      <h1>{FormHeader}</h1>
-      <Form onSubmit={handleSubmit}>
-        <Row className="border mb-3 rounded-2">
-          <Col xs={12} >
-            <Form.Group className="mb-3" controlId="srnInput">
-              <Form.Label>Enter Your SRN:</Form.Label>
-              <Form.Control
-                type="text"
-                name="srn"
-                placeholder="Enter Your SRN"
-                onChange={(e) => setSrn(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
+    <div 
+   
+    >
+      <Container>
+
+      <Container fluid >
+        <Row className="d-flex justify-content-center align-items-center">
+          <img
+            style={{
+              width: 100,
+              height: 100,
+              textAlign: "center",
+              alignContent: "center",
+            }}
+            src="../HRlogo.png"
+          />
         </Row>
+        <Row>
+          <h3 style={{ textAlign: "center" }}>{FormHeader1}</h3>
+        </Row>
+        <Row>
+          <h3 style={{ textAlign: "center" }}>{FormHeader2}</h3>
+        </Row>
+        <hr></hr>
 
-        <Row className="border mb-3 rounded-2">
-          <Col xs={12} md={6} className="border-end p-3">
-          <h2>Personal Details:</h2>
-            <Form.Group className="mb-3" controlId="nameInput">
-              <Form.Label>Enter Your Name:</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                placeholder="Enter Your Name"
-                onChange={(e) => setName(e.target.value)}
-              />
-            </Form.Group>
+        <Nav defaultActiveKey="/userprofile" as="ul">
+          <Nav.Item as="li">
+            <Nav.Link href="/examination">Home</Nav.Link>
+          </Nav.Item>
+          <Nav.Item as="li">
+            <Nav.Link href="/examination">How to fill form</Nav.Link>
+          </Nav.Item>
+        </Nav>
+        </Container>
 
-            <Form.Group className="mb-3" controlId="fatherInput">
-              <Form.Label>Enter Your Father's Name:</Form.Label>
-              <Form.Control
-                type="text"
-                name="father"
-                placeholder="Enter Your Father Name"
-                onChange={(e) => setFather(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="motherInput">
-              <Form.Label>Enter Your Mother's Name:</Form.Label>
-              <Form.Control
-                type="text"
-                name="mother"
-                placeholder="Enter Your Mother Name"
-                onChange={(e) => setMother(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="dobInput">
-              <Form.Label>Enter Your D.O.B:</Form.Label>
-              <Form.Control
-                type="date"
-                name="dob"
-                onChange={(e) => setDob(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="genderSelect">
-              <Form.Label>Enter Your Gender:</Form.Label>
-              <Form.Select
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
-              >
-                <option value="">Select Your Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="categorySelect">
-              <Form.Label>Enter Your Category:</Form.Label>
-              <Form.Select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option value="">Select Your Category</option>
-                <option value="BCA">BCA</option>
-                <option value="BCB">BCB</option>
-                <option value="GEN">GEN</option>
-                <option value="SC">SC</option>
-                <option value="ST">ST</option>
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="aadharInput">
-              <Form.Label>Enter Your 12 digits Aadhar Number:</Form.Label>
-              <Form.Control
-                type="text"
-                name="aadhar"
-                placeholder="Enter Your Aadhar Number"
-                onChange={(e) => setAadhar(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
-
-          {/* Second Column inside the Second Row */}
-          <Col className="border-end p-3">
-          <h2>Contact Details:</h2>
-            <Form.Group className="mb-3" controlId="mobileInput">
-              <Form.Label>Enter Your 10 digits Mobile Number:</Form.Label>
-              <Form.Control
-                type="text"
-                name="mobile"
-                placeholder="Enter Your Mobile Number"
-                onChange={(e) => setMobile(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="whatsappInput">
-              <Form.Label>Enter Your 10 digits Whatsapp Number:</Form.Label>
-              <Form.Control
-                type="text"
-                name="whatsapp"
-                placeholder="Enter Your Whatsapp Number"
-                onChange={(e) => setWhatsapp(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="addressInput">
-              <Form.Label>Enter Your Address:</Form.Label>
-              <Form.Control
-                type="text"
-                name="address"
-                placeholder="Enter Your Address"
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </Form.Group>
-
-             {/* Nested Row inside a second column of the second Row    */}
-
-            
-                <h2>Academic Details:</h2>
-                <DependentDropComponent
-                  setDistrict={setDistrict}
-                  setBlock={setBlock}
-                  setSchool={setSchool}
-                  setshowManualSchool={setshowManualSchool}
-                  setSchoolCode={setSchoolCode}
+        <hr></hr>
+      
+        <Form onSubmit={handleSubmit}>
+          <Row className="border mb-3 rounded-2">
+            <Col xs={12}>
+              <Form.Group className="mb-3" controlId="srnInput">
+                <Form.Label>SRN (एस.आर.एन.) :</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="srn"
+                  placeholder="SRN (एस.आर.एन.)"
+                  onChange={(e) => setSrn(e.target.value)}
                 />
-               
-                
-                
-                <Form.Group className="mb-3" controlId="gradeSelect">
-                  <Form.Label>Enter Your Grade:</Form.Label>
-                  <Form.Select value={grade}>
-                    <option value="8">8</option>
-                    <option value="10">10</option>
-                  </Form.Select>
-                </Form.Group>
-              
-               {/* ^^^^^Nested Row inside a second column of the second Row ^^^^*/}
-            
-          </Col>
-           {/*^^^ Second Column inside the Second Row^^^*/}
-        </Row>
+              </Form.Group>
+            </Col>
+          </Row>
 
-        <Row className="border mb-3 rounded-2">
-          <Col xs={12} md={6}>
-            <Form.Group className="mb-3" controlId="photoInput">
-              <Form.Label>Upload your photo:</Form.Label>
-              <Form.Control
-                type="file"
-                name="image"
-                onChange={(e) => setImage(e.target.files[0])}
+          <Row className="border mb-3 rounded-2">
+            <Col xs={12} md={6} className="border-end p-3">
+              <h2>Personal Details:</h2>
+              <hr></hr>
+              <Form.Group className="mb-3" controlId="nameInput">
+                <Form.Label>Student Name (छात्र का नाम) :</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  placeholder="Student Name (छात्र का नाम)"
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="fatherInput">
+                <Form.Label>Father's Name (पिता का नाम) :</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="father"
+                  placeholder="Father's Name (पिता का नाम)"
+                  onChange={(e) => setFather(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="motherInput">
+                <Form.Label>Mother's Name (मां का नाम) :</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="mother"
+                  placeholder="Mother's Name (मां का नाम)"
+                  onChange={(e) => setMother(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="dobInput">
+                <Form.Label>D.O.B (जन्म तिथि) :</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="dob"
+                  onChange={(e) => setDob(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="genderSelect">
+                <Form.Label>Gender (लिंग) :</Form.Label>
+                <Form.Select
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <option value="">Select Your Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </Form.Select>
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="categorySelect">
+                <Form.Label>Category (वर्ग) :</Form.Label>
+                <Form.Select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                >
+                  <option value="">Select Your Category</option>
+                  <option value="BCA">BCA</option>
+                  <option value="BCB">BCB</option>
+                  <option value="GEN">GEN</option>
+                  <option value="SC">SC</option>
+                  <option value="ST">ST</option>
+                </Form.Select>
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="aadharInput">
+                <Form.Label>Aadhar Number (आधार नंबर) :</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="aadhar"
+                  placeholder="Enter Your Aadhar Number"
+                  onChange={(e) => setAadhar(e.target.value)}
+                />
+              </Form.Group>
+            </Col>
+
+            {/* Second Column inside the Second Row */}
+            <Col className="border-end p-3">
+              <h2>Contact Details:</h2>
+              <hr></hr>
+              <Form.Group className="mb-3" controlId="mobileInput">
+                <Form.Label>Mobile Number (मोबाइल नंबर) :</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="mobile"
+                  placeholder="Enter Your Mobile Number"
+                  onChange={(e) => setMobile(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="whatsappInput">
+                <Form.Label>Whatsapp Number (व्हाट्सएप नंबर) :</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="whatsapp"
+                  placeholder="Enter Your Whatsapp Number"
+                  onChange={(e) => setWhatsapp(e.target.value)}
+                />
+              </Form.Group>
+
+           
+              {/* BELOW FIELDS ADDED ON 7TH NOV AND ARE NEW */}
+              <Form.Group className="mb-3" controlId="addressInput">
+                <Form.Label>House Number (घर का नंबर) :</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="houseNumber"
+                  placeholder="House Number (घर का नंबर)"
+                  onChange={(e) => setHouseNumber(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="addressInput">
+                <Form.Label>City/Town/Village (शहर/कस्बा/गाँव):</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="cityTownVillage"
+                  placeholder="City/Town/Village (शहर/कस्बा/गाँव)"
+                  onChange={(e) => setCityTownVillage(e.target.value)}
+                />
+              </Form.Group>
+
+             
+              <Form.Group className="mb-3" controlId="addressInput">
+                <Form.Label>Block (ब्लॉक):</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="addressBlock"
+                  placeholder="Block"
+                  onChange={(e) => setAddressBlock(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="addressInput">
+                <Form.Label>District (ज़िला):</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="addressDistrict"
+                  placeholder="District (ज़िला)"
+                  onChange={(e) => setAddressDistrict(e.target.value)}
+                />
+
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="addressInput">
+                <Form.Label>State (राज्य):</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="state"
+                  placeholder="State (राज्य)"
+                  onChange={(e) => setAddressState(e.target.value)}
+                />
+              </Form.Group>
+
+
+              {/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */}
+
+              {/* Nested Row inside a second column of the second Row    */}
+
+              <h2>Academic Details:</h2>
+              <hr></hr>
+              <DependentDropComponent
+                setDistrict={setDistrict}
+                setBlock={setBlock}
+                setSchool={setSchool}
+                setshowManualSchool={setshowManualSchool}
+                setSchoolCode={setSchoolCode}
               />
-            </Form.Group>
 
-            <Button type="submit">Register</Button>
-          </Col>
-        </Row>
-      </Form>
+             
+              <Form.Group className="mb-3" controlId="addressInput">
+                <Form.Label>{location.pathname === '/Registration-form/MB' ||
+                  location.pathname === '/Registration-form/put/MB' ? ("Class 7th Annual Examination Percentage (कक्षा 7वीं की वार्षिक परीक्षा का प्रतिशत)"):("Class 10th Annual Examination Percentage (कक्षा 10वीं की वार्षिक परीक्षा का प्रतिशत.)")}</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="previousClassAnnualExamPercentage"
+                  placeholder="Enter Percentage"
+                  onChange={(e) => setPreviousClassAnnualExamPercentage(e.target.value)}
+                />
+              </Form.Group>
 
-      <p>{message}</p>
-      {manualSchool ? <div>Data found</div> : <p>Not found data</p>}
 
-      {/* {showAck ? (
+              <Form.Group className="mb-3" controlId="gradeSelect">
+                <Form.Label>Class (कक्षा) :</Form.Label>
+                <Form.Select value={grade}>
+                  <option value="8">8</option>
+                  <option value="10">10</option>
+                </Form.Select>
+              </Form.Group>
+
+              {/* ^^^^^Nested Row inside a second column of the second Row ^^^^*/}
+            </Col>
+            {/*^^^ Second Column inside the Second Row^^^*/}
+          </Row>
+
+          <Row className="border mb-3 rounded-2">
+            <Col xs={12} md={6}>
+              <Form.Group className="mb-3" controlId="photoInput">
+                <Form.Label>Upload Your Image (अपनी प्रोफाइल पिक्चर अपलोड करें।) :</Form.Label>
+                <Form.Control
+                  type="file"
+                  name="image"
+                  onChange={(e) => setImage(e.target.files[0])}
+                />
+              </Form.Group>
+
+              
+            </Col>
+          </Row>
+          <Row>
+          <Button type="submit">Register</Button>
+          </Row>
+        </Form>
+
+        <p>{message}</p>
+        {/* {manualSchool ? <div>Data found</div> : <p>Not found data</p>} */}
+
+        {/* {showAck ? (
         <AcknowledgementSlip showAck={showAck} slipData={slipData} />
       ) : null} */}
-    </Container>
+      </Container>
+      <Footer />
+    </div>
   );
 }

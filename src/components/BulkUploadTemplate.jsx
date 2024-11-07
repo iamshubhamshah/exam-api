@@ -18,7 +18,7 @@ const DownloadTemplate =()=>{
 
 for (let i = 0; i<10; i++){
     TemplateData.push ({
-        srn: '', // Empty field for user input
+                srn: '', // Empty field for user input
                 name: '',
                 father: '',
                 mother: '',
@@ -28,12 +28,21 @@ for (let i = 0; i<10; i++){
                 aadhar: '',
                 mobile: '',
                 whatsapp: '',
-                address: '',
+                // address: '',
+                //below added on 7 nov
+                houseNumber: '',
+                cityTownVillage: '',
+                addressBlock: '',
+                addressDistrict: '',
+                addressState: '',
+
+                //^^^^^^^^^^^^^^^^^^^^^
                 district: district || '', // Prefilled district names
                 block: block || '', // Prefilled block names
                 school: school || '', // Prefilled school names
                 schoolCode: schoolCode, // Empty field for school code
-                grade: grade
+                grade: grade,
+                previousClassAnnualExamPercentage: ''
 
     })
 }

@@ -14,6 +14,8 @@ export default function StudentNavbar() {
     const {setStudent} = useContext(StudentContext);
     
     const {student} = useContext(StudentContext);
+
+    //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     return (
         <div style={{ textAlign: 'center' }}>
           <nav style={{

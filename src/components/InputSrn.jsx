@@ -149,7 +149,7 @@ if (location.pathname==='/srn-100'){
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "100vh", 
+        height: "50vh", 
       
       }}
     >
@@ -169,18 +169,19 @@ if (location.pathname==='/srn-100'){
         }}
         onSubmit={handleSubmit}
       >
-        <img src="" alt="logo goes here" />
         <label>ENTER YOUR SRN</label>
         <br />
         <input
-          type="text"
+        type="text" 
+        maxlength="10" 
           name="srn"
           placeholder="Enter Your SRN Here"
           onChange={(e) => setInputSrn(e.target.value)}
+          oninput={(e) => this.value.replace(/[^0-9]/g, '').slice(0, 10)}
         />
         <br />
         <button>Submit</button>
-        <p>made changese</p>
+       
       </form>
       {console.log(inputSrn)}
       

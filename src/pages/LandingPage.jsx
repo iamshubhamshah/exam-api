@@ -25,11 +25,7 @@ export default function LandingPage() {
           <Nav.Link href="/user-signup">Officials/Staff Signup</Nav.Link>
         </Nav.Item>
 
-        <Nav.Item as="li">
-          <Nav.Link onClick={handleClickforStudentSignin}>
-            Student Login
-          </Nav.Link>
-        </Nav.Item>
+        
         <hr/>
       </Nav>
       <Container fluid>
