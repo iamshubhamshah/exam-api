@@ -19,7 +19,7 @@ export default function Navbar() {
             border:'solid'
             
           }}>
-            <img src="./HRLogo.png" style={{ width: '100px', height: 'auto' }} />
+            <img src="../HRLogo.png" style={{ width: '100px', height: 'auto' }} />
             <div>
             <h1 style={customStyles}>
               हरियाणा प्रतिभा खोज
