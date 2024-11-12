@@ -42,7 +42,7 @@ function App() {
         
         <Routes>
 
-                <Route path="/examination" element={<LandingPage />} />
+                <Route path="/" element={<LandingPage />} />  
 
                 <Route path="/srn" element={<InputSrn />} />
                 <Route path="/srn-100" element={<InputSrn />} />

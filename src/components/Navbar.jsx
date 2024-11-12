@@ -1,33 +1,63 @@
 import React from "react";
 
 
-const customStyles ={
-    color: "black"
-    
-}
+
 
 export default function Navbar() {
     return (
       
         <div style={{ textAlign: 'center' }}>
           <nav style={{
-            background: "#50C878",
+           background: '#0F326F',
+
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             padding: '00px', // Add some padding for better spacing
-            border:'solid'
+            border:''
             
           }}>
-            <img src="../HRLogo.png" style={{ width: '100px', height: 'auto' }} />
+            <img src="/HRLogo.png" style={{ width: '100px', height: 'auto' }} />
             <div>
-            <h1 style={customStyles}>
+            <h5 style={{color: '#F2FFD7',
+              fontWeight:'bold'
+              
+            }}>
+              <br/>
               हरियाणा प्रतिभा खोज
-            </h1>
-            <h2>Mission Buniyaad & Haryana Super 100 Examination</h2>
-          <h2>Batch 2025-27</h2>
+            </h5>
+            <h1
+             style={{
+              color:'#FFFFFF',
+              fontWeight:'bold',
+              fontSize:'55px'
+          
+            }}>Mission Buniyaad</h1>
+            <h3
+             style={{
+              color:'#FFFFFF',
+              fontWeight:'bold'
+          
+            }}
+            >Haryana Super 100 Examination</h3>
+          <h4
+           style={{
+            color:'#F2FFD7',
+       
+        
+          }}
+          
+          >Registration Form</h4>
+          <h4
+           style={{
+            color:'#F2FFD7',
+       
+        
+          }}
+          
+          >Batch 2025-27</h4>
           </div>
-            <img src="./Buniyaad.png" style={{ width: '100px', height: 'auto' }} />
+            <img src="/Buniyaad.png" style={{ width: '100px', height: 'auto' }} />
           </nav>
           
       

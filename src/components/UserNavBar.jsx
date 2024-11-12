@@ -53,7 +53,7 @@ try {
         </Row>
         <Nav defaultActiveKey="/userprofile" as="ul">
         <Nav.Item as="li">
-        <Nav.Link href="/examination">Home Page</Nav.Link>
+        <Nav.Link href="/">Home Page</Nav.Link>
       </Nav.Item>
       <Nav.Item as="li">
         <Nav.Link href="/userprofile">Go Back</Nav.Link>

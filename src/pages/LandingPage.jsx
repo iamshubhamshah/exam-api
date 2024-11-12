@@ -20,33 +20,39 @@ export default function LandingPage() {
   return (
     <div>
       <Navbar /> 
-      <Nav defaultActiveKey="/userprofile" as="ul">
+      <br></br>
+      {/* <Nav defaultActiveKey="/userprofile" as="ul">
         <Nav.Item as="li">
-          <Nav.Link href="/user-signup">Officials/Staff Signup</Nav.Link>
+          <Nav.Link href="/user-signup">Officials/Stsdlfnaff Signup</Nav.Link>
         </Nav.Item>
 
         
         <hr/>
-      </Nav>
+      </Nav> */}
       <Container fluid>
         <Row className="justify-content-right "></Row>
 
         <Container >
           <Row>
             <Col className="text-center">
-            <BsArrowRight className="blinking-link" />
-            <Link  to="/srn" style={{textDecoration:'none', fontSize:'25px'}}>Mission Buniyaad Registration Class 8th</Link>
+            
+            <Link  to="/srn" style={{textDecoration:'none', fontSize:'25px'}}>
+            <p><BsArrowRight className="blinking-link" />Mission Buniyaad Registration Class 8th <br/>(मिशन बुनियाद परीक्षा के लिए, कक्षा 8 के विद्यार्थी यहाँ क्लिक करें)</p> 
+            </Link>
             <br />
+           
+            
+            <Link to="/srn-100" style={{textDecoration:'none', fontSize:'25px'}}>
+            <p><BsArrowRight className="blinking-link" /> Haryana Super 100 Registration Class 10th <br/> (हरियाणा सुपर 100 परीक्षा के लिए, कक्षा 10 के विद्यार्थी यहाँ क्लिक करें)</p>
+            </Link>
             <br />
-            <BsArrowRight className="blinking-link" />
-            <Link to="/srn-100" style={{textDecoration:'none', fontSize:'25px'}}>Super 100 Registration Class 10th</Link>
-            <br />
-            <br />
-            <BsArrowRight className="blinking-link" />
-            <Link to="/user-signin" style={{textDecoration:'none', fontSize:'25px'}}>SCHOOL/ABRC/TEACHER Login</Link>
+            
+            <Link to="/user-signin" style={{textDecoration:'none', fontSize:'25px'}}>
+           <p><BsArrowRight className="blinking-link" />SCHOOL/ABRC/BRP/Officials Login (स्कूल/ABRC/BRP/अन्य अधिकारी यंहा क्लिक करे)</p>
+            </Link>
 
             <br />
-            <br />
+           
             {/* //Below Student Login is just for testing purpose right now. I will place it at it's right place in future. */}
             </Col>
           </Row>

@@ -9,6 +9,7 @@ import Navbar from "./Navbar";
 
 import TwilioService, { sendNotification } from "../services/TwilioService";
 import Footer from "./Footer";
+import DependentDropABRC from "./DependentDropABRC";
 
 export default function UserSignUp() {
   let otp = "123456";
@@ -153,13 +154,15 @@ export default function UserSignUp() {
         
         <Row className="border mb-3 rounded-2">
        
-         <h1 style={{textAlign:'center'}}>OFFICIALS SIGN-UP</h1>
-         <small style={{textAlign:'center'}}>(Only for Govt. officials, ABRC/BRP/Teacher/School Staff/Vikalpa Staff)</small>
+         <h1 style={{textAlign:'center'}}>OFFICIALS SIGN-UP (अधिकारिक पंजीकरण)</h1>
+         <small style={{textAlign:'center'}}>Only for Govt. officials, ABRC/BRP/Teachers/School Staff/Vikalpa Staff.<br/>(केवल सरकारी अधिकारी, ABRC/BRP/शिक्षक/स्कूल स्टाफ/Vikalpa स्टाफ के लिए) 
+
+</small>
         </Row>
         <Row className="border mb-3 rounded-2" >
           <Col>
             <Form.Group className="mb-3" controlId="userNameInput">
-              <Form.Label>Name:</Form.Label>
+              <Form.Label>Name (नाम) :</Form.Label>
 
               <Form.Control
                 type="text"
@@ -171,29 +174,39 @@ export default function UserSignUp() {
             </Col>
       <Col>
             <Form.Group>
-              <Form.Label>Designation:</Form.Label>
+              <Form.Label>Designation (पद) : </Form.Label>
 
               <Form.Select onChange={(e) => setDesignation(e.target.value)} required>
                 <option value="">Select Designation</option>
-                <option value="Teacher">Teacer</option>
-                <option value="Principal">Principal</option>
+                <option value="Teacher">Teacher (शिक्षक)</option>
+                <option value="Principal">Principal (प्रधानाचार्य)</option>
                 <option value="ABRC">ABRC</option>
-                <option value="Coordinator">Co-ordinator</option>
+                <option value="Coordinator">Co-ordinator (समन्वयक)</option>
+                <option value="VikalpaStaff">Vikalpa Staff</option>
               </Form.Select>
             </Form.Group>
             </Col>
-            
+            {(designation === 'Teacher' || designation === 'Principal') ? (
+  <DependentDropComponent
+    setDistrict={setDistrict}
+    setBlock={setBlock}
+    setSchool={setSchool}
+    setSchoolCode={setSchoolCode}
+  />
+) : (
+  (designation === 'ABRC' || designation === 'Coordinator' || designation === 'VikalpaStaff') ? (
+    <DependentDropABRC
+      setDistrict={setDistrict}
+      setBlock={setBlock}
+    />
+  ) : null
+)}
+           
         
-            <DependentDropComponent
-            setDistrict={setDistrict}
-            setBlock={setBlock}
-            setSchool={setSchool}
-            setSchoolCode={setSchoolCode}
-          />
-        
+       
             
         <Form.Group>
-              <Form.Label>Enter Your Mobile:</Form.Label>
+              <Form.Label>Mobile Number (अपना मोबाइल नंबर दर्ज करें) :</Form.Label>
 
               <Form.Control
                 type="text"
@@ -205,7 +218,7 @@ export default function UserSignUp() {
 
             {VerifyOtp ? (
               <Form.Group>
-              <Form.Label>Verify Otp:</Form.Label>
+              <Form.Label>Enter OTP sent on your mobile (अपना OTP दर्ज करें) :</Form.Label>
   
                 <Form.Control
                   type="tel"
@@ -213,7 +226,7 @@ export default function UserSignUp() {
                   onChange={(e) => setInputOtp(e.target.value)}
                   required
                 />
-                {inputOtp === otp ? (null):(<small>Type in correct otp for creating password</small>)}
+                {inputOtp === otp ? (null):(<small>Enter correct otp for creating password</small>)}
               </Form.Group>
               
             ):(null)}
@@ -222,7 +235,7 @@ export default function UserSignUp() {
             
             
               <Form.Group>
-              <Form.Label>Enter Your Password:</Form.Label>
+              <Form.Label>Cereate Password (कृपया अपना पासवर्ड बनाएं) :</Form.Label>
              
               <Form.Control
                 type="password"
@@ -230,7 +243,7 @@ export default function UserSignUp() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <small>Your otp is correct. Please create your password</small>
+              <small>Otp Matched</small>
             </Form.Group>
   
 

@@ -58,12 +58,16 @@ export default function RegistrationFormComponent() {
   //Dynamically sets the header in the form
   let FormHeader1;
   let FormHeader2;
+  let FormHeader3;
   if (location.pathname === "/Registration-form/MB") {
     FormHeader1 = "Registration Form";
-    FormHeader2 = "Mission Buniyaad Batch 2025-27";
+    FormHeader2 = "Mission Buniyaad";
+    FormHeader3 = "Batch 2025-27"
   } else if (location.pathname === "/Registration-form/S100") {
     FormHeader1 = "Registration Form";
-    FormHeader2 = "Haryana Super 100 Batch 2025-27";
+    FormHeader2 = "Haryana Super 100";
+    FormHeader3 = "Batch 2025-27"
+    
   }
   //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -525,14 +529,17 @@ export default function RegistrationFormComponent() {
               textAlign: "center",
               alignContent: "center",
             }}
-            src="../HRlogo.png"
+            src="/HRlogo.png"
           />
+        </Row>
+        <Row>
+          <h2 style={{ textAlign: "center" }}>{FormHeader2}</h2>
         </Row>
         <Row>
           <h3 style={{ textAlign: "center" }}>{FormHeader1}</h3>
         </Row>
         <Row>
-          <h3 style={{ textAlign: "center" }}>{FormHeader2}</h3>
+          <h4 style={{ textAlign: "center" }}>{FormHeader3}</h4>
         </Row>
         <hr></hr>
 
@@ -541,7 +548,7 @@ export default function RegistrationFormComponent() {
             <Nav.Link href="/examination">Home</Nav.Link>
           </Nav.Item>
           <Nav.Item as="li">
-            <Nav.Link href="/examination">How to fill form</Nav.Link>
+            <Nav.Link href="/examination">How to fill form (फॉर्म कैसे भरे)</Nav.Link>
           </Nav.Item>
         </Nav>
         </Container>
@@ -565,20 +572,22 @@ export default function RegistrationFormComponent() {
 
           <Row className="border mb-3 rounded-2">
             <Col xs={12} md={6} className="border-end p-3">
-              <h2>Personal Details:</h2>
+              <h2>Personal Details (व्यक्तिगत विवरण) :</h2>
               <hr></hr>
               <Form.Group className="mb-3" controlId="nameInput">
-                <Form.Label>Student Name (छात्र का नाम) :</Form.Label>
+                <Form.Label>Student Name (विद्यार्थी का नाम) :</Form.Label>
+                <p style={{fontSize: '12px'}}>(स्कूल में पंजीकृत नाम दर्ज करें)</p>
                 <Form.Control
                   type="text"
                   name="name"
-                  placeholder="Student Name (छात्र का नाम)"
+                  placeholder="Student Name (विद्यार्थी का नाम)"
                   onChange={(e) => setName(e.target.value)}
                 />
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="fatherInput">
                 <Form.Label>Father's Name (पिता का नाम) :</Form.Label>
+                <p style={{fontSize: '12px'}}>(MR/श्री का प्रयोग न करें)</p>
                 <Form.Control
                   type="text"
                   name="father"
@@ -588,13 +597,21 @@ export default function RegistrationFormComponent() {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="motherInput">
-                <Form.Label>Mother's Name (मां का नाम) :</Form.Label>
+                <Form.Label>Mother's Name (माता का नाम) :</Form.Label>
+                <p style={{fontSize: '12px'}}>(MRS/श्रीमती का प्रयोग न करें)</p>
                 <Form.Control
                   type="text"
                   name="mother"
-                  placeholder="Mother's Name (मां का नाम)"
+                  placeholder="Mother's Name (माता का नाम)"
                   onChange={(e) => setMother(e.target.value)}
                 />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="gradeSelect">
+                <Form.Label>Class (कक्षा) :</Form.Label>
+                <Form.Select value={grade}>
+                  <option value={grade}>{grade}</option>
+                  
+                </Form.Select>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="dobInput">
@@ -612,7 +629,7 @@ export default function RegistrationFormComponent() {
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
                 >
-                  <option value="">Select Your Gender</option>
+                  <option value="">Select Your Gender: Male/Female</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                 </Form.Select>
@@ -638,7 +655,7 @@ export default function RegistrationFormComponent() {
                 <Form.Control
                   type="text"
                   name="aadhar"
-                  placeholder="Enter Your Aadhar Number"
+                  placeholder="Aadhar Number (आधार नंबर)"
                   onChange={(e) => setAadhar(e.target.value)}
                 />
               </Form.Group>
@@ -646,14 +663,15 @@ export default function RegistrationFormComponent() {
 
             {/* Second Column inside the Second Row */}
             <Col className="border-end p-3">
-              <h2>Contact Details:</h2>
+              <h2>Contact Details (संपर्क विवरण) :</h2>
               <hr></hr>
               <Form.Group className="mb-3" controlId="mobileInput">
                 <Form.Label>Mobile Number (मोबाइल नंबर) :</Form.Label>
+                <p style={{fontSize:'12px'}}>(केवल अपने माता या पिता का मोबाइल नंबर भरें)</p>
                 <Form.Control
                   type="text"
                   name="mobile"
-                  placeholder="Enter Your Mobile Number"
+                  placeholder="Mobile Number (मोबाइल नंबर)"
                   onChange={(e) => setMobile(e.target.value)}
                 />
               </Form.Group>
@@ -663,7 +681,7 @@ export default function RegistrationFormComponent() {
                 <Form.Control
                   type="text"
                   name="whatsapp"
-                  placeholder="Enter Your Whatsapp Number"
+                  placeholder="Whatsapp Number (व्हाट्सएप नंबर)"
                   onChange={(e) => setWhatsapp(e.target.value)}
                 />
               </Form.Group>
@@ -671,16 +689,16 @@ export default function RegistrationFormComponent() {
            
               {/* BELOW FIELDS ADDED ON 7TH NOV AND ARE NEW */}
               <Form.Group className="mb-3" controlId="addressInput">
-                <Form.Label>House Number (घर का नंबर) :</Form.Label>
+                <Form.Label>H. No. (मकान नंबर) :</Form.Label>
                 <Form.Control
                   type="text"
                   name="houseNumber"
-                  placeholder="House Number (घर का नंबर)"
+                  placeholder="H. No. (मकान नंबर)"
                   onChange={(e) => setHouseNumber(e.target.value)}
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="addressInput">
-                <Form.Label>City/Town/Village (शहर/कस्बा/गाँव):</Form.Label>
+                <Form.Label>City/Town/Village (शहर/कस्बा/गाँव) :</Form.Label>
                 <Form.Control
                   type="text"
                   name="cityTownVillage"
@@ -691,16 +709,16 @@ export default function RegistrationFormComponent() {
 
              
               <Form.Group className="mb-3" controlId="addressInput">
-                <Form.Label>Block (ब्लॉक):</Form.Label>
+                <Form.Label>Block (ब्लॉक) :</Form.Label>
                 <Form.Control
                   type="text"
                   name="addressBlock"
-                  placeholder="Block"
+                  placeholder="Block (ब्लॉक)"
                   onChange={(e) => setAddressBlock(e.target.value)}
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="addressInput">
-                <Form.Label>District (ज़िला):</Form.Label>
+                <Form.Label>District (ज़िला) :</Form.Label>
                 <Form.Control
                   type="text"
                   name="addressDistrict"
@@ -710,7 +728,7 @@ export default function RegistrationFormComponent() {
 
               </Form.Group>
               <Form.Group className="mb-3" controlId="addressInput">
-                <Form.Label>State (राज्य):</Form.Label>
+                <Form.Label>State (राज्य) :</Form.Label>
                 <Form.Control
                   type="text"
                   name="state"
@@ -724,7 +742,7 @@ export default function RegistrationFormComponent() {
 
               {/* Nested Row inside a second column of the second Row    */}
 
-              <h2>Academic Details:</h2>
+              <h2>Academic Details (शैक्षिक विवरण) :</h2>
               <hr></hr>
               <DependentDropComponent
                 setDistrict={setDistrict}
@@ -737,7 +755,7 @@ export default function RegistrationFormComponent() {
              
               <Form.Group className="mb-3" controlId="addressInput">
                 <Form.Label>{location.pathname === '/Registration-form/MB' ||
-                  location.pathname === '/Registration-form/put/MB' ? ("Class 7th Annual Examination Percentage (कक्षा 7वीं की वार्षिक परीक्षा का प्रतिशत)"):("Class 10th Annual Examination Percentage (कक्षा 10वीं की वार्षिक परीक्षा का प्रतिशत.)")}</Form.Label>
+                  location.pathname === '/Registration-form/put/MB' ? ("Class 7th Annual Examination % (कक्षा 7वीं की वार्षिक परीक्षा का प्रतिशत)"):("Class 10th Annual Examination % (कक्षा 10वीं की वार्षिक परीक्षा का प्रतिशत.)")}</Form.Label>
                 <Form.Control
                   type="text"
                   name="previousClassAnnualExamPercentage"
@@ -747,13 +765,7 @@ export default function RegistrationFormComponent() {
               </Form.Group>
 
 
-              <Form.Group className="mb-3" controlId="gradeSelect">
-                <Form.Label>Class (कक्षा) :</Form.Label>
-                <Form.Select value={grade}>
-                  <option value="8">8</option>
-                  <option value="10">10</option>
-                </Form.Select>
-              </Form.Group>
+             
 
               {/* ^^^^^Nested Row inside a second column of the second Row ^^^^*/}
             </Col>
@@ -763,7 +775,9 @@ export default function RegistrationFormComponent() {
           <Row className="border mb-3 rounded-2">
             <Col xs={12} md={6}>
               <Form.Group className="mb-3" controlId="photoInput">
-                <Form.Label>Upload Your Image (अपनी प्रोफाइल पिक्चर अपलोड करें।) :</Form.Label>
+                <Form.Label>Upload Your Passport Size Photo (अपनी पासपोर्ट साइज फोटो अपलोड करें) :</Form.Label>
+                <p style={{fontSize:'12px'}}>Note: You can register without a passport photo, but please upload it within 48 hours. <br/>नोट: आप बिना पासपोर्ट फोटो के भी रजिस्टर कर सकते हैं, लेकिन कृपया 48 घंटे के भीतर इसे अपलोड कर दें।</p>
+                  
                 <Form.Control
                   type="file"
                   name="image"
@@ -772,7 +786,12 @@ export default function RegistrationFormComponent() {
               </Form.Group>
 
               
+              
             </Col>
+            <p>Note / नोट:  Submitting incorrect details may lead to form rejection.
+                 (गलत जानकारी देने पर फॉर्म अस्वीकार हो सकता है।)
+              </p>
+              
           </Row>
           <Row>
           <Button type="submit">Register</Button>

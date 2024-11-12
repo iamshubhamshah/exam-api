@@ -108,34 +108,30 @@ export default function UserSignIn() {
         height: "65vh", // Full viewport height
         textAlign: "center" // Center text
         }}>
-              <Card style={{width:'50rem', height:'30rem', alignContent:"center", borderRadius:"30px",
-                borderColor: 'grey',
-                border: 'solid'
-              }}>
-                
-              <Card.Body>
+              
                 
         
       <div>
         <form
           style={{
-            display: 'flex',
+            display: '',
             flexDirection: 'column', 
             alignItems: 'center', 
             justifyContent: 'center', 
             textAlign: 'center', 
-            width: '100%', 
+            width: '500px', 
             height: '100%', 
+            border:'solid',
+            borderRadius:'20px'
           }}
           onSubmit={handleSubmit}
         >
+          
           <div>
-            <img src="" alt="Logo goes here" />
+            <h1>OFFICIALS LOGIN</h1>
+            <hr/>
           </div>
-          <div>
-            <p>Login to your account</p>
-          </div>
-          <label>Enter Your Mobile Number: </label>
+          <label>Enter Your Registered Mobile Number: </label>
           <br />
           <input
             type="text"
@@ -144,7 +140,7 @@ export default function UserSignIn() {
             onChange={(e) => setMobile(e.target.value)}
           />
           <br />
-          <label>Enter Your Password: </label>
+          <label>Enter Password: </label>
           <br />
           <input
             type="text"
@@ -153,26 +149,30 @@ export default function UserSignIn() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <br />
-          <Button onClick={handleSubmit}>Login</Button>
+          <br />
+          <Button onClick={handleSubmit} style={{width:200}}>Login</Button>
 
           
 
           {errorRedirect && (
             <div>
               <p>Your Id and Password is Wrong.</p>
-              <br />
+            
               <p> SignUp first: <Link to="/user-signup">Go to signup Page</Link></p>
               
             </div>
           )}
+          <br/>
+          <br/>
+          <Link to={'/user-signup'}><Button style={{width:200}}>Create your account</Button></Link>
+          <br/>
+          <br/>
         </form>
         
-        <br/>
-        <Link to={'/user-signup'}><Button>Create your account</Button></Link>
+        
       </div>
   
-      </Card.Body>
-      </Card> 
+      
     </div>
     </Row>
     <br></br>

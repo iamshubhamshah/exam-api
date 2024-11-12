@@ -41,12 +41,15 @@ const {user} = useContext(UserContext)
   //Dynamically sets the header in the form
   let FormHeader1;
   let FormHeader2;
+  let FormHeader3;
   if (location.pathname === "/Registration-form/put/MB") {
     FormHeader1 = "Registration Form";
-    FormHeader2 = "Mission Buniyaad Batch 2025-27";
+    FormHeader2 = "Mission Buniyaad";
+    FormHeader3 = "Batch 2025-27"
   } else if (location.pathname === "/Registration-form/put/S100") {
     FormHeader1 = "Registration Form";
     FormHeader2 = "Haryana Super 100 Batch 2025-27";
+    FormHeader3 = "Batch 2025-27"
   }
   //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     
@@ -606,14 +609,17 @@ return (
               textAlign: "center",
               alignContent: "center",
             }}
-            src="../HRlogo.png"
+            src="/HRlogo.png"
           />
+        </Row>
+        <Row>
+          <h2 style={{ textAlign: "center" }}>{FormHeader2}</h2>
         </Row>
         <Row>
           <h3 style={{ textAlign: "center" }}>{FormHeader1}</h3>
         </Row>
         <Row>
-          <h3 style={{ textAlign: "center" }}>{FormHeader2}</h3>
+          <h4 style={{ textAlign: "center" }}>{FormHeader3}</h4>
         </Row>
         <hr></hr>
 
@@ -622,7 +628,7 @@ return (
             <Nav.Link href="/examination">Home</Nav.Link>
           </Nav.Item>
           <Nav.Item as="li">
-            <Nav.Link href="/examination">How to fill form</Nav.Link>
+            <Nav.Link href="/examination">How to fill form (फॉर्म कैसे भरे)</Nav.Link>
           </Nav.Item>
         </Nav>
         </Container>
@@ -646,26 +652,36 @@ return (
     
             <Row className="border mb-3 rounded-2">
             <Col xs={12} md={6} className="border-end p-3">
-            <h2>Personal Details:</h2>
+            <h2>Personal Details (व्यक्तिगत विवरण) :</h2>
             <Form.Group className="mb-3" controlId="nameInput">
-            <Form.Label>Student Name (छात्र का नाम) :</Form.Label>
+            <Form.Label>Student Name (विद्यार्थी का नाम) :</Form.Label>
             
-            <Form.Control type='text' name='name' placeholder='Student Name (छात्र का नाम)' value={name} onChange={(e) => setName(e.target.value)} />
+            <Form.Control type='text' name='name' placeholder='Student Name (विद्यार्थी का नाम)' value={name} onChange={(e) => setName(e.target.value)} />
          
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="fatherInput">
               <Form.Label>Father's Name (पिता का नाम) :</Form.Label>
-            
+              <p style={{fontSize: '12px'}}>(MR/श्री का प्रयोग न करें)</p>
             <Form.Control type='text' name='father' placeholder="Father's Name (पिता का नाम)" value={father} onChange={(e) => setFather(e.target.value)} />
             
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="motherInput">
-            <Form.Label>Mother's Name (मां का नाम) ::</Form.Label>
-            
+            <Form.Label>Mother's Name (माता का नाम) :</Form.Label>
+            <p style={{fontSize: '12px'}}>(MRS/श्रीमती का प्रयोग न करें)</p>
             <Form.Control type='text' name='mother' placeholder="Mother's Name (मां का नाम)" value={mother} onChange={(e) => setMother(e.target.value)} />
             
+            <Form.Group className="mb-3" controlId="gradeSelect">
+    <Form.Label>Class (कक्षा) :</Form.Label>
+ 
+                <Form.Select value={grade} onChange={(e)=>setGrade(e.target.value)}>
+                    <option value={grade}>{grade}</option>
+                  
+                </Form.Select>
+                </Form.Group>
+
+
             </Form.Group>
             <Form.Group className="mb-3" controlId="dobInput">
             <Form.Label>D.O.B (जन्म तिथि) :</Form.Label>
@@ -701,7 +717,7 @@ return (
             
             <Form.Group className="mb-3" controlId="aadharInput">
             <Form.Label>Aadhar Number (आधार नंबर) :</Form.Label>
-            <Form.Control type='text' name='aadhar' placeholder='Enter Your Aadhar Number' value={aadhar} onChange={(e) => setAadhar(e.target.value)} />
+            <Form.Control type='text' name='aadhar' placeholder="Aadhar Number (आधार नंबर)" value={aadhar} onChange={(e) => setAadhar(e.target.value)} />
             
             </Form.Group>
              </Col>
@@ -709,24 +725,24 @@ return (
               {/* Second Column inside the Second Row */}
           
               <Col className="border-end p-3">
-              <h2>Contact Details:</h2>
+              <h2>Contact Details (संपर्क विवरण) :</h2>
               <Form.Group className="mb-3" controlId="mobileInput">
               <Form.Label>Mobile Number (मोबाइल नंबर) :</Form.Label>
-            <Form.Control type='text' name='mobile' placeholder='Enter Your Mobile Number' value={mobile} onChange={(e) => setMobile(e.target.value)} />
+            <Form.Control type='text' name='mobile' placeholder='Mobile Number (मोबाइल नंबर)' value={mobile} onChange={(e) => setMobile(e.target.value)} />
             </Form.Group>
     
             <Form.Group className="mb-3" controlId="whatsappInput">
               <Form.Label>Whatsapp Number (व्हाट्सएप नंबर) :</Form.Label>
-            <Form.Control type='text' name='whatsapp' placeholder='Enter Your Whatsapp Number' value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} />
+            <Form.Control type='text' name='whatsapp' placeholder='Whatsapp Number (व्हाट्सएप नंबर)' value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} />
             </Form.Group>
     
              {/* BELOW FIELDS ADDED ON 7TH NOV AND ARE NEW */}
              <Form.Group className="mb-3" controlId="addressInput">
-                <Form.Label>House Number (घर का नंबर):</Form.Label>
+                <Form.Label>H. No. (मकान नंबर) :</Form.Label>
                 <Form.Control
                   type="text"
                   name="houseNumber"
-                  placeholder="House Number (घर का नंबर)"
+                  placeholder="H. No. (मकान नंबर)"
                   value={houseNumber}
                   onChange={(e) => setHouseNumber(e.target.value)}
                 />
@@ -781,7 +797,7 @@ return (
 
         {/* Nested Row inside a second column of the second Row    */}
             
-        <h2>Academic Details:</h2>     
+        <h2>Academic Details (शैक्षिक विवरण) :</h2>     
 
 <DependentDropComponent
     setDistrict={setDistrict}
@@ -823,15 +839,7 @@ return (
             <input type='text' name='school' placeholder='Enter Your School' value={school} onChange={(e) => setSchool(e.target.value)} />
             <br/> */}
     
-    <Form.Group className="mb-3" controlId="gradeSelect">
-    <Form.Label>Class (कक्षा) :</Form.Label>
- 
-                <Form.Select value={grade} onChange={(e)=>setGrade(e.target.value)}>
-                    <option value="8">8</option>
-                    <option value="10">10</option>
-                </Form.Select>
-                </Form.Group>
-
+    
                 {/* ^^^^^Nested Row inside a second column of the second Row ^^^^*/}
 
             {/* <input type='text' name='grade' placeholder='Enter Your Grade' value={grade} onChange={(e) => setGrade(e.target.value)} /> */}
@@ -841,20 +849,25 @@ return (
             <Row className="border mb-3 rounded-2">
           <Col xs={12} md={6}>
             <Form.Group className="mb-3" controlId="photoInput">
-              <Form.Label>Upload Your Image (अपनी प्रोफाइल पिक्चर अपलोड करें।) :</Form.Label>
+              <Form.Label>Upload Your Passport Size Photo (अपनी पासपोर्ट साइज फोटो अपलोड करें) :</Form.Label>
+              <p style={{fontSize:'12px'}}>Note: You can register without a passport photo, but please upload it within 48 hours. <br/>नोट: आप बिना पासपोर्ट फोटो के भी रजिस्टर कर सकते हैं, लेकिन कृपया 48 घंटे के भीतर इसे अपलोड कर दें।</p>
+                 
             <Form.Control type='file' name='image' onChange={(e) => setImage(e.target.files[0])} />
             </Form.Group>
              
             </Col>
+            <p>Note / नोट:  Submitting incorrect details may lead to form rejection.
+                 (गलत जानकारी देने पर फॉर्म अस्वीकार हो सकता है।)
+              </p>
             </Row>
             <Row>
             <Button type="submit" >Register</Button>
             </Row>
         </Form>
     
-        <p>{message}</p>
-        <p>{student.name}</p>
-      
+        {/* <p>{message}</p>
+        <p>{student.name}</p> */}
+      <br></br>
       
 
     

@@ -9,13 +9,10 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 
 
-export default function DependentDropComponent({
+export default function DependentDropABRC({
   setDistrict = () => {},
   setBlock = () => {},
-  setSchool = () => {},
-  setshowManualSchool = () => {},
-  setSchoolCode = () => {},
-  setManualSchoolNameIsChecked = () =>{}
+ 
 
 }) {
   const [districtList, setDistrictList] = useState([]);
@@ -126,9 +123,9 @@ const prefilledSchool =()=>{
     setBlock(selectedOption.label);
   };
 
-  const handleSchoolChange = (selectedOption) => {
-    setSchool(selectedOption.label);
-  };
+//   const handleSchoolChange = (selectedOption) => {
+//     setSchool(selectedOption.label);
+//   };
 
   const filteredBlock = blockList.filter(
     (eachBlock) => eachBlock.d_id === selectedDistrict
@@ -197,16 +194,7 @@ const [handleClickCount, setHandleClickCount] = useState(0)
 
    
 
-    if (handleClickCount%2===0 ){
-      setshowManualSchool(true)
-      setShowSchoolDropDonw(false)
-      setManualSchoolNameIsChecked(true) //It is a prop that checks if the checkbox clicked or not.
-    } else{
-      setshowManualSchool(false)
-      setShowSchoolDropDonw(true)
-      setManualSchoolNameIsChecked(false);//It is a prop that checks if the checkbox clicked or not.
-    }
-
+   
     
   }
 
@@ -215,101 +203,45 @@ const [handleClickCount, setHandleClickCount] = useState(0)
 
   return (
     <>
-     <Form>
-      <Container>
-        <Row>
-          <Col>
-          
-    <div style={{ display: '', flexDirection: 'column', alignItems: 'center' }}>
-
-      <Form.Group className="mb-3" controlId="districtSelect">
-     
-        <Form.Label>School District (स्कूल का जिला चुनें) :</Form.Label>
-        
-        <Select
-       placeholder="SSchool District (स्कूल का जिला चुनें)"
-       value={prefilledDistrict()} // Call the function to get the prefilled value
-          
-          options={districtList.map((d) => ({
-            value: d.d_id,
-            label: d.d_name,
-            
-          }))}
-          onChange={handleDistirctChange} styles={customStyles}
-          
-        />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="blockSelect">
-        <Form.Label>School Block (स्कूल का ब्लॉक चुनें) :</Form.Label>
-    
-        <Select
-        placeholder="School Block (स्कूल का ब्लॉक चुनें) :"
-        value={prefilledBlock()}
-          onChange={handleBlockChange}
-          options={filteredBlock.map((b) => ({
-            value: b.b_id,
-            label: b.b_name,
-          }))}
-          
-          styles={customStyles} />
-      
-      </Form.Group>
-       
-          {showSchoolDropDown ? (<>
-            <Form.Group className="mb-3" controlId="schoolSelect">
-            <Form.Label>Select School (स्कूल चुनें) :</Form.Label>
-
-<Select
-placeholder='Select School (स्कूल चुनें) :'
-value={prefilledSchool()}
-  onChange={handleSchoolChange}
-  options={filteredSchool.map((s) => ({
-    value: s.b_id,
-    label: s.s_name,
-  }))}
- 
-  styles={customStyles}   /> 
-  </Form.Group>
-
-</> ):(
-  <div >
-  <Form.Group className="mb-3">
-    <Form.Label>School Name (स्कूल का नाम) :</Form.Label>
-    <Form.Control 
-      type="text" 
-      name="school" 
-      placeholder="School Name (स्कूल का नाम)" 
-      onChange={(e) => setSchool(e.target.value)} 
-    />
-  </Form.Group>
-
-  <Form.Group className="mb-3">
-    <Form.Label>School Code (स्कूल कोड दर्ज करें) :</Form.Label>
-    <Form.Control 
-      type="text" 
-      name="schoolCode" 
-      placeholder="School Code (स्कूल कोड दर्ज करें)" 
-      onChange={(e) => setSchoolCode(e.target.value)} 
-      required 
-    />
-  </Form.Group>
-</div>)}
-
-        
-          
-    </div>
-    <div className="checkbox" id="DependentLabel">
-      <div><label htmlFor="myCheckbox">यदि आपका विद्यालय उपर दी गई सूची में नहीं है, तो कृपया यहाँ क्लिक करें।</label></div>
-    
-    <div className="checkbox" id="DependentCheckbox"><input type="checkbox" id="myCheckbox" onClick={handleOnClilck}/></div>
-      
-    </div>
-    </Col>
-    
-    </Row>
-    </Container>
-    </Form>
+      <Form>
+        <Container>
+          <Row>
+            <Col>
+              <div style={{ display: ' ', flexDirection: 'column', alignItems: 'center' }}>
+                
+                <Form.Group className="mb-3" controlId="districtSelect">
+                  <Form.Label>District (जिला चुनें) :</Form.Label>
+                  <Select
+                    placeholder="School District (स्कूल का जिला चुनें)"
+                    value={prefilledDistrict()} // Call the function to get the prefilled value
+                    options={districtList.map((d) => ({
+                      value: d.d_id,
+                      label: d.d_name,
+                    }))}
+                    onChange={handleDistirctChange} // Fixed the typo here
+                    styles={customStyles}
+                  />
+                </Form.Group>
+  
+                <Form.Group className="mb-3" controlId="blockSelect">
+                  <Form.Label>Block (ब्लॉक चुनें) :</Form.Label>
+                  <Select
+                    placeholder="School Block (स्कूल का ब्लॉक चुनें)"
+                    value={prefilledBlock()}
+                    onChange={handleBlockChange}
+                    options={filteredBlock.map((b) => ({
+                      value: b.b_id,
+                      label: b.b_name,
+                    }))}
+                    styles={customStyles}
+                  />
+                </Form.Group>
+  
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </Form>
     </>
   );
 }

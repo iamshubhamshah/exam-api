@@ -137,7 +137,7 @@ if (location.pathname==='/srn-100'){
 
   <Nav defaultActiveKey="/userprofile" as="ul">
         <Nav.Item as="li">
-          <Nav.Link href="/examination">Go To Home Page</Nav.Link>
+          <Nav.Link href="/">Go To Home Page</Nav.Link>
         </Nav.Item>
       </Nav>
     
@@ -169,7 +169,8 @@ if (location.pathname==='/srn-100'){
         }}
         onSubmit={handleSubmit}
       >
-        <label>ENTER YOUR SRN</label>
+        <label style={{textAlign:'center'}}>ENTER YOUR SRN <br/>(अपना एसआरएन भरे)<br/><small style={{fontSize:'15px'}}>(नोट: यदि आपको "SRN" के बारे में जानकारी नहीं है, तो आप अपने विद्यालय के प्रधानाचार्य से SRN प्राप्त कर सकते हैं।)</small></label>
+        
         <br />
         <input
         type="text" 

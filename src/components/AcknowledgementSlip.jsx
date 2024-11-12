@@ -89,10 +89,16 @@ if(EditForm){
 
 //Hnadling below text dynamically...
 let examLevel;
+let examLevelSlip;
+let examLevelBatch;
 if ((student && student.grade === "8") || (slipData && slipData.grade === "8") || slipData) {
-    examLevel = "Mission Buniyaad Acknowledgement Slip_Batch 2025-27";
+    examLevel = "Mission Buniyaad";
+    examLevelSlip = "Acknowledgement Slip";
+    examLevelBatch = "Batch 2025-27";
 } else {
-    examLevel = "Super 100 Acknowledgement Slip_Batch 2025-27";
+    examLevel = "Haryana Super 100";
+    examLevelSlip = "Acknowledgement Slip";
+    examLevelBatch = "Batch 2025-27";
 }
 
 //Below logic is for downloading Acknowledgement sllip using html2canvas and jsPDF library.
@@ -110,11 +116,15 @@ function DownloadPDF() {
     // Set font size and styles for header
     pdf.setFontSize(14);
     pdf.text(examLevel, 105, 20, { align: "center" });
+    pdf.setFontSize(12);
+    pdf.text(examLevelSlip, 105, 24, { align: "center" });
+    pdf.setFontSize(10);
+    pdf.text(examLevelBatch, 105, 28, { align: "center" });
 
     
 
-    pdf.setFontSize(12);
-    pdf.text(`Registration Status: ${isVerified || student.isVerified}`, 105, 30, { align: "center" });
+    pdf.setFontSize(10);
+    pdf.text(`Registration stotas: ${isVerified || student.isVerified}`, 105, 32, { align: "center" });
 
     // Draw underline below the header
     const headerY = 35; // Y-coordinate for the underline
@@ -267,9 +277,11 @@ return (
                     textAlign: 'center',
                     marginRight: '20px'
                 }}>
-                    <h4>{examLevel}</h4>
+                    <h5>{examLevel}</h5>
+                    <h5>{examLevelSlip}</h5>
+                    <h5>{examLevelBatch}</h5>
                     <h5>{`Registration Status: ${isVerified || student.isVerified}`}</h5>
-                    <h6 style={{fontSize:'12px'}}>Your Form Is Under Verification. Once Your form is verified, your Registration status will be updated</h6>
+                    <h6 style={{fontSize:'12px'}}>Your form is under verification. Registration status will update once verified.<br/> (आपका फॉर्म सत्यापन में है। सत्यापन के बाद आपकी पंजीकरण स्थिति अपडेट की जाएगी।)</h6>
                 </div>
                 <Button variant='close' onClick={CloseModal} style={{marginLeft: '20px'}}/>
             </header>
@@ -294,56 +306,62 @@ return (
           </Col>
           <Col>
             <Row>
-              <Col>Name:</Col>
+              <Col>Name (नाम):</Col>
               <Col>{student.name}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Father Name:</Col>
+              <Col>Father's Name (पिता का नाम):</Col>
               <Col>{student.father}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>D.O.B:</Col>
+              <Col>D.O.B (जन्म तिथि):</Col>
               <Col>{student.dob}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Gen:</Col>
+              <Col>Gender (लिंग):</Col>
               <Col>{student.gender}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Category:</Col>
+              <Col>Category (श्रेणी):</Col>
               <Col>{student.category}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Class:</Col>
+              <Col>Class (कक्षा):</Col>
               <Col>{student.grade}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>District:</Col>
+              <Col>District (जिला):</Col>
               <Col>{student.district}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Block:</Col>
+              <Col>Block (ब्लॉक):</Col>
               <Col>{student.block}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>School:</Col>
+              <Col>School (स्कूल):</Col>
               <Col>{student.school}</Col>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>Registration Status (पंजीकरण की स्थिति):</Col>
+              <Col> {isVerified || student.isVerified}</Col>
             </Row>
           </Col>
         </Row>
@@ -367,58 +385,65 @@ return (
           </Col>
           <Col>
             <Row>
-              <Col>Name:</Col>
+              <Col>Name (नाम):</Col>
               <Col>{slipData.name}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Father Name:</Col>
+              <Col>Father's Name (पिता का नाम):</Col>
               <Col>{slipData.father}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>D.O.B:</Col>
+              <Col>D.O.B (जन्म तिथि):</Col>
               <Col>{slipData.dob}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Gen:</Col>
+              <Col>Gender (लिंग):</Col>
               <Col>{slipData.gender}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Category:</Col>
+              <Col>Category (श्रेणी):</Col>
               <Col>{slipData.category}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Class:</Col>
+              <Col>Class (कक्षा):</Col>
               <Col>{slipData.grade}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>District:</Col>
+              <Col>District (जिला):</Col>
               <Col>{slipData.district}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Block:</Col>
+              <Col>Block (ब्लॉक):</Col>
               <Col>{slipData.block}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>School:</Col>
+              <Col>School (स्कूल):</Col>
               <Col>{slipData.school}</Col>
             </Row>
           </Col>
+          <Col>
+            <Row>
+              <Col>Registration Status (पंजीकरण की स्थिति):</Col>
+              <Col> {isVerified || student.isVerified}</Col>
+            </Row>
+          </Col>
+          
         </Row>
       </Container>
     </div>
@@ -427,20 +452,27 @@ return (
 
         <Card.Footer>
             <footer>
-                Note: If you have filled any details incorrectly in the form, click on edit details button below and Edit your details.
+                <h3>General Instructions/सामान्य निर्देश:</h3>
+                <hr/>
+                <p>1. Use your Slip ID and SRN Number to check registration status and Download the admit card.<br/>(पंजीकरण की स्थिति की जांच करने और प्रवेश पत्र डाउनलोड करने के लिए अपनी पर्ची आईडी और एसआरएन नंबर का उपयोग करें।)</p>
+                <p>2. Check your registration status after 3 days. If accepted, it will show "Registration Successful. <br/>(3 दिनों के बाद अपनी पंजीकरण स्थिति की जाँच करें। यदि स्वीकार किया जाता है, तो यह "पंजीकरण सफल" दिखाएगा।)</p>
+                <p>3. If your registration still shows pending or rejected, after 3 days, then either register again or call on given number. <br/>(यदि आपका पंजीकरण 3 दिनों के बाद भी लंबित या अस्वीकार दिखाता है, तो या तो फिर से पंजीकरण करें या दिए गए नंबर पर कॉल करें।)</p>
+                <hr/>
+                <p>Note: If you have any doubts regarding registration, please contact us at.  <br/>(यदि आपको पंजीकरण के संबंध में कोई संदेह है, तो कृपया हमसे संपर्क करें।): 8888888888 </p>
             </footer>
         </Card.Footer>
         
         
     </Card>
     
-    <div style={{display:'flex'}}>
-    <Button onClick={DownloadPDF}>Download</Button>
-    </div>
+   
+    <Button onClick={DownloadPDF}>Download Acknowledgement Slip</Button>
+   
+   <br></br>
+   <p>If you entered any incorrect details, click 'Edit' to update and resubmit the form. <br/>(अगर आपने फॉर्म में कोई जानकारी गलत भरी है, तो 'संपादित करें' पर क्लिक करके फॉर्म फिर से जमा करें।)</p>
 
-    <div style={{display:'flex'}}>
     <Button onClick={UpdateForm}>Edit Details</Button>
-    </div>
+    
     
     
     
