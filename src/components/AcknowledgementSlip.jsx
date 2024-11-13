@@ -22,7 +22,7 @@ const location = useLocation();
 
 let PutDirectTo;
 
-if (location.pathname === '/srn-100'){
+if (location.pathname === '/srn-100' || location.pathname === '/acknowledgementslip-100'){
     PutDirectTo = "/Registration-form/put/S100"
 } else {
     PutDirectTo = "/Registration-form/put/MB"
@@ -64,7 +64,7 @@ function CloseModal () {
         location.pathname === '/Registration-form/put/MB' ||
         location.pathname === '/Registration-form/put/S100'
     ){
-        navigate('/examination'); // Navigate after downloading
+        navigate('/'); // Navigate after downloading
     } 
 
 
@@ -231,7 +231,7 @@ function DownloadPDF() {
         location.pathname === '/Registration-form/put/MB' ||
         location.pathname === '/Registration-form/put/S100'
     ){
-        navigate('/examination'); // Navigate after downloading
+        navigate('/'); // Navigate after downloading
     } 
 } 
 //^^^Acknowledgement Slip Template^^^^^^
@@ -458,7 +458,7 @@ return (
                 <p>2. Check your registration status after 3 days. If accepted, it will show "Registration Successful. <br/>(3 दिनों के बाद अपनी पंजीकरण स्थिति की जाँच करें। यदि स्वीकार किया जाता है, तो यह "पंजीकरण सफल" दिखाएगा।)</p>
                 <p>3. If your registration still shows pending or rejected, after 3 days, then either register again or call on given number. <br/>(यदि आपका पंजीकरण 3 दिनों के बाद भी लंबित या अस्वीकार दिखाता है, तो या तो फिर से पंजीकरण करें या दिए गए नंबर पर कॉल करें।)</p>
                 <hr/>
-                <p>Note: If you have any doubts regarding registration, please contact us at.  <br/>(यदि आपको पंजीकरण के संबंध में कोई संदेह है, तो कृपया हमसे संपर्क करें।): 8888888888 </p>
+                <p>Note: If you have any doubts regarding registration, please contact us at.  <br/>(यदि आपको पंजीकरण के संबंध में कोई संदेह है, तो कृपया हमसे संपर्क करें। सुबह 10 बजे से शाम 5 बजे तक उपलब्ध।): 7982108494, 7982109268 </p>
             </footer>
         </Card.Footer>
         

@@ -227,7 +227,7 @@ const [handleClickCount, setHandleClickCount] = useState(0)
         <Form.Label>School District (स्कूल का जिला चुनें) :</Form.Label>
         
         <Select
-       placeholder="SSchool District (स्कूल का जिला चुनें)"
+       placeholder="School District (स्कूल का जिला चुनें)"
        value={prefilledDistrict()} // Call the function to get the prefilled value
           
           options={districtList.map((d) => ({
@@ -300,7 +300,7 @@ value={prefilledSchool()}
           
     </div>
     <div className="checkbox" id="DependentLabel">
-      <div><label htmlFor="myCheckbox">यदि आपका विद्यालय उपर दी गई सूची में नहीं है, तो कृपया यहाँ क्लिक करें।</label></div>
+      <div><label htmlFor="myCheckbox">यदि आपका विद्यालय उपर दी गई सूची में नहीं है, तो कृपया यहाँ टिक करें।</label></div>
     
     <div className="checkbox" id="DependentCheckbox"><input type="checkbox" id="myCheckbox" onClick={handleOnClilck}/></div>
       

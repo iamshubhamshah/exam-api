@@ -17,7 +17,9 @@ export default function Navbar() {
             border:''
             
           }}>
-            <img src="/HRLogo.png" style={{ width: '100px', height: 'auto' }} />
+            <div>
+            <img src="/haryana.png" style={{ width: '100px', height: 'auto' }} />
+            </div>
             <div>
             <h5 style={{color: '#F2FFD7',
               fontWeight:'bold'
@@ -30,19 +32,21 @@ export default function Navbar() {
              style={{
               color:'#FFFFFF',
               fontWeight:'bold',
-              fontSize:'55px'
+              fontSize:'50px'
           
             }}>Mission Buniyaad</h1>
             <h3
              style={{
               color:'#FFFFFF',
-              fontWeight:'bold'
+              fontWeight:'bold',
+              fontSize:'45'
           
             }}
             >Haryana Super 100 Examination</h3>
           <h4
            style={{
             color:'#F2FFD7',
+            fontSize:'48'
        
         
           }}
@@ -51,7 +55,7 @@ export default function Navbar() {
           <h4
            style={{
             color:'#F2FFD7',
-       
+            fontSize:'40'
         
           }}
           

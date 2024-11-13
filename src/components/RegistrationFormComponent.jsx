@@ -27,6 +27,7 @@ import {
 } from "react-bootstrap";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import StudentNavbar from "./StudentNavbar";
 //_____________________________
 
 //-----------------------------------
@@ -518,9 +519,21 @@ export default function RegistrationFormComponent() {
     <div 
    
     >
-      <Container>
+       <StudentNavbar/>
+       <hr></hr>
 
-      <Container fluid >
+<Nav defaultActiveKey="/userprofile" as="ul">
+  <Nav.Item as="li">
+    <Nav.Link href="/">Home</Nav.Link>
+  </Nav.Item>
+  <Nav.Item as="li">
+    <Nav.Link href="/">How to fill form video (फॉर्म कैसे भरे)</Nav.Link>
+  </Nav.Item>
+</Nav>
+      <Container>
+       
+
+      {/* <Container fluid >
         <Row className="d-flex justify-content-center align-items-center">
           <img
             style={{
@@ -548,10 +561,10 @@ export default function RegistrationFormComponent() {
             <Nav.Link href="/examination">Home</Nav.Link>
           </Nav.Item>
           <Nav.Item as="li">
-            <Nav.Link href="/examination">How to fill form (फॉर्म कैसे भरे)</Nav.Link>
+            <Nav.Link href="/examination">How to fill form video (फॉर्म कैसे भरे)</Nav.Link>
           </Nav.Item>
         </Nav>
-        </Container>
+        </Container> */}
 
         <hr></hr>
       
@@ -587,7 +600,7 @@ export default function RegistrationFormComponent() {
 
               <Form.Group className="mb-3" controlId="fatherInput">
                 <Form.Label>Father's Name (पिता का नाम) :</Form.Label>
-                <p style={{fontSize: '12px'}}>(MR/श्री का प्रयोग न करें)</p>
+                <p style={{fontSize: '12px'}}>(Mr/श्री का प्रयोग न करें)</p>
                 <Form.Control
                   type="text"
                   name="father"
@@ -598,7 +611,7 @@ export default function RegistrationFormComponent() {
 
               <Form.Group className="mb-3" controlId="motherInput">
                 <Form.Label>Mother's Name (माता का नाम) :</Form.Label>
-                <p style={{fontSize: '12px'}}>(MRS/श्रीमती का प्रयोग न करें)</p>
+                <p style={{fontSize: '12px'}}>(Mrs/श्रीमती का प्रयोग न करें)</p>
                 <Form.Control
                   type="text"
                   name="mother"
@@ -667,7 +680,7 @@ export default function RegistrationFormComponent() {
               <hr></hr>
               <Form.Group className="mb-3" controlId="mobileInput">
                 <Form.Label>Mobile Number (मोबाइल नंबर) :</Form.Label>
-                <p style={{fontSize:'12px'}}>(केवल अपने माता या पिता का मोबाइल नंबर भरें)</p>
+                
                 <Form.Control
                   type="text"
                   name="mobile"
@@ -678,6 +691,7 @@ export default function RegistrationFormComponent() {
 
               <Form.Group className="mb-3" controlId="whatsappInput">
                 <Form.Label>Whatsapp Number (व्हाट्सएप नंबर) :</Form.Label>
+                <p style={{fontSize:'12px'}}>(केवल अपने माता या पिता का मोबाइल नंबर भरें)</p>
                 <Form.Control
                   type="text"
                   name="whatsapp"
@@ -690,6 +704,7 @@ export default function RegistrationFormComponent() {
               {/* BELOW FIELDS ADDED ON 7TH NOV AND ARE NEW */}
               <Form.Group className="mb-3" controlId="addressInput">
                 <Form.Label>H. No. (मकान नंबर) :</Form.Label>
+                <p style={{fontSize:'12px'}}>Optional. (वैकल्पिक)</p>
                 <Form.Control
                   type="text"
                   name="houseNumber"
@@ -755,7 +770,7 @@ export default function RegistrationFormComponent() {
              
               <Form.Group className="mb-3" controlId="addressInput">
                 <Form.Label>{location.pathname === '/Registration-form/MB' ||
-                  location.pathname === '/Registration-form/put/MB' ? ("Class 7th Annual Examination % (कक्षा 7वीं की वार्षिक परीक्षा का प्रतिशत)"):("Class 10th Annual Examination % (कक्षा 10वीं की वार्षिक परीक्षा का प्रतिशत.)")}</Form.Label>
+                  location.pathname === '/Registration-form/put/MB' ? ("Class 7th Annual Examination Per% (कक्षा 7वीं की वार्षिक परीक्षा का प्रतिशत)"):("Class 10th Annual Examination Per% (कक्षा 10वीं की वार्षिक परीक्षा का प्रतिशत.)")}</Form.Label>
                 <Form.Control
                   type="text"
                   name="previousClassAnnualExamPercentage"
@@ -776,7 +791,7 @@ export default function RegistrationFormComponent() {
             <Col xs={12} md={6}>
               <Form.Group className="mb-3" controlId="photoInput">
                 <Form.Label>Upload Your Passport Size Photo (अपनी पासपोर्ट साइज फोटो अपलोड करें) :</Form.Label>
-                <p style={{fontSize:'12px'}}>Note: You can register without a passport photo, but please upload it within 48 hours. <br/>नोट: आप बिना पासपोर्ट फोटो के भी रजिस्टर कर सकते हैं, लेकिन कृपया 48 घंटे के भीतर इसे अपलोड कर दें।</p>
+                <p style={{fontSize:'12px'}}>Note: You can register without a passport photo, but please upload it within 2 to 3 days. <br/>नोट: आप बिना पासपोर्ट फोटो के भी रजिस्टर कर सकते हैं, लेकिन कृपया 48 घंटे के भीतर इसे अपलोड कर दें।</p>
                   
                 <Form.Control
                   type="file"

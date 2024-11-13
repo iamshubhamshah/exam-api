@@ -48,7 +48,7 @@ export default function LandingPage() {
             <br />
             
             <Link to="/user-signin" style={{textDecoration:'none', fontSize:'25px'}}>
-           <p><BsArrowRight className="blinking-link" />SCHOOL/ABRC/BRP/Officials Login (स्कूल/ABRC/BRP/अन्य अधिकारी यंहा क्लिक करे)</p>
+           <p><BsArrowRight className="blinking-link" />SCHOOL/ABRC/BRP/Officials Login (स्कूल/ABRC/BRP/अन्य अधिकारी यहाँ क्लिक करे)</p>
             </Link>
 
             <br />

@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import {Container, Row, Col, Form, Card, Button, CardFooter, Nav } from "react-bootstrap";
 
 import AcknowledgementSlip from "./AcknowledgementSlip";
-
+import StudentNavbar from './StudentNavbar';
 
 function PreFilledRegistrationForm () {
 
@@ -598,9 +598,21 @@ const {user} = useContext(UserContext)
    
 
 return (
+  <>
+  <StudentNavbar/>
+  <hr></hr>
+
+<Nav defaultActiveKey="/userprofile" as="ul">
+  <Nav.Item as="li">
+    <Nav.Link href="/">Home</Nav.Link>
+  </Nav.Item>
+  <Nav.Item as="li">
+    <Nav.Link href="/">How to fill form video (फॉर्म कैसे भरे)</Nav.Link>
+  </Nav.Item>
+</Nav>
     <Container>
 
-<Container fluid >
+{/* <Container fluid >
         <Row className="d-flex justify-content-center align-items-center">
           <img
             style={{
@@ -631,7 +643,7 @@ return (
             <Nav.Link href="/examination">How to fill form (फॉर्म कैसे भरे)</Nav.Link>
           </Nav.Item>
         </Nav>
-        </Container>
+        </Container> */}
 
         <hr></hr>
     
@@ -662,14 +674,14 @@ return (
 
             <Form.Group className="mb-3" controlId="fatherInput">
               <Form.Label>Father's Name (पिता का नाम) :</Form.Label>
-              <p style={{fontSize: '12px'}}>(MR/श्री का प्रयोग न करें)</p>
+              <p style={{fontSize: '12px'}}>(Mr/श्री का प्रयोग न करें)</p>
             <Form.Control type='text' name='father' placeholder="Father's Name (पिता का नाम)" value={father} onChange={(e) => setFather(e.target.value)} />
             
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="motherInput">
             <Form.Label>Mother's Name (माता का नाम) :</Form.Label>
-            <p style={{fontSize: '12px'}}>(MRS/श्रीमती का प्रयोग न करें)</p>
+            <p style={{fontSize: '12px'}}>(Mrs/श्रीमती का प्रयोग न करें)</p>
             <Form.Control type='text' name='mother' placeholder="Mother's Name (मां का नाम)" value={mother} onChange={(e) => setMother(e.target.value)} />
             
             <Form.Group className="mb-3" controlId="gradeSelect">
@@ -733,12 +745,14 @@ return (
     
             <Form.Group className="mb-3" controlId="whatsappInput">
               <Form.Label>Whatsapp Number (व्हाट्सएप नंबर) :</Form.Label>
+              <p style={{fontSize:'12px'}}>(केवल अपने माता या पिता का मोबाइल नंबर भरें)</p>
             <Form.Control type='text' name='whatsapp' placeholder='Whatsapp Number (व्हाट्सएप नंबर)' value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} />
             </Form.Group>
     
              {/* BELOW FIELDS ADDED ON 7TH NOV AND ARE NEW */}
              <Form.Group className="mb-3" controlId="addressInput">
                 <Form.Label>H. No. (मकान नंबर) :</Form.Label>
+                <p style={{fontSize:'12px'}}>Optional. (वैकल्पिक)</p>
                 <Form.Control
                   type="text"
                   name="houseNumber"
@@ -878,6 +892,7 @@ return (
     
    
 </Container>
+</>
 )
 
 }

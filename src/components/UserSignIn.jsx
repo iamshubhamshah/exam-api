@@ -94,7 +94,7 @@ export default function UserSignIn() {
       <Nav defaultActiveKey="/userprofile" as="ul">
       
       <Nav.Item as="li">
-        <Nav.Link href="/examination">Go To Main Page</Nav.Link>
+        <Nav.Link href="/">Go To Main Page</Nav.Link>
       </Nav.Item>
      
     </Nav>

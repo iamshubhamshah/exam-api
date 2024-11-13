@@ -26,9 +26,9 @@ export default function UserSignUp() {
   const [password, setPassword] = useState("");
   const [SuccessMessage, setSuccessMessage] = useState("");
   //dynamically showing otp input box:
-  const [VerifyOtp, setVerifyOtp]= useState(false);
+  const [VerifyOtp, setVerifyOtp] = useState(false);
   //below hook for users typed otp
-  const [inputOtp, setInputOtp] = useState('')
+  const [inputOtp, setInputOtp] = useState("");
   //below hook for sending message to user as otp
   const message = `Enter this otp:  ${otp}  in registration portal and crete your password`;
 
@@ -137,80 +137,84 @@ export default function UserSignUp() {
 
   return (
     <>
-    <Navbar/>
-    <Nav defaultActiveKey="/userprofile" as="ul">
-      <Nav.Item as="li">
-        <Nav.Link href="/examination">Home</Nav.Link>
-      </Nav.Item>
-      <Nav.Item as="li">
-        <Nav.Link href="/user-signin">Already Registred (Sign-in)</Nav.Link>
-      </Nav.Item>
-    
-    </Nav>
-    
-    <Container style={{width:"60%"}}>
-      
-      <Form onSubmit={handleSubmit}>
-        
-        <Row className="border mb-3 rounded-2">
-       
-         <h1 style={{textAlign:'center'}}>OFFICIALS SIGN-UP (अधिकारिक पंजीकरण)</h1>
-         <small style={{textAlign:'center'}}>Only for Govt. officials, ABRC/BRP/Teachers/School Staff/Vikalpa Staff.<br/>(केवल सरकारी अधिकारी, ABRC/BRP/शिक्षक/स्कूल स्टाफ/Vikalpa स्टाफ के लिए) 
+      <Navbar />
+      <Nav defaultActiveKey="/userprofile" as="ul">
+        <Nav.Item as="li">
+          <Nav.Link href="/">Home</Nav.Link>
+        </Nav.Item>
+        <Nav.Item as="li">
+          <Nav.Link href="/user-signin">Already Registred (Sign-in)</Nav.Link>
+        </Nav.Item>
+      </Nav>
 
-</small>
-        </Row>
-        <Row className="border mb-3 rounded-2" >
-          <Col>
-            <Form.Group className="mb-3" controlId="userNameInput">
-              <Form.Label>Name (नाम) :</Form.Label>
+      <Container style={{ width: "60%" }}>
+        <Form onSubmit={handleSubmit}>
+          <Row className="border mb-3 rounded-2">
+            <h1 style={{ textAlign: "center" }}>
+              OFFICIALS SIGN-UP (अधिकारिक पंजीकरण)
+            </h1>
+            <small style={{ textAlign: "center" }}>
+              Only for Govt. officials, ABRC/BRP/Teachers/School Staff/Vikalpa
+              Staff.
+              <br />
+              (केवल सरकारी अधिकारी, ABRC/BRP/शिक्षक/स्कूल स्टाफ/Vikalpa स्टाफ के
+              लिए)
+            </small>
+          </Row>
+          <Row className="border mb-3 rounded-2">
+            <Col>
+              <Form.Group className="mb-3" controlId="userNameInput">
+                <Form.Label>Name (नाम) :</Form.Label>
 
-              <Form.Control
-                type="text"
-                placeholder="Enter Your Name"
-                onChange={(e) => setUserName(e.target.value)}
-                required
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Your Name"
+                  onChange={(e) => setUserName(e.target.value)}
+                  required
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group>
+                <Form.Label>Designation (पद) : </Form.Label>
+
+                <Form.Select
+                  onChange={(e) => setDesignation(e.target.value)}
+                  required
+                >
+                  <option value="">Select Designation</option>
+                  <option value="Teacher">Teacher (शिक्षक)</option>
+                  <option value="Principal">Principal (प्रधानाचार्य)</option>
+                  <option value="ABRC">ABRC/BRP</option>
+                  <option value="Coordinator">Co-ordinator (समन्वयक)</option>
+                  <option value="VikalpaStaff">Other Officials (अन्य अधिकारी)</option>
+                </Form.Select>
+              </Form.Group>
+            </Col>
+            {designation === "Teacher" || designation === "Principal" ? (
+              <DependentDropComponent
+                setDistrict={setDistrict}
+                setBlock={setBlock}
+                setSchool={setSchool}
+                setSchoolCode={setSchoolCode}
               />
-            </Form.Group>
-            </Col>
-      <Col>
-            <Form.Group>
-              <Form.Label>Designation (पद) : </Form.Label>
+            ) : designation === "ABRC" ||
+              designation === "Coordinator" ||
+              designation === "VikalpaStaff" ? (
+              <DependentDropABRC
+                setDistrict={setDistrict}
+                setBlock={setBlock}
+              />
+            ) : null}
 
-              <Form.Select onChange={(e) => setDesignation(e.target.value)} required>
-                <option value="">Select Designation</option>
-                <option value="Teacher">Teacher (शिक्षक)</option>
-                <option value="Principal">Principal (प्रधानाचार्य)</option>
-                <option value="ABRC">ABRC</option>
-                <option value="Coordinator">Co-ordinator (समन्वयक)</option>
-                <option value="VikalpaStaff">Vikalpa Staff</option>
-              </Form.Select>
-            </Form.Group>
-            </Col>
-            {(designation === 'Teacher' || designation === 'Principal') ? (
-  <DependentDropComponent
-    setDistrict={setDistrict}
-    setBlock={setBlock}
-    setSchool={setSchool}
-    setSchoolCode={setSchoolCode}
-  />
-) : (
-  (designation === 'ABRC' || designation === 'Coordinator' || designation === 'VikalpaStaff') ? (
-    <DependentDropABRC
-      setDistrict={setDistrict}
-      setBlock={setBlock}
-    />
-  ) : null
-)}
-           
-        
-       
-            
-        <Form.Group>
-              <Form.Label>Mobile Number (अपना मोबाइल नंबर दर्ज करें) :</Form.Label>
+            <Form.Group>
+              <Form.Label>
+                Mobile Number (अपना मोबाइल नंबर दर्ज करें) :
+              </Form.Label>
 
               <Form.Control
                 type="text"
-                placeholder="Enter Your Mobile"
+                placeholder="Enter Mobile Number"
                 onChange={(e) => setMobile(e.target.value)}
                 required
               />
@@ -218,52 +222,51 @@ export default function UserSignUp() {
 
             {VerifyOtp ? (
               <Form.Group>
-              <Form.Label>Enter OTP sent on your mobile (अपना OTP दर्ज करें) :</Form.Label>
-  
+                <Form.Label>
+                  Enter OTP sent on your mobile (अपना OTP दर्ज करें) :
+                </Form.Label>
+
                 <Form.Control
                   type="tel"
                   placeholder="Enter Your Mobile"
                   onChange={(e) => setInputOtp(e.target.value)}
                   required
                 />
-                {inputOtp === otp ? (null):(<small>Enter correct otp for creating password</small>)}
+                {inputOtp === otp ? null : (
+                  <small>Enter correct otp for creating password</small>
+                )}
               </Form.Group>
-              
-            ):(null)}
+            ) : null}
 
-<Col>
-            
-            
+            <Col>
               <Form.Group>
-              <Form.Label>Cereate Password (कृपया अपना पासवर्ड बनाएं) :</Form.Label>
-             
-              <Form.Control
-                type="password"
-                placeholder="Enter Your Password"
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <small>Otp Matched</small>
-            </Form.Group>
-  
+                <Form.Label>
+                  Create Password (कृपया अपना पासवर्ड बनाएं) :
+                </Form.Label>
+                <p style={{fontSize:'12px'}}>Password must contain only 6 digits. (पासवर्ड 6 अंको का होना चाहिए.)</p>
 
+                <Form.Control
+                  type="password"
+                  placeholder="Create Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <small>Otp Matched</small>
+              </Form.Group>
 
-           
-            
-
-            {SuccessMessage && <p>{SuccessMessage}</p>}
-          </Col>
-        </Row>
-        <Row className="border mb-3 rounded-2">
-          
-            <Button type="submit" style={{width:"100%"}}>Submit</Button>
-          
-        </Row>
-      </Form>
-      {/* <button onClick={handleVerifyNumberClick}>Verify Mobile Number</button>
+              {SuccessMessage && <p>{SuccessMessage}</p>}
+            </Col>
+          </Row>
+          <Row className="border mb-3 rounded-2">
+            <Button type="submit" style={{ width: "100%" }}>
+              Submit
+            </Button>
+          </Row>
+        </Form>
+        {/* <button onClick={handleVerifyNumberClick}>Verify Mobile Number</button>
       <button onClick={handleGooadvertOtp}> Verify OTP By goadvert</button> */}
-    </Container>
-    <Footer/>
+      </Container>
+      <Footer />
     </>
   );
 }
