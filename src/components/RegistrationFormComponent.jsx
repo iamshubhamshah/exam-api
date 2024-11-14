@@ -154,7 +154,7 @@ export default function RegistrationFormComponent() {
   const [errWhatsapp, setErrWhatsapp] = useState(true);
   // const [errAddress, setErrAddress] = useState(true);
   //Below validatino for home address and added on 7 nov
-  const [errHouseNumber, setErrHouseNumber] = useState(true);
+  // const [errHouseNumber, setErrHouseNumber] = useState(true);
   const [errCityTownVillage, setErrCityTownVillage] = useState(true);
   const [errAddressBlock, setErrAddressBlock] = useState(true);
   const [errAddressDistrict, setErrAddressDistrict] = useState(true);
@@ -256,12 +256,12 @@ export default function RegistrationFormComponent() {
 
     //below check for home address validation
     //new validation on 7 nov
-    if (houseNumber.length !== 0) {
-      setErrHouseNumber(false);
-    } else {
-      setErrHouseNumber(true);
-      toast.error("Please fill your House Number");
-    }
+    // if (houseNumber.length !== 0) {
+    //   setErrHouseNumber(false);
+    // } else {
+    //   setErrHouseNumber(true);
+    //   toast.error("Please fill your House Number");
+    // }
 
     if (cityTownVillage.length !== 0) {
       setErrCityTownVillage(false);
@@ -345,7 +345,7 @@ export default function RegistrationFormComponent() {
 
       //below added on 7 nov
 
-      errHouseNumber === false &&
+      // errHouseNumber === false &&
       errCityTownVillage === false &&
       errAddressBlock === false &&
       errAddressDistrict === false &&
@@ -383,7 +383,7 @@ export default function RegistrationFormComponent() {
 
     //Below added on 7 nov
 
-    errHouseNumber,
+    // errHouseNumber,
     errCityTownVillage,
     errAddressBlock,
     errAddressDistrict,
@@ -577,6 +577,7 @@ export default function RegistrationFormComponent() {
                   type="text"
                   name="srn"
                   placeholder="SRN (एस.आर.एन.)"
+                  maxLength={10}
                   onChange={(e) => setSrn(e.target.value)}
                 />
               </Form.Group>
@@ -633,6 +634,7 @@ export default function RegistrationFormComponent() {
                   type="date"
                   name="dob"
                   onChange={(e) => setDob(e.target.value)}
+                   max="2020-12-31"
                 />
               </Form.Group>
 
@@ -669,7 +671,9 @@ export default function RegistrationFormComponent() {
                   type="text"
                   name="aadhar"
                   placeholder="Aadhar Number (आधार नंबर)"
+                  maxLength={12}
                   onChange={(e) => setAadhar(e.target.value)}
+                  
                 />
               </Form.Group>
             </Col>
@@ -686,6 +690,7 @@ export default function RegistrationFormComponent() {
                   name="mobile"
                   placeholder="Mobile Number (मोबाइल नंबर)"
                   onChange={(e) => setMobile(e.target.value)}
+                  maxLength={10}
                 />
               </Form.Group>
 
@@ -697,6 +702,7 @@ export default function RegistrationFormComponent() {
                   name="whatsapp"
                   placeholder="Whatsapp Number (व्हाट्सएप नंबर)"
                   onChange={(e) => setWhatsapp(e.target.value)}
+                  maxLength={10}
                 />
               </Form.Group>
 
@@ -775,6 +781,7 @@ export default function RegistrationFormComponent() {
                   type="text"
                   name="previousClassAnnualExamPercentage"
                   placeholder="Enter Percentage"
+                  maxLength={2}
                   onChange={(e) => setPreviousClassAnnualExamPercentage(e.target.value)}
                 />
               </Form.Group>

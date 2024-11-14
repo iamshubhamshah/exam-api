@@ -105,7 +105,7 @@ if ((student && student.grade === "8") || (slipData && slipData.grade === "8") |
 function DownloadPDF() {
     const pdf = new jsPDF('p', 'mm', 'a4');
 
-    const logo = '/HRlogo.png';
+    const logo = '/haryana.png';
 
     const slipDataToShow = slipData || {}; // Get slip data or use empty object if not available
     const { srn, name, father, dob, gender, category, slipId, district, block, school } = slipDataToShow;
@@ -269,7 +269,7 @@ return (
                 alignItems: 'center',
                 padding: '20px'
             }}>
-                <img src='/HRlogo.png' style={{ width: '50px', marginRight: '20px' }} />
+                <img src='/haryana.png' style={{ width: '50px', marginRight: '20px' }} />
 
                 {/* Container for the text */}
                 <div style={{
