@@ -837,7 +837,7 @@ function PreFilledRegistrationForm() {
                   {location.pathname === "/Registration-form/MB" ||
                   location.pathname === "/Registration-form/put/MB"
                     ? "Class 7th Annual Examination Percentage (कक्षा 7वीं की वार्षिक परीक्षा का प्रतिशत)"
-                    : "Class 10th Annual Examination Percentage (कक्षा 10वीं की वार्षिक परीक्षा का प्रतिशत.)"}
+                    : "Class 9th Annual Examination Percentage (कक्षा 9वीं की वार्षिक परीक्षा का प्रतिशत.)"}
                 </Form.Label>
                 <Form.Control
                   type="text"

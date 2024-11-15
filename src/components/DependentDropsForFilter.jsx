@@ -214,7 +214,6 @@ school,
             </Form.Group>
             </Col>
             
-
             <Col>
             {showSchoolDropDown ? (
               <>

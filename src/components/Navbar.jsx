@@ -42,7 +42,7 @@ export default function Navbar() {
               fontSize:'45'
           
             }}
-            >Haryana Super 100 Examination</h3>
+            >Haryana Super 100</h3>
           <h4
            style={{
             color:'#F2FFD7',

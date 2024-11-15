@@ -228,7 +228,7 @@ const [handleClickCount, setHandleClickCount] = useState(0)
         
         <Select
        placeholder="School District (स्कूल का जिला चुनें)"
-       value={prefilledDistrict()} // Call the function to get the prefilled value
+       //value={prefilledDistrict()} // Call the function to get the prefilled value
           
           options={districtList.map((d) => ({
             value: d.d_id,
@@ -245,7 +245,7 @@ const [handleClickCount, setHandleClickCount] = useState(0)
     
         <Select
         placeholder="School Block (स्कूल का ब्लॉक चुनें) :"
-        value={prefilledBlock()}
+        //value={prefilledBlock()}
           onChange={handleBlockChange}
           options={filteredBlock.map((b) => ({
             value: b.b_id,
@@ -262,7 +262,7 @@ const [handleClickCount, setHandleClickCount] = useState(0)
 
 <Select
 placeholder='Select School (स्कूल चुनें) :'
-value={prefilledSchool()}
+//value={prefilledSchool()}
   onChange={handleSchoolChange}
   options={filteredSchool.map((s) => ({
     value: s.b_id,

@@ -106,28 +106,41 @@ function DownloadPDF() {
     const pdf = new jsPDF('p', 'mm', 'a4');
 
     const logo = '/haryana.png';
+    const instruction = '/geninstructions.png'
 
     const slipDataToShow = slipData || {}; // Get slip data or use empty object if not available
     const { srn, name, father, dob, gender, category, slipId, district, block, school } = slipDataToShow;
 
+  // Format the current date
+const currentDate = new Date(Date.now()).toLocaleDateString('en-US');
+
+// Check if `student.createdAt` exists and format accordingly
+const formattedDate = student.createdAt ? new Date(student.createdAt).toLocaleDateString('en-US') : null;
+
+// Use `formattedDate` if it exists; otherwise, use the formatted current date
+const dateToShow = formattedDate || currentDate;
+
+
     // Add logo to the PDF
     pdf.addImage(logo, 'PNG', 10, 10, 20, 20);
+
+    pdf.addImage(instruction, 'PNG', 10, 158, 180, 120);
 
     // Set font size and styles for header
     pdf.setFontSize(14);
     pdf.text(examLevel, 105, 20, { align: "center" });
     pdf.setFontSize(12);
-    pdf.text(examLevelSlip, 105, 24, { align: "center" });
+    pdf.text(examLevelSlip, 105, 25, { align: "center" });
     pdf.setFontSize(10);
-    pdf.text(examLevelBatch, 105, 28, { align: "center" });
+    pdf.text(examLevelBatch, 105, 30, { align: "center" });
 
     
 
     pdf.setFontSize(10);
-    pdf.text(`Registration stotas: ${isVerified || student.isVerified}`, 105, 32, { align: "center" });
+    pdf.text(`Registration Status: ${isVerified || student.isVerified}`, 105, 35, { align: "center" });
 
     // Draw underline below the header
-    const headerY = 35; // Y-coordinate for the underline
+    const headerY = 40; // Y-coordinate for the underline
     pdf.setLineWidth(1);
     pdf.line(10, headerY, 200, headerY); // Draw line from (10, headerY) to (200, headerY)
 
@@ -142,12 +155,14 @@ function DownloadPDF() {
     const lineHeight = 10; // Height between lines
     
     // Draw the texts
+    
     pdf.text(`1. Slip ID:`, xStart, yPositionStart);
     pdf.text(`${slipId || student.slipId}`, xStart + labelWidth, yPositionStart);
     
     pdf.text(`2. SRN:`, xStart, yPositionStart + lineHeight);
     pdf.text(`${srn || student.srn}`, xStart + labelWidth, yPositionStart + lineHeight);
-    
+
+   
     pdf.text(`3. Name:`, xStart, yPositionStart + 2 * lineHeight);
     pdf.text(`${name || student.name}`, xStart + labelWidth, yPositionStart + 2 * lineHeight);
     
@@ -172,8 +187,8 @@ function DownloadPDF() {
     pdf.text(`10. School:`, xStart, yPositionStart + 9 * lineHeight);
     pdf.text(`${school || student.school}`, xStart + labelWidth, yPositionStart + 9 * lineHeight);
     
-    pdf.text(`11. Registration Status:`, xStart, yPositionStart + 10 * lineHeight);
-    pdf.text(`${isVerified || student.isVerified}`, xStart + labelWidth, yPositionStart + 10 * lineHeight);
+    pdf.text(`11. Registration Date:`, xStart, yPositionStart + 10 * lineHeight);
+    pdf.text(`${dateToShow}`, xStart + labelWidth, yPositionStart + 10 * lineHeight);
     
     // Draw a gray header line
     const lineY = 155; // Y-coordinate for the header line
@@ -182,21 +197,16 @@ function DownloadPDF() {
     pdf.line(10, lineY, 200, lineY); // Draw line from (10, lineY) to (200, lineY)
     
     // Add instructions below the header line
-    pdf.setFontSize(10); // Optionally, set a smaller font size for the instructions
-    pdf.text("General Instructions:", 10, lineY + 10);
-    pdf.text("1. Use your Slip ID or SRN Number to login to your account", 10, lineY + 20);
-    pdf.text("2. Student Account Will be used to check the registration status and for Admit card downlaod.", 10, lineY + 30);
-    pdf.text("3. Submission of wrong details can lead to rejection of registration form:", 10, lineY + 40);
-    pdf.text("General Instructions:", 10, lineY + 50);
-    pdf.text("General Instructions:", 10, lineY + 60);
-    pdf.text("General Instructions:", 10, lineY + 70);
-    pdf.text("General Instructions:", 10, lineY + 80);
-    
+    // pdf.setFontSize(10); // Optionally, set a smaller font size for the instructions
+    // pdf.text("General Instructions:", 10, lineY + 10);
+    // pdf.text("1. Use your Slip ID and SRN Number to check registration status and Download the admit card.", 10, lineY + 20);
+    // pdf.text("2. Check your registration status after 3 days. If accepted, it will show 'Registration Successful'.", 10, lineY + 30);
+    // pdf.text("3. Submission of wrong details can lead to rejection of registration form:", 10, lineY + 40);
 
    
     // Footer instructions
     const footerY = pdf.internal.pageSize.height - 20; // Y-coordinate for the footer
-    pdf.text("Note: If you have any doubt regarding registration, then contact us: 9999999999, 8888888888.", 10, footerY);
+    // pdf.text("Note: If you have any doubt regarding registration, then contact us: 7982108494, 7982109268.", 10, footerY);
     
     // Draw line in the footer
     pdf.line(10, footerY + 5, 200, footerY + 5); // Draw line from (10, footerY + 5) to (200, footerY + 5)
@@ -294,74 +304,68 @@ return (
         <Row xs={1} md={2} style={{ gap: '10px' }}>
           <Col>
             <Row>
-              <Col>Slip ID:</Col>
+              <Col>1. Slip ID:</Col>
               <Col>{student.slipId}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>SRN:</Col>
+              <Col>2. SRN:</Col>
               <Col>{student.srn}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Name (नाम):</Col>
+              <Col>3. Name (नाम):</Col>
               <Col>{student.name}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Father's Name (पिता का नाम):</Col>
+              <Col>4. Father's Name (पिता का नाम):</Col>
               <Col>{student.father}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>D.O.B (जन्म तिथि):</Col>
+              <Col>5. D.O.B (जन्म तिथि):</Col>
               <Col>{student.dob}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Gender (लिंग):</Col>
+              <Col>6. Gender (लिंग):</Col>
               <Col>{student.gender}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Category (श्रेणी):</Col>
+              <Col>7. Category (श्रेणी):</Col>
               <Col>{student.category}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Class (कक्षा):</Col>
+              <Col>8. Class (कक्षा):</Col>
               <Col>{student.grade}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>District (जिला):</Col>
+              <Col>9. District (जिला):</Col>
               <Col>{student.district}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>Block (ब्लॉक):</Col>
+              <Col>10. Block (ब्लॉक):</Col>
               <Col>{student.block}</Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col>School (स्कूल):</Col>
+              <Col>11. School (स्कूल):</Col>
               <Col>{student.school}</Col>
-            </Row>
-          </Col>
-          <Col>
-            <Row>
-              <Col>Registration Status (पंजीकरण की स्थिति):</Col>
-              <Col> {isVerified || student.isVerified}</Col>
             </Row>
           </Col>
         </Row>
@@ -440,7 +444,7 @@ return (
           <Col>
             <Row>
               <Col>Registration Status (पंजीकरण की स्थिति):</Col>
-              <Col> {isVerified || student.isVerified}</Col>
+              <Col> {isVerified || student.createdAt}</Col>
             </Row>
           </Col>
           
@@ -450,12 +454,12 @@ return (
   )}
 </Card.Body>
 
-        <Card.Footer>
-            <footer>
+        <Card.Footer >
+            <footer style={{background:'white'}}>
                 <h3>General Instructions/सामान्य निर्देश:</h3>
                 <hr/>
                 <p>1. Use your Slip ID and SRN Number to check registration status and Download the admit card.<br/>(पंजीकरण की स्थिति की जांच करने और प्रवेश पत्र डाउनलोड करने के लिए अपनी पर्ची आईडी और एसआरएन नंबर का उपयोग करें।)</p>
-                <p>2. Check your registration status after 3 days. If accepted, it will show "Registration Successful. <br/>(3 दिनों के बाद अपनी पंजीकरण स्थिति की जाँच करें। यदि स्वीकार किया जाता है, तो यह "पंजीकरण सफल" दिखाएगा।)</p>
+                <p>2. Check your registration status after 3 days. If accepted, it will show "Registration Successful. <br/>(3 दिनों के बाद अपनी पंजीकरण स्थिति की जाँच करें। यदि स्वीकार किया जाता है, तो यह "Reigstration सफल" दिखाएगा।)</p>
                 <p>3. If your registration still shows pending or rejected, after 3 days, then either register again or call on given number. <br/>(यदि आपका पंजीकरण 3 दिनों के बाद भी लंबित या अस्वीकार दिखाता है, तो या तो फिर से पंजीकरण करें या दिए गए नंबर पर कॉल करें।)</p>
                 <hr/>
                 <p>Note: If you have any doubts regarding registration, please contact us at.  <br/>(यदि आपको पंजीकरण के संबंध में कोई संदेह है, तो कृपया हमसे संपर्क करें। सुबह 10 बजे से शाम 5 बजे तक उपलब्ध।): 7982108494, 7982109268 </p>
@@ -494,4 +498,5 @@ return (
 
 
 }
+
 

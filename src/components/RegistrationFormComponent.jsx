@@ -301,7 +301,7 @@ export default function RegistrationFormComponent() {
       setErrDistrict(false);
     } else {
       setErrDistrict(true);
-      toast.error("Please select your district");
+      toast.error("Select School district");
     }
 
     //below check for block validation
@@ -309,7 +309,7 @@ export default function RegistrationFormComponent() {
       setErrBlock(false);
     } else {
       setErrBlock(true);
-      toast.error("Please select your block");
+      toast.error("Select School Block");
     }
 
     //below check for school validation
@@ -317,7 +317,7 @@ export default function RegistrationFormComponent() {
       setErrSchool(false);
     } else {
       setErrSchool(true);
-      toast.error("Please select your school");
+      toast.error("Select School");
     }
 
     if (previousClassAnnualExamPercentage.length === 2 && /[^\d]/.test(previousClassAnnualExamPercentage) == false) {
@@ -481,6 +481,10 @@ export default function RegistrationFormComponent() {
       console.log(slipData);
 
       if (response.data.success === true) {
+        setDistrict('')
+        setBlock('')
+        setSchool('')
+        alert('distblockschoolare cleared')
         setMessage("Post created successfully");
         toast.success("Registration done succesfully");
         if (location.pathname === "/Registration-form/S100") {
@@ -501,6 +505,7 @@ export default function RegistrationFormComponent() {
         setMessage("Post not created");
       }
       setImage("");
+
 
       setTimeout(function () {
         setMessage("");
@@ -766,6 +771,9 @@ export default function RegistrationFormComponent() {
               <h2>Academic Details (शैक्षिक विवरण) :</h2>
               <hr></hr>
               <DependentDropComponent
+              district={district}
+              block={block}
+              school={school}
                 setDistrict={setDistrict}
                 setBlock={setBlock}
                 setSchool={setSchool}
@@ -776,7 +784,7 @@ export default function RegistrationFormComponent() {
              
               <Form.Group className="mb-3" controlId="addressInput">
                 <Form.Label>{location.pathname === '/Registration-form/MB' ||
-                  location.pathname === '/Registration-form/put/MB' ? ("Class 7th Annual Examination Per% (कक्षा 7वीं की वार्षिक परीक्षा का प्रतिशत)"):("Class 10th Annual Examination Per% (कक्षा 10वीं की वार्षिक परीक्षा का प्रतिशत.)")}</Form.Label>
+                  location.pathname === '/Registration-form/put/MB' ? ("Class 7th Annual Examination Per% (कक्षा 7वीं की वार्षिक परीक्षा का प्रतिशत)"):("Class th Annual Examination Per% (कक्षा 9वीं की वार्षिक परीक्षा का प्रतिशत.)")}</Form.Label>
                 <Form.Control
                   type="text"
                   name="previousClassAnnualExamPercentage"
