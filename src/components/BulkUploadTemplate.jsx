@@ -16,25 +16,25 @@ export default function BulkUploadTemplate ({district, block, school, grade, man
 
 const DownloadTemplate =()=>{
 
-for (let i = 0; i<10; i++){
+for (let i = 0; i<1; i++){
     TemplateData.push ({
-                srn: '', // Empty field for user input
-                name: '',
-                father: '',
-                mother: '',
-                dob: '',
-                gender: '',
-                category: '',
-                aadhar: '',
-                mobile: '',
-                whatsapp: '',
+                srn: '0000000000', // Empty field for user input
+                name: 'Dummy Name',
+                father: 'Dummy Father',
+                mother: 'Dummy Mother',
+                dob: 'dd-mm-yyyy',
+                gender: 'Male/Female',
+                category: 'BCA/BCB/GEN/SC/ST',
+                aadhar: '123456789012',
+                mobile: '1234567890',
+                whatsapp: '1234567890',
                 // address: '',
                 //below added on 7 nov
-                houseNumber: '',
-                cityTownVillage: '',
-                addressBlock: '',
-                addressDistrict: '',
-                addressState: '',
+                houseNumber: 'A10',
+                cityTownVillage: 'Gurugram',
+                addressBlock: 'Gurgaon',
+                addressDistrict: 'Gurgaon',
+                addressState: 'Haryana',
 
                 //^^^^^^^^^^^^^^^^^^^^^
                 district: district || '', // Prefilled district names

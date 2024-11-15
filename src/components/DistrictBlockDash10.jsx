@@ -30,9 +30,20 @@ useEffect(() =>{
 
 console.log(stateDash)
 
+ //Below variables are for shwoing total count on dashboars:
+ const totalDistrictCount = stateDash.reduce((sum, eachDistrictCount) => {
+  return sum + eachDistrictCount.districtCount;
+}, 0);
+console.log(totalDistrictCount)
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     return (
         <div>
+          <h1>Super 100 Dash Board</h1>
+      <hr/>
+      <p style={{fontSize:'30px'}}>Total Count: {totalDistrictCount}</p>
+      <hr/>
             <Table responsive>
             
            

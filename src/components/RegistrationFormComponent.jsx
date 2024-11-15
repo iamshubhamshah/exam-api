@@ -484,7 +484,6 @@ export default function RegistrationFormComponent() {
         setDistrict('')
         setBlock('')
         setSchool('')
-        alert('distblockschoolare cleared')
         setMessage("Post created successfully");
         toast.success("Registration done succesfully");
         if (location.pathname === "/Registration-form/S100") {

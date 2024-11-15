@@ -28,7 +28,7 @@ useEffect(()=>{
 },[user])
 
 function handleSignOut(){
-    alert('i got clicked')
+    alert('Signed Out')
     setUser('')
     navigate('/user-signin')
 }
@@ -40,7 +40,7 @@ try {
         <Container fluid>
         
         <Row style={{ backgroundColor: '#1e90ff', border:'solid black'}} >
-        <Col style={{textAlign:'left'}}><img src="./HRLogo.png" style={{ width: '80px', height: 'auto' }} /></Col>
+        <Col style={{textAlign:'left'}}><img src="/haryana.png" style={{ width: '80px', height: 'auto' }} /></Col>
         <Col style={{textAlign:'center'}}>
         <p>Haryana Pratibha Khoj </p>
         <p>2025-27</p>

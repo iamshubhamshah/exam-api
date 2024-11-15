@@ -248,10 +248,11 @@ export default function UserSignUp() {
                 <Form.Control
                   type="password"
                   placeholder="Create Password"
+                  maxLength={6}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                <small>Otp Matched</small>
+                {/* <small>Otp Matched</small> */}
               </Form.Group>
 
               {SuccessMessage && <p>{SuccessMessage}</p>}

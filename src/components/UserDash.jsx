@@ -5,17 +5,31 @@ import DashBoardServices from "../services/DashBoardServices";
 import { Table, Row, Col, Container, Button } from "react-bootstrap";
 import DependentDropsForFilter from './DependentDropsForFilter';
 import Select from "react-select";
-
+import { StudentContext } from "./ContextApi/StudentContextAPI/StudentContext";
 import { UserContext } from "./ContextApi/UserContextAPI/UserContext";
 import UserNavBar from "./UserNavBar";
 import Footer from "./Footer";
+import jsPDF from "jspdf";
+import { useNavigate, useLocation } from "react-router-dom";
+import registrationServiceInstance from "../services/RegistrationFormService";
 
 
 const BaseURL = process.env.REACT_APP_API_BASE_URL;
 const AllData = () => {
+
+
+ 
+
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+
+
   //Defining useState hooks
 
   const [allData, setAllData] = useState([]);
+  const [studentSlipData, setStudentSlipData] = useState({});
 
   //Filter hooks
   const [district, setDistrict] = useState('')
@@ -27,15 +41,34 @@ const AllData = () => {
   
   const [grade, setGrade] = useState('');
 
+  //context api below
 
+const {setStudent} = useContext(StudentContext)
+const {student} = useContext(StudentContext)
 
-  
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   //Hnadling below text dynamically...
+let examLevel;
+let examLevelSlip;
+let examLevelBatch;
+if ((studentSlipData && studentSlipData.grade === "8")) {
+    examLevel = "Mission Buniyaad";
+    examLevelSlip = "Acknowledgement Slip";
+    examLevelBatch = "Batch 2025-27";
+} else {
+    examLevel = "Haryana Super 100";
+    examLevelSlip = "Acknowledgement Slip";
+    examLevelBatch = "Batch 2025-27";
+}
+
 
 
   console.log(district)
 
   
   const fetchAllData = async () => {
+
+
 
     let query = `isRegisteredBy=${user.mobile}&district=${district}&block=${block}&school=${school}&grade=${grade}`.trim();
     
@@ -53,7 +86,156 @@ const AllData = () => {
     fetchAllData();
   }, [ district, block, school, grade]);
 
+
+
+  //Below logic downloads acknowledgemtn slip
+  const DownloadAckSlip = async (id, e) => {
+
+
+    const newSrn = id
+
+    try {
+      const response = await registrationServiceInstance.getPostsBySrn(newSrn)
+      
+      setStudent(response.data.data)
+      //sessionStorage.setItem('user', JSON.stringify(response.data.data)); // Store user data in localStorage
+   
+  } catch (error) {
+      console.error(error);
+    
+
+  }
+
+
+
+
+
+
+  //pdf download logic
+
+  const pdf = new jsPDF('p', 'mm', 'a4');
+
+  const logo = '/haryana.png';
+  const instruction = '/geninstructions.png'
+
+  // const slipDataToShow = slipData || {}; // Get slip data or use empty object if not available
+  // const { srn, name, father, dob, gender, category, slipId, district, block, school } = slipDataToShow;
+
+// Format the current date
+const currentDate = new Date(Date.now()).toLocaleDateString('en-US');
+
+// Check if `studentSlipData.createdAt` exists and format accordingly
+const formattedDate = studentSlipData.createdAt ? new Date(studentSlipData.createdAt).toLocaleDateString('en-US') : null;
+
+// Use `formattedDate` if it exists; otherwise, use the formatted current date
+const dateToShow = formattedDate || currentDate;
+
+
+  // Add logo to the PDF
+  pdf.addImage(logo, 'PNG', 10, 10, 20, 20);
+
+  pdf.addImage(instruction, 'PNG', 10, 158, 180, 120);
+
+  // Set font size and styles for header
+  pdf.setFontSize(14);
+  pdf.text(examLevel, 105, 20, { align: "center" });
+  pdf.setFontSize(12);
+  pdf.text(examLevelSlip, 105, 25, { align: "center" });
+  pdf.setFontSize(10);
+  pdf.text(examLevelBatch, 105, 30, { align: "center" });
+
   
+
+  pdf.setFontSize(10);
+  pdf.text(`Registration Status: ${studentSlipData.isVerified}`, 105, 35, { align: "center" });
+
+  // Draw underline below the header
+  const headerY = 40; // Y-coordinate for the underline
+  pdf.setLineWidth(1);
+  pdf.line(10, headerY, 200, headerY); // Draw line from (10, headerY) to (200, headerY)
+
+  // Add some spacing
+  
+  pdf.setFontSize(12);
+
+  // Define a maximum label width
+  const labelWidth = 70; // Adjust this value based on your needs
+  const xStart = 10; // Starting X-coordinate
+  const yPositionStart = 50; // Starting Y-coordinate
+  const lineHeight = 10; // Height between lines
+  
+  // Draw the texts
+  
+  pdf.text(`1. Slip ID:`, xStart, yPositionStart);
+  pdf.text(`${student.slipId}`, xStart + labelWidth, yPositionStart);
+  
+  pdf.text(`2. SRN:`, xStart, yPositionStart + lineHeight);
+  pdf.text(`${student.srn}`, xStart + labelWidth, yPositionStart + lineHeight);
+
+ 
+  pdf.text(`3. Name:`, xStart, yPositionStart + 2 * lineHeight);
+  pdf.text(`${student.name}`, xStart + labelWidth, yPositionStart + 2 * lineHeight);
+  
+  pdf.text(`4. Father's Name:`, xStart, yPositionStart + 3 * lineHeight);
+  pdf.text(`${student.father}`, xStart + labelWidth, yPositionStart + 3 * lineHeight);
+  
+  pdf.text(`5. D.O.B:`, xStart, yPositionStart + 4 * lineHeight);
+  pdf.text(`${student.dob}`, xStart + labelWidth, yPositionStart + 4 * lineHeight);
+  
+  pdf.text(`6. Gender:`, xStart, yPositionStart + 5 * lineHeight);
+  pdf.text(`${student.gender}`, xStart + labelWidth, yPositionStart + 5 * lineHeight);
+  
+  pdf.text(`7. Category:`, xStart, yPositionStart + 6 * lineHeight);
+  pdf.text(`${student.category}`, xStart + labelWidth, yPositionStart + 6 * lineHeight);
+  
+  pdf.text(`8. District:`, xStart, yPositionStart + 7 * lineHeight);
+  pdf.text(`${student.district}`, xStart + labelWidth, yPositionStart + 7 * lineHeight);
+  
+  pdf.text(`9. Block:`, xStart, yPositionStart + 8 * lineHeight);
+  pdf.text(`${student.block}`, xStart + labelWidth, yPositionStart + 8 * lineHeight);
+  
+  pdf.text(`10. School:`, xStart, yPositionStart + 9 * lineHeight);
+  pdf.text(`${student.school}`, xStart + labelWidth, yPositionStart + 9 * lineHeight);
+  
+  pdf.text(`11. Registration Date:`, xStart, yPositionStart + 10 * lineHeight);
+  pdf.text(`${dateToShow}`, xStart + labelWidth, yPositionStart + 10 * lineHeight);
+  
+  // Draw a gray header line
+  const lineY = 155; // Y-coordinate for the header line
+  pdf.setDrawColor(169, 169, 169); // Set color to gray (RGB)
+  pdf.setLineWidth(1); // Set line width
+  pdf.line(10, lineY, 200, lineY); // Draw line from (10, lineY) to (200, lineY)
+  
+
+  // Footer instructions
+  const footerY = pdf.internal.pageSize.height - 20; // Y-coordinate for the footer
+  // pdf.text("Note: If you have any doubt regarding registration, then contact us: 7982108494, 7982109268.", 10, footerY);
+  
+  // Draw line in the footer
+  pdf.line(10, footerY + 5, 200, footerY + 5); // Draw line from (10, footerY + 5) to (200, footerY + 5)
+
+  // Save the PDF
+  pdf.save(`${student.name}_${student.srn}_acknowledgement-slip.pdf`);
+  
+
+
+ console.log('i am student')
+ console.log(student)
+//^^^^^^^^^^^^^^^^^^^^^
+
+    
+//download slip ends here^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  }
+
+
+console.log('i am student after setstudent zero')
+console.log(student)
+
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
   function handleClearFilter() {
     setDistrict('')
     setBlock('')
@@ -127,6 +309,7 @@ const AllData = () => {
                 <th>School</th>
                 <th>Class</th>
                 <th>image</th>
+                <th>Download L1 Slip</th>
               </tr>
             </thead>
             <tbody>
@@ -148,10 +331,13 @@ const AllData = () => {
                       <td>{eachStudent.grade}</td>
                       <td>
                         <img
-                          src={`${BaseURL}/api/postimages/${eachStudent.image}`}
+                          src={eachStudent.imageUrl} //${BaseURL}/api/postimages/${eachStudent.image}`
                           alt={eachStudent.name}
                           style={{ width: 100, height: 100 }}
                         />
+                      </td>
+                      <td>
+                        <button id={eachStudent.srn} onClick={(e)=>DownloadAckSlip(eachStudent.srn,e)}>Download Slip</button>
                       </td>
                     </tr>
                   ))

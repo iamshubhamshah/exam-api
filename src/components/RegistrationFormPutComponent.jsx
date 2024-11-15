@@ -475,7 +475,7 @@ function PreFilledRegistrationForm() {
       //  toast.error('Please fill the form correctly')
       return; // Stop execution if validation fails
     } else {
-      toast.success("registration done");
+      // toast.success("Form Filled Right");
     }
 
     try {
@@ -539,14 +539,17 @@ function PreFilledRegistrationForm() {
         );
         console.log(response); // Debugging log
         if (response.data.updated_data) {
-          setMessage("Data updated successfully");
           toast.success("Form updated succesfully");
+          setMessage("Data updated successfully");
           setShowAck(true); //this was for showing Acknowledgement slip dynamically.
           // if (location.pathname === '/Registration-form/put/MB'){
           //     navigate('/acknowledgementslip-mb')
           // } else if (location.pathname === '/Registration-form/put/S100'){
           //     navigate('/acknowledgementslip-100')
           // }
+          setTimeout(() => {
+            setShowAck(false);
+          }, 30000);
 
           //navigate('/srn')  //after successfull updation of data it routes back to the inputsrn page
         } else {
@@ -560,6 +563,12 @@ function PreFilledRegistrationForm() {
       console.log("Some error occured");
     }
   };
+
+  let ackStateChange;
+  
+  if (ackStateChange){
+    setShowAck(false)
+  }
 
   return (
     <>
@@ -908,7 +917,7 @@ function PreFilledRegistrationForm() {
         <br></br>
 
         {showAck ? (
-          <AcknowledgementSlip showAck={showAck} slipData={slipData} /> //showAck = {showAck} slipData = {slipData} <= these are the props if needed i can use from here.
+          <AcknowledgementSlip showAck={showAck} slipData={slipData} ackStateChange={ackStateChange} /> //showAck = {showAck} slipData = {slipData} <= these are the props if needed i can use from here.
         ) : null}
       </Container>
     </>

@@ -23,10 +23,24 @@ export default function DistrictBlockDash8() {
 
   console.log(stateDash);
 
+  //Below variables are for shwoing total count on dashboars:
+  const totalDistrictCount = stateDash.reduce((sum, eachDistrictCount) => {
+    return sum + eachDistrictCount.districtCount;
+  }, 0);
+console.log(totalDistrictCount)
+
+  //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   return (
     <div>
+      <h1>Mission Buniyaad Dash Board</h1>
+      <hr/>
+      <p style={{fontSize:'30'}}> Total Count: {totalDistrictCount}</p>
+      <hr/>
       {stateDash.length > 0 ? (
         <>
+
+        
           {stateDash.map((eachDistrict, index) => (
             <Accordion key={index}>
               <Accordion.Item eventKey="0">
@@ -49,7 +63,7 @@ export default function DistrictBlockDash8() {
                       {/* Access blocks within eachDistrict */}
                       {eachDistrict.blocks.map((eachBlock, blockIndex) => (
                         <tr key={blockIndex}>
-                          <td>{blockIndex}</td>
+                          <td>{blockIndex + 1}</td>
                           <td>{eachBlock.block}</td>
                           <td>{eachBlock.blockCount}</td>
                         </tr>

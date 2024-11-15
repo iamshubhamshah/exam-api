@@ -185,7 +185,7 @@ school,
 
                 <Select
                   placeholder="Select District"
-                  value={district ? { label: district, value: district } : null}
+                  // value={district ? { label: district, value: district } : null}
                   options={districtList.map((d) => ({
                     value: d.d_id,
                     label: d.d_name,
@@ -202,7 +202,7 @@ school,
 
               <Select
                 placeholder="Select Block"
-                value = {block ? {label: block, value: block}: null}
+                // value = {block ? {label: block, value: block}: null}
                
                 onChange={handleBlockChange}
                 options={filteredBlock.map((b) => ({
@@ -222,7 +222,7 @@ school,
 
                   <Select
                     placeholder="Selct School"
-                    value = {school ? {label: school, value: school}:null}
+                    // value = {school ? {label: school, value: school}:null}
                     onChange={handleSchoolChange}
                     options={filteredSchool.map((s) => ({
                       value: s.b_id,
