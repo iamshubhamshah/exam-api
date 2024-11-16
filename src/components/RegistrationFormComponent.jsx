@@ -418,10 +418,10 @@ export default function RegistrationFormComponent() {
 
     // Check if the form is validated
     if (!formValidated) {
-      //   toast.error("Please fix the errors before submitting the form.");
+        // toast.error("Please fix the errors before submitting the form.");
       return; // Stop execution if validation fails
     } else {
-      toast.success("registration done");
+      //toast.success("Form Validated");
     }
 
     try {
@@ -513,7 +513,8 @@ export default function RegistrationFormComponent() {
       e.target.reset();
     } catch (error) {
       console.log("Some error occured");
-
+      alert('This SRN is already Registred. (एसआरएन पहले से ही पंजीकृत है।)')
+      navigate('/')
       // alert('fill the form properly')
     }
   };

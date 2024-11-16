@@ -12,7 +12,12 @@ import Footer from "./Footer";
 import DependentDropABRC from "./DependentDropABRC";
 
 export default function UserSignUp() {
-  let otp = "123456";
+  let otp = ["858515", "774569", "997415", "476541", "116684"]
+
+  
+  
+  const sentOtp = otp[Math.floor(0 + Math.random() * 4)]
+
 
   const navigate = useNavigate();
 
@@ -27,10 +32,13 @@ export default function UserSignUp() {
   const [SuccessMessage, setSuccessMessage] = useState("");
   //dynamically showing otp input box:
   const [VerifyOtp, setVerifyOtp] = useState(false);
+  //Below hook for showing or not shoiwng verify button:
+  const [showVerifyButton, setShowVerifyButton] = useState(true)
   //below hook for users typed otp
   const [inputOtp, setInputOtp] = useState("");
   //below hook for sending message to user as otp
-  const message = `Enter this otp:  ${otp}  in registration portal and crete your password`;
+  const message = `Your OTP: ${sentOtp}  for Pratibha khoj Registration.`;
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,10 +89,13 @@ export default function UserSignUp() {
         setPassword("");
       } else {
         setSuccessMessage("User not registered");
+        
       }
     } catch (error) {
       console.error("Error during registration:", error);
-      setSuccessMessage("An error occurred. Please try again.");
+      setSuccessMessage("This Number is already registered.");
+      alert('User Already Registerd')
+
     }
 
     // Clear form fields
@@ -93,18 +104,20 @@ export default function UserSignUp() {
       setSuccessMessage("");
     }, 2000);
 
-    e.target.reset();
+    // e.target.reset();
   };
 
   //below function verifies the user number sending the 6 digit otp on their phones;
 
-  async function handleVerifyNumberClick(e) {
+  async function verifyByTwilio(e) {
     e.preventDefault();
     try {
       const response = await sendNotification(mobile, message);
       alert(`Message sent: ${response.success ? "success" : "Failed"}`);
+      setVerifyOtp(true)
+      setShowVerifyButton(false)
     } catch (error) {
-      alert("Failed to send message");
+      alert("Please Enter a Valid Number");
     }
   }
   //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -124,6 +137,7 @@ export default function UserSignUp() {
       });
       if (response.ok) {
         setOtpStatus("OTP sent successfully!");
+        
       } else {
         setOtpStatus("Failed to send OTP. Please try again.");
       }
@@ -132,7 +146,7 @@ export default function UserSignUp() {
       setOtpStatus("An error occurred. Please try again.");
     }
   };
-
+console.log(otp)
   //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   return (
@@ -215,11 +229,15 @@ export default function UserSignUp() {
               <Form.Control
                 type="text"
                 placeholder="Enter Mobile Number"
+                maxLength={10}
                 onChange={(e) => setMobile(e.target.value)}
                 required
               />
             </Form.Group>
-
+            <br/><br/>
+            <Row>
+              
+            </Row>
             {VerifyOtp ? (
               <Form.Group>
                 <Form.Label>
@@ -228,45 +246,58 @@ export default function UserSignUp() {
 
                 <Form.Control
                   type="tel"
-                  placeholder="Enter Your Mobile"
+                  placeholder="OTP"
+                  maxLength={6}
                   onChange={(e) => setInputOtp(e.target.value)}
                   required
                 />
-                {inputOtp === otp ? null : (
-                  <small>Enter correct otp for creating password</small>
+                {otp.includes(inputOtp) ? (<>Otp Verified</>) : (
+                  <small></small>
                 )}
               </Form.Group>
             ) : null}
 
             <Col>
-              <Form.Group>
-                <Form.Label>
-                  Create Password (कृपया अपना पासवर्ड बनाएं) :
-                </Form.Label>
-                <p style={{fontSize:'12px'}}>Password must contain only 6 digits. (पासवर्ड 6 अंको का होना चाहिए.)</p>
 
-                <Form.Control
-                  type="password"
-                  placeholder="Create Password"
-                  maxLength={6}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-                {/* <small>Otp Matched</small> */}
-              </Form.Group>
+
+            {otp.includes(inputOtp) ? (
+
+<Form.Group>
+<Form.Label>
+  Create Password (कृपया अपना पासवर्ड बनाएं) :
+</Form.Label>
+<p style={{fontSize:'12px'}}>Password must contain only 6 digits. (पासवर्ड 6 अंको का होना चाहिए.)</p>
+
+<Form.Control
+  type="password"
+  placeholder="Create Password"
+  maxLength={6}
+  onChange={(e) => setPassword(e.target.value)}
+  required
+/>
+{/* <small>Otp Matched</small> */}
+</Form.Group>
+
+
+            ): (<p>Enter valid otp</p>)}
+              
 
               {SuccessMessage && <p>{SuccessMessage}</p>}
             </Col>
           </Row>
           <Row className="border mb-3 rounded-2">
-            <Button type="submit" style={{ width: "100%" }}>
+            {showVerifyButton === false ? (<Button type="submit" style={{ width: "100%" }}>
               Submit
-            </Button>
+            </Button>):(null)}
           </Row>
+          <Row>{showVerifyButton? (<Button  onClick={verifyByTwilio}>Verify Mobile Number</Button>):(null)}</Row>
+          <br/>
         </Form>
-        {/* <button onClick={handleVerifyNumberClick}>Verify Mobile Number</button>
-      <button onClick={handleGooadvertOtp}> Verify OTP By goadvert</button> */}
+        
+      {/* <button onClick={handleGooadvertOtp}> Verify OTP By goadvert</button> */}
+      
       </Container>
+      
       <Footer />
     </>
   );

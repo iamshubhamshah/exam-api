@@ -18,9 +18,6 @@ const BaseURL = process.env.REACT_APP_API_BASE_URL;
 const AllData = () => {
 
 
- 
-
-
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -46,6 +43,9 @@ const AllData = () => {
 const {setStudent} = useContext(StudentContext)
 const {student} = useContext(StudentContext)
 
+//For downloading slip
+const [downloadSlip, setDownloadSlip] = useState(false)
+
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^
    //Hnadling below text dynamically...
 let examLevel;
@@ -68,8 +68,6 @@ if ((studentSlipData && studentSlipData.grade === "8")) {
   
   const fetchAllData = async () => {
 
-
-
     let query = `isRegisteredBy=${user.mobile}&district=${district}&block=${block}&school=${school}&grade=${grade}`.trim();
     
     try {
@@ -88,17 +86,34 @@ if ((studentSlipData && studentSlipData.grade === "8")) {
 
 
 
-  //Below logic downloads acknowledgemtn slip
-  const DownloadAckSlip = async (id, e) => {
 
+  //Below logic takes the srn as id from the DownloadAckSlip button to below logice
+  const DownloadAckSlip = async (id, e) => { 
 
+    setTimeout(()=>{
+      setStudent('')
+    }, 5000)
     const newSrn = id
 
     try {
       const response = await registrationServiceInstance.getPostsBySrn(newSrn)
       
       setStudent(response.data.data)
+
+      setDownloadSlip(true);
       //sessionStorage.setItem('user', JSON.stringify(response.data.data)); // Store user data in localStorage
+
+      if (student === ''){
+        //alert(' i am undefined')
+
+        //Below logic runs and click the "DownloadAckSlip" button again. Cause "SettimeOut" function sets the state of...
+        // student back to blank string. I had to do it cause state update has a gap of undefined. So thats' why ...
+        // auto trigger needed. Just try it out and you will know what i am saying. Either contact me I will explain
+        document.querySelector('.triggerClickOnUndefined').click();
+        
+      } else {
+        return fetchStudentSlip();
+      }
    
   } catch (error) {
       console.error(error);
@@ -108,7 +123,14 @@ if ((studentSlipData && studentSlipData.grade === "8")) {
 
 
 
+  }
 
+
+
+  //Below logic is for designing and downloading student acknowledgemnt slip...
+  //What it does is that it gets run by "DownloadAckSlip" function, when condition inside that met. if not this...
+  // function does not run.
+  const fetchStudentSlip = async (id, e) => {
 
 
   //pdf download logic
@@ -217,20 +239,19 @@ const dateToShow = formattedDate || currentDate;
   // Save the PDF
   pdf.save(`${student.name}_${student.srn}_acknowledgement-slip.pdf`);
   
+  // alert('slip downloaded')
 
 
- console.log('i am student')
- console.log(student)
+//  console.log('i am student')
+//  console.log(student)
 //^^^^^^^^^^^^^^^^^^^^^
+
 
     
 //download slip ends here^^^^^^^^^^^^^^^^^^^^^^^^^^^
   }
-
-
-console.log('i am student after setstudent zero')
-console.log(student)
-
+  
+  
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -337,7 +358,7 @@ console.log(student)
                         />
                       </td>
                       <td>
-                        <button id={eachStudent.srn} onClick={(e)=>DownloadAckSlip(eachStudent.srn,e)}>Download Slip</button>
+                        <button className="triggerClickOnUndefined" id={eachStudent.srn} onClick={(e)=>DownloadAckSlip(eachStudent.srn,e)}>Download Slip</button>
                       </td>
                     </tr>
                   ))

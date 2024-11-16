@@ -447,6 +447,7 @@ function PreFilledRegistrationForm() {
     errBlock,
     errSchool,
     errPreviousClassAnnualExamPercentage,
+  
   ]);
 
   console.log("Blow  if formValidated");
@@ -549,7 +550,8 @@ function PreFilledRegistrationForm() {
           // }
           setTimeout(() => {
             setShowAck(false);
-          }, 30000);
+            
+          }, 20000);
 
           //navigate('/srn')  //after successfull updation of data it routes back to the inputsrn page
         } else {
