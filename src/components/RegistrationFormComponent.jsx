@@ -8,6 +8,7 @@ import "../index.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StudentContext } from "./ContextApi/StudentContextAPI/StudentContext";
+import registrationServiceInstance from "../services/RegistrationFormService";
 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -413,6 +414,24 @@ export default function RegistrationFormComponent() {
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
 
+  //Below try and catch block Checks for the already registred srn and if there is then route back to landing page.
+  try {
+    // Check if SRN is already registered in the database
+    const checkingAlreadyyRegisterdSrn = await registrationServiceInstance.getPostsBySrn(srn);
+  
+    if (checkingAlreadyyRegisterdSrn) {
+      alert('This SRN is already registered');
+      navigate('/'); // Navigate to homepage if duplicate SRN is found
+      return; // Prevent further execution of the code
+    }
+  } catch (error) {
+    console.error('Error checking SRN:', error);
+    // Handle error (e.g., if the network request fails)
+    // alert('An error occurred while checking the SRN.');
+  }
+  //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  
     // Call the formValidation function
     formValidation();
 
@@ -459,7 +478,7 @@ export default function RegistrationFormComponent() {
       formData.append("schoolCode", schoolCode);
       formData.append("slipId", slipId);
 
-      console.log(slipId);
+      // console.log(slipId);
 
       //Below piece of code converts the formData into JSON Object to show it in a Slip
       const SlipData = {};
@@ -467,7 +486,7 @@ export default function RegistrationFormComponent() {
         SlipData[key] = value;
       });
 
-      console.log(SlipData);
+      // console.log(SlipData);
       setSlipData(SlipData);
       setStudent(SlipData);
       console.log(slipData); //It will not directly log the data but, yes it will store the data in slipData hook(It is something related to useEffect hook)
@@ -477,8 +496,9 @@ export default function RegistrationFormComponent() {
         formData
       );
 
-      console.log(response.data.data);
-      console.log(slipData);
+      // console.log('below is the response.data.success')
+      // console.log(response.data.data);
+      // console.log(slipData);
 
       if (response.data.success === true) {
         setDistrict('')
@@ -492,8 +512,7 @@ export default function RegistrationFormComponent() {
         } else if (location.pathname === "/Registration-form/MB") {
           navigate("/acknowledgementslip-mb");
           console.log("true is mbs");
-        }
-
+        } 
         //Resets the district block, school dropdown vales
         
         //^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -502,6 +521,7 @@ export default function RegistrationFormComponent() {
         // navigate('/srn')  //after successfull updation of data it routes back to the inputsrn page
       } else {
         setMessage("Post not created");
+        alert('i am here ')
       }
       setImage("");
 
@@ -513,9 +533,9 @@ export default function RegistrationFormComponent() {
       e.target.reset();
     } catch (error) {
       console.log("Some error occured");
-      alert('This SRN is already registered')
-      // alert('fill the form properly')
-      navigate('/')
+      // alert('This SRN is already registered')
+      // // alert('fill the form properly')
+      // navigate('/')
     }
   };
 
