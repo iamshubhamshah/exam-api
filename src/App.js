@@ -30,7 +30,7 @@ import BlockSchoolDash10 from './components/BlockSchoolDash10';
 import SchoolDash8 from './components/SchoolDash8';
 import SchoolDash10 from './components/SchoolDash10';
 import DashBoardPage from './pages/DashBoardPage';
-
+import Verification from './components/Verification';
 
 
 
@@ -113,6 +113,14 @@ function App() {
                   <Route path='/blockschooldash-100' element = {<BlockSchoolDash10/>}/>
                   <Route path = '/schooldash-mb' element = {<SchoolDash8/>}/>
                   <Route path = '/schooldash-100' element = {<SchoolDash10/>}/>
+
+
+                    {/* Routes for verifcation portal */}
+
+                    <Route path='/verification' element = {<Verification/>}/>
+
+
+
             </Routes>
             </StudentProvider>
             

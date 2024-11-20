@@ -37,7 +37,7 @@ export default function UserSignUp() {
   //below hook for users typed otp
   const [inputOtp, setInputOtp] = useState("");
   //below hook for sending message to user as otp
-  const message = `Your OTP: ${sentOtp}  for Pratibha khoj Registration.`;
+  const message = `Your OTP: ${sentOtp} for Pratibha Khoj Account Creation.`;
 
 
   const handleSubmit = async (e) => {
@@ -51,7 +51,7 @@ export default function UserSignUp() {
     // if (
     //   !userName ||
     //   !designation ||
-    //   !mobile ||
+    //   !mobile || 
     //   !district ||
     //   !block ||
     //   !school ||
@@ -146,7 +146,7 @@ export default function UserSignUp() {
       setOtpStatus("An error occurred. Please try again.");
     }
   };
-console.log(otp)
+
   //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   return (

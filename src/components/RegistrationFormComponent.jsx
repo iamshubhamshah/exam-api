@@ -418,10 +418,10 @@ export default function RegistrationFormComponent() {
 
     // Check if the form is validated
     if (!formValidated) {
-        // toast.error("Please fix the errors before submitting the form.");
+      //   toast.error("Please fix the errors before submitting the form.");
       return; // Stop execution if validation fails
     } else {
-      //toast.success("Form Validated");
+      // toast.success("registration done");
     }
 
     try {
@@ -485,7 +485,7 @@ export default function RegistrationFormComponent() {
         setBlock('')
         setSchool('')
         setMessage("Post created successfully");
-        toast.success("Registration done succesfully");
+        // toast.success("Registration done succesfully");
         if (location.pathname === "/Registration-form/S100") {
           navigate("/acknowledgementslip-100");
           console.log("true is s100");
@@ -513,9 +513,9 @@ export default function RegistrationFormComponent() {
       e.target.reset();
     } catch (error) {
       console.log("Some error occured");
-      alert('This SRN is already Registred. (एसआरएन पहले से ही पंजीकृत है।)')
-      navigate('/')
+      alert('This SRN is already registered')
       // alert('fill the form properly')
+      navigate('/')
     }
   };
 
