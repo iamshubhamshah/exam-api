@@ -11,6 +11,7 @@ import TwilioService, { sendNotification } from "../services/TwilioService";
 import Footer from "./Footer";
 import DependentDropABRC from "./DependentDropABRC";
 
+
 export default function UserSignUp() {
   let otp = ["858515", "774569", "997415", "476541", "116684"]
 
@@ -111,6 +112,29 @@ export default function UserSignUp() {
 
   async function verifyByTwilio(e) {
     e.preventDefault();
+
+    
+
+    try {
+      const userExistInDb = await UserService.GetUser(mobile)
+
+      if(userExistInDb){
+        alert('User Already Registerd. Please Login or Contact on Helpline Numbers regarding any issue.')
+        navigate('/user-signin')
+        return;
+      }
+
+    } catch (error) {
+      console.log('User already exist in db')
+    }
+
+
+
+
+
+
+
+
     try {
       const response = await sendNotification(mobile, message);
       alert(`Message sent: ${response.success ? "success" : "Failed"}`);

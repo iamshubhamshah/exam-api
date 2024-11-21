@@ -240,7 +240,9 @@ const Verification = () => {
                                         options={[
                                             { value: 'Invalid Name', label: 'Invalid Name' },
                                             { value: 'Invalid Father', label: 'Invalid Father' },
-                                            {value: 'Invalid Mobile', label:'Invalid Mobile'}
+                                            {value: 'Invalid Mobile', label:'Invalid Mobile'},
+                                            {value: 'Invalid Image', label:'Invalid Image'},
+                                            {value: 'Image Not Upoaded', label:'Image Not Uploaded'}
                                         ]}
                                         />
 
@@ -252,7 +254,7 @@ const Verification = () => {
                                         options={[
                                             { value: 'Verified', label: 'Verified' },
                                             { value: 'Not Verified', label: 'Not Verified' },
-                                            {value: 'Rejected', label:'Regjected'}
+                                            {value: 'Rejected', label:'Rejected'}
                                         ]}
                                         />
 
