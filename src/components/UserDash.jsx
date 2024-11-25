@@ -61,9 +61,28 @@ if ((studentSlipData && studentSlipData.grade === "8")) {
     examLevelBatch = "Batch 2025-27";
 }
 
+  //________________________________
+  let verificationStatusText = ""; // Initialize as an empty string
+if (student.isVerified === "Verified") {
+  verificationStatusText = 
+    "Your Registration form is verified for Level 1 Examination. ";
+} else if (student.isVerified === "Pending" ) {
+    if (student.verificationRemark === null){
+
+      verificationStatusText = 
+      "Your Registration form is under verification. Check your status after three days.";
+
+    } else {
+      verificationStatusText = `Pending Reason: ${student.verificationRemark}`;
+    }
+  }
+
+
 
 
   console.log(district)
+
+  
 
   
   const fetchAllData = async () => {
@@ -169,10 +188,18 @@ const dateToShow = formattedDate || currentDate;
   
 
   pdf.setFontSize(10);
-  pdf.text(`Registration Status: ${studentSlipData.isVerified}`, 105, 35, { align: "center" });
+  pdf.text(`Registration Status: ${student.isVerified}`, 105, 35, { align: "center" });
+
+  //Below shows rejection reason
+  pdf.setFontSize(10);
+  pdf.text(verificationStatusText, 105, 40, { align: "center" });
+
+
+
+
 
   // Draw underline below the header
-  const headerY = 40; // Y-coordinate for the underline
+  const headerY = 44; // Y-coordinate for the underline
   pdf.setLineWidth(1);
   pdf.line(10, headerY, 200, headerY); // Draw line from (10, headerY) to (200, headerY)
 

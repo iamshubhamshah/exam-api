@@ -136,8 +136,9 @@ export default function UserSignUp() {
 
 
     try {
-      const response = await sendNotification(mobile, message);
-      alert(`Message sent: ${response.success ? "success" : "Failed"}`);
+      // const response = await sendNotification(mobile, message);
+      // alert(`Message sent: ${response.success ? "success" : "Failed"}`);
+      alert(`Your otp is: ${sentOtp}`)
       setVerifyOtp(true)
       setShowVerifyButton(false)
     } catch (error) {

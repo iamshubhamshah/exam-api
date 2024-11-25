@@ -36,6 +36,10 @@ class RegistrationService {
         return axios.put(url, formData); // Pass the formData here
     }
 
+    patchPostById (id, formData) {
+        const url = `${BaseURL}/api/MB-form/patchPostById/${id}`;
+        return axios.patch(url, formData);
+    }
     
 }
 

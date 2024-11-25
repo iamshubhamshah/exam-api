@@ -112,6 +112,11 @@ function PreFilledRegistrationForm() {
 
   const [showAck, setShowAck] = useState(false);
   //_________________________________________________________________
+  //On resubmission on form isVerified field sets to "Pending"
+  const isVerified = "Pending"
+  const verificationRemark = ""
+  //------------------------------------
+
 
   //Below states will be used to lift the state and pass it to DependentDropDown component for prefilling of <select> object.
 
@@ -513,6 +518,10 @@ function PreFilledRegistrationForm() {
       formData.append("isRegisteredBy", isRegisteredBy);
       formData.append("schoolCode", schoolCode);
       formData.append("slipId", slipId);
+
+      //Below field added on 23-Nov. R
+      formData.append("isVerified", isVerified)
+      formData.append("verificationRemark", verificationRemark)
 
       console.log(slipId);
 
