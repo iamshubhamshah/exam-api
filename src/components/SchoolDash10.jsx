@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import DashBoardServices from '../services/DashBoardServices';
 import {Table, Row, Col, Container, Button} from 'react-bootstrap';
 import DependentDropsForFilter from './DependentDropsForFilter';
+import NavbarDashboard from "../components/NavbarDashaboard"
 
 const BaseURL = process.env.REACT_APP_API_BASE_URL;
 
@@ -62,6 +63,10 @@ const SchoolDash10 = () => {
       console.log(filterApplied)
 
       return (
+        <>
+        <NavbarDashboard/>
+        <h5 style={{textAlign:'center'}}>Haryana Super 100 School Level Dashboard</h5>
+        <hr/>
         <Container>
             <Row>
             <Col>
@@ -160,6 +165,7 @@ const SchoolDash10 = () => {
             </Row>
 
         </Container>
+        </>
       )
 
 

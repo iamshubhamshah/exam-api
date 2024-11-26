@@ -3,6 +3,8 @@ import Accordion from "react-bootstrap/Accordion";
 import RegistratonFormService from "../services/RegistrationFormService"; // I can remove this
 import DashBoardServices from "../services/DashBoardServices";
 import Table from "react-bootstrap/Table";
+import Navbar from "./Navbar";
+import NavbarDashboard from "../components/NavbarDashaboard"
 
 export default function DistrictBlockDash8() {
   const [stateDash, setStateDash] = useState([]);
@@ -21,7 +23,11 @@ export default function DistrictBlockDash8() {
     fetchPosts();
   }, []);
 
-  console.log(stateDash);
+
+  const sortStateDash = stateDash.sort((a, b) => a.district.localeCompare(b.district));
+
+  console.log("I am sorted dash")
+  console.log(sortStateDash)
 
   //Below variables are for shwoing total count on dashboars:
   const totalDistrictCount = stateDash.reduce((sum, eachDistrictCount) => {
@@ -33,21 +39,23 @@ console.log(totalDistrictCount)
 
   return (
     <div>
-      <h1>Mission Buniyaad Dash Board</h1>
+      <NavbarDashboard/>
+      
+      <h5 style={{textAlign:'center'}}>Mission Buniyaad Dash Board-District Level</h5>
       <hr/>
-      <p style={{fontSize:'30'}}> Total Count: {totalDistrictCount}</p>
+      <p style={{fontSize:'30', textAlign:'center'}}> Registration Count: {totalDistrictCount}</p>
       <hr/>
       {stateDash.length > 0 ? (
         <>
 
         
           {stateDash.map((eachDistrict, index) => (
-            <Accordion key={index}>
+            <Accordion defaultActiveKey="0" key={index}>
               <Accordion.Item eventKey="0">
                 <Accordion.Header>
                   <div>
-                    <p>District: {eachDistrict.district}</p>
-                    <p>L-1 Registration Count: {eachDistrict.districtCount}</p>
+                    <p style={{ fontWeight:'bold', color:'red'}}>{eachDistrict.district}</p>
+                    <p style={{ fontWeight:'bold', color:'red'}}>Total Registration: {eachDistrict.districtCount}</p>
                   </div>
                 </Accordion.Header>
                 <Accordion.Body>

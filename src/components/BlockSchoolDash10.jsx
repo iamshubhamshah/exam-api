@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import DashBoardServices from '../services/DashBoardServices';
 import Table from 'react-bootstrap/Table';
+import NavbarDashboard from "../components/NavbarDashaboard"
 
 
 export default function SchoolDash10 () {
@@ -26,7 +27,8 @@ export default function SchoolDash10 () {
     
     return(
         <div>
-           
+          <NavbarDashboard/>
+          <h5 style={{textAlign:'center'}}>Haryana Super 100 Block Level Dashboard</h5>
             {BlockSchoolDash.length > 0 ?(
                 <>
                 {BlockSchoolDash.map((eachDistrict, index)=>(
@@ -37,9 +39,10 @@ export default function SchoolDash10 () {
                         <Accordion.Item key={eachBlockIndex} eventKey={eachBlockIndex.toString()}>
                             <Accordion.Header>
                                 <div>
-                                <p>{eachBlock.block}</p>
-                                <p>L-1 Count: {eachBlock.blockCount}</p>
+                                <p style={{fontWeight:'bold', color:'red'}}>{eachBlock.block}</p>
+                                <p style={{fontWeight:'bold', color:'red'}}>Registration Count: {eachBlock.blockCount}</p>
                                 </div>
+                                <span style={{ marginLeft: '65%' }}>Click Here</span>
                             </Accordion.Header>
                             <Accordion.Body>
                                 <Table responsive>

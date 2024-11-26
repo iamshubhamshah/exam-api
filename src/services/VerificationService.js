@@ -11,6 +11,7 @@ class VerificationService {
         return axios.get(url)
     };
 
+    
 
 }
 

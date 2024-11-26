@@ -62,21 +62,7 @@ if ((studentSlipData && studentSlipData.grade === "8")) {
 }
 
   //________________________________
-  let verificationStatusText = ""; // Initialize as an empty string
-if (student.isVerified === "Verified") {
-  verificationStatusText = 
-    "Your Registration form is verified for Level 1 Examination. ";
-} else if (student.isVerified === "Pending" ) {
-    if (student.verificationRemark === null){
-
-      verificationStatusText = 
-      "Your Registration form is under verification. Check your status after three days.";
-
-    } else {
-      verificationStatusText = `Pending Reason: ${student.verificationRemark}`;
-    }
-  }
-
+ 
 
 
 
@@ -122,6 +108,8 @@ if (student.isVerified === "Verified") {
       setDownloadSlip(true);
       //sessionStorage.setItem('user', JSON.stringify(response.data.data)); // Store user data in localStorage
 
+      
+
       if (student === ''){
         //alert(' i am undefined')
 
@@ -152,7 +140,9 @@ if (student.isVerified === "Verified") {
   const fetchStudentSlip = async (id, e) => {
 
 
-  //pdf download logic
+  try {
+
+    //pdf download logic
 
   const pdf = new jsPDF('p', 'mm', 'a4');
 
@@ -184,6 +174,23 @@ const dateToShow = formattedDate || currentDate;
   pdf.text(examLevelSlip, 105, 25, { align: "center" });
   pdf.setFontSize(10);
   pdf.text(examLevelBatch, 105, 30, { align: "center" });
+
+
+  let verificationStatusText = ""; // Initialize as an empty string
+  if (student.isVerified === "Verified") {
+    verificationStatusText = 
+      "Your Registration form is verified for Level 1 Examination. ";
+  } else if (student.isVerified === "Pending" ) {
+      if (student.verificationRemark === null){
+  
+        verificationStatusText = 
+        "Your Registration form is under verification. Check your status after three days.";
+  
+      } else {
+        verificationStatusText = `Pending Reason: ${student.verificationRemark}`;
+      }
+    }
+  
 
   
 
@@ -274,6 +281,16 @@ const dateToShow = formattedDate || currentDate;
 //^^^^^^^^^^^^^^^^^^^^^
 
 
+    
+  } catch (error) {
+    console.error(error);
+
+    //First time setStudent state is null so fetchslip crashes the page. 
+    //So we are again triggering the download button in catch block..
+    //So that slip properly gets downloaded.
+    document.querySelector('.triggerClickOnUndefined').click();
+    // alert('Please Download Again')
+  }
     
 //download slip ends here^^^^^^^^^^^^^^^^^^^^^^^^^^^
   }

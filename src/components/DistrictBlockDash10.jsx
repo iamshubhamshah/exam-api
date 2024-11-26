@@ -3,6 +3,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import RegistratonFormService from '../services/RegistrationFormService';// I can remove this 
 import DashBoardServices from '../services/DashBoardServices';
 import Table from 'react-bootstrap/Table';
+import NavbarDashboard from '../components/NavbarDashaboard';
 
 
 
@@ -28,7 +29,8 @@ useEffect(() =>{
     fetchPosts();
 }, []);
 
-console.log(stateDash)
+const sortStateDash = stateDash.sort((a, b) => a.district.localeCompare(b.district));
+console.log(sortStateDash)
 
  //Below variables are for shwoing total count on dashboars:
  const totalDistrictCount = stateDash.reduce((sum, eachDistrictCount) => {
@@ -40,9 +42,10 @@ console.log(totalDistrictCount)
 
     return (
         <div>
-          <h1>Super 100 Dash Board</h1>
+          <NavbarDashboard/>
+          <h5 style={{textAlign:'center'}}>Haryana Super 100 Dash Board-District Level</h5>
       <hr/>
-      <p style={{fontSize:'30px'}}>Total Count: {totalDistrictCount}</p>
+      <p style={{fontSize:'30', textAlign:'center'}}> Registration Count: {totalDistrictCount}</p>
       <hr/>
             <Table responsive>
             
@@ -53,12 +56,12 @@ console.log(totalDistrictCount)
                  
                     
                         
-                    <Accordion key={index} >
+                    <Accordion defaultActiveKey="0" key={index} >
       <Accordion.Item eventKey="0">
         <Accordion.Header>
         <div>
-            <p>District: {eachDistrict.district}</p>
-            <p>L-1 Registration Count: {eachDistrict.districtCount}</p>
+            <p style={{fontWeight:'bold', color:'red'}}>{eachDistrict.district}</p>
+            <p style={{fontWeight:'bold', color:'red'}}>Total Registratios: {eachDistrict.districtCount}</p>
         </div>
         </Accordion.Header>
         <Accordion.Body>
@@ -75,7 +78,7 @@ console.log(totalDistrictCount)
          {/* Access blocks within eachDistrict */}
          {eachDistrict.blocks.map((eachBlock, blockIndex) => (
                           <tr key={blockIndex}>
-                            <td>{blockIndex}</td>
+                            <td>{blockIndex + 1}</td>
                             <td>{eachBlock.block}</td>
                             <td>{eachBlock.blockCount}</td>
                           </tr>
