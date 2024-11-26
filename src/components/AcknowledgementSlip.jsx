@@ -98,14 +98,14 @@ export default function AcknowledgementSlip({ showAck, slipData }) {
 if (student.isVerified === "Verified" || isVerified === "Verified") {
   verificationStatusText = 
     "Your Registration form is verified for Level 1 Examination. ";
-} else if (student.isVerified === "Pending" || isVerified === "Pending") {
-    if (student.verificationRemark === ""){
+} else if (student.isVerified === "Pending" || isVerified === "Pending" || slipData) {
+    if (student.verificationRemark === null || student.verificationRemark === "" || slipData){
 
       verificationStatusText = 
       "Your Registration form is under verification. Check your status after three days.";
 
     } else {
-      verificationStatusText = `Pending Reason: ${student.verificationRemark}`;
+      verificationStatusText = `Pending Reason: ${student.verificationRemark || "Your Registration form is under verification. Check your status after three days."}`;
     }
 
 
@@ -162,15 +162,16 @@ if (student.isVerified === "Verified" || isVerified === "Verified") {
 
     pdf.setFontSize(10);
     pdf.text(
-      `Registration Status: ${isVerified || student.isVerified}`,
+      `Registration Status: ${isVerified || student.isVerified || "Pending"}`,
       105,
       35,
       { align: "center" }
     );
 
     //Below shows rejection reason
+    let verificationStatusText1 = "Your Registration form is under verification. Check your status after three days."
     pdf.setFontSize(10);
-    pdf.text(verificationStatusText, 105, 40, { align: "center" });
+    pdf.text(verificationStatusText || verificationStatusText1 , 105, 40, { align: "center" });
 
     //__________________________________________________________________
 
@@ -632,20 +633,21 @@ if (student.isVerified === "Verified" || isVerified === "Verified") {
                   </footer>
                 </Card.Footer>
               </Card>
-
+                       
               <Button onClick={DownloadPDF}>
                 Download Acknowledgement Slip
               </Button>
 
               <br></br>
-              <p>
+              {student.isVerified === "Verified" ? (null):( <p>
                 If you entered any incorrect details, click 'Edit' to update and
                 resubmit the form. <br />
                 (अगर आपने फॉर्म में कोई जानकारी गलत भरी है, तो 'संपादित करें' पर
                 क्लिक करके फॉर्म फिर से जमा करें।)
-              </p>
-
-              <Button onClick={UpdateForm}>Edit Details</Button>
+              </p>)} 
+             
+              {student.isVerified === "Verified" ? (null):(<Button onClick={UpdateForm}>Edit Details</Button>)} 
+              
             </div>
           </div>
         </>

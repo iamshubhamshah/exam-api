@@ -195,11 +195,12 @@ const dateToShow = formattedDate || currentDate;
   
 
   pdf.setFontSize(10);
-  pdf.text(`Registration Status: ${student.isVerified}`, 105, 35, { align: "center" });
+  pdf.text(`Registration Status: ${student.isVerified || "Pending"}`, 105, 35, { align: "center" });
 
   //Below shows rejection reason
+  let verificationStatusText1 = "Your Registration form is under verification. Check your status after three days."
   pdf.setFontSize(10);
-  pdf.text(verificationStatusText, 105, 40, { align: "center" });
+  pdf.text(verificationStatusText || verificationStatusText1, 105, 40, { align: "center" });
 
 
 
