@@ -378,7 +378,7 @@ if (student.isVerified === "Verified" || isVerified === "Verified") {
                       <h5>{examLevelSlip}</h5>
                       <h5>{examLevelBatch}</h5>
                       <h5>{`Registration Status: ${
-                        isVerified || student.isVerified
+                        isVerified || student.isVerified || "Pending"
                       }`}</h5>
 
                       <h6>
@@ -408,11 +408,16 @@ if (student.isVerified === "Verified" || isVerified === "Verified") {
                                     Rejection Reason:{" "}
                                     {student.verificationRemark}
                                   </>
-                                ) : null}
+                                ) : <h6 style={{ fontSize: "12px" }}>
+                                Your Registration form is under verification.
+                                Registration status will update once verified.
+                                <br /> (आपका फॉर्म सत्यापन में है। सत्यापन के
+                                बाद आपकी पंजीकरण स्थिति अपडेट की जाएगी।)
+                              </h6>}
                               </>
                             )}
                           </>
-                        )}
+                        )} 
                       </h6>
                     </div>
                     <Button
@@ -500,7 +505,7 @@ if (student.isVerified === "Verified" || isVerified === "Verified") {
                               <Col>
                                 Registration Status (पंजीकरण की स्थिति):
                               </Col>
-                              <Col> {isVerified || student.isVerified}</Col>
+                              <Col> {isVerified || student.isVerified || "Pending"}</Col>
                             </Row>
                           </Col>
                         </Row>

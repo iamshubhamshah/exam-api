@@ -87,7 +87,7 @@ const [reRunhandleSubmit, setRerunhandlesubmit] = useState(false)
     }
 
     let query =
-      `district=${district}&block=${block}&school=${school}&grade=8`.trim();
+      `district=${district}&block=${block}&school=${school}`.trim();
 
     try {
       const response = await DashBoardServices.GetAllStudentData(query);
@@ -212,7 +212,7 @@ const [reRunhandleSubmit, setRerunhandlesubmit] = useState(false)
 
 
   const filterStudent = allData.filter(
-    (student) => student.isVerified === "Pending" && student.isRegisteredBy === "Self"
+    (student) => student.isVerified === "Pending" && student.verificationRemark === null && student.isRegisteredBy === "Self"
 
     
   );
