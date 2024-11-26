@@ -145,7 +145,7 @@ const SchoolDash8 = () => {
                             ))
                         ):(
                             <tr>
-                                 <td colSpan="14" style={{ textAlign: "center" }}>This District or block or shool has no registration yet</td>
+                                 <td colSpan="14" style={{ textAlign: "center" }}>This district/block/school has not registered yet.</td>
                             </tr>
                         )}
                     </tbody>

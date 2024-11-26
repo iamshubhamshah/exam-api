@@ -113,13 +113,13 @@ export default function DashBoardPage () {
 
             <hr/>
            <Row>
-            <h3>Misson Buniyyad Dashboards</h3>
+            <h3>Misson Buniyaad Dashboards</h3>
             
             <Link to={'/districtblockdash-mb'}>District Dashboard MB</Link>
             <Link to={'/blockschooldash-mb'}>Block Dashboard MB</Link>
             <Link to={'/schooldash-mb'}>School Dashboard MB</Link>
 
-            <h3>Haryana Super Dashboards</h3>
+            <h3>Haryana Super 100 Dashboards</h3>
             <Link to={'/districtblockdash-100'}>District Dashboard 100</Link>
             
             <Link to={'/blockschooldash-100'}>Block Dashboard 100</Link>

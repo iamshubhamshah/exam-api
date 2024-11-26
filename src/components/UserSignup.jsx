@@ -291,7 +291,7 @@ export default function UserSignUp() {
 <Form.Label>
   Create Password (कृपया अपना पासवर्ड बनाएं) :
 </Form.Label>
-<p style={{fontSize:'12px'}}>Password must contain only 6 digits. (पासवर्ड 6 अंको का होना चाहिए.)</p>
+<p style={{fontSize:'18px'}}>Password should have only 6 digits. (पासवर्ड केवल 6 अंकों का होना चाहिए।)</p>
 
 <Form.Control
   type="password"
