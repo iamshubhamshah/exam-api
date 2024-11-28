@@ -178,8 +178,11 @@ const [reRunhandleSubmit, setRerunhandlesubmit] = useState(false)
 
 
   const verifyPost = async (id, e) => {
+
+   
     console.log(id);
     console.log(verifiedBy)
+    console.log(`isVerified: ${isVerified}`)
     alert("Slip Status Updated");
     if (e) e.preventDefault();
 

@@ -3,10 +3,12 @@ import Accordion from 'react-bootstrap/Accordion';
 import DashBoardServices from '../services/DashBoardServices';
 import Table from 'react-bootstrap/Table';
 import NavbarDashboard from "../components/NavbarDashaboard"
+import DistrictFilterOnly from './DistrictFilterOnly';
 
 
 export default function SchoolDash10 () {
     const [BlockSchoolDash, setBlockSchoolDash] = useState([]);
+    const [district, setDistrict] = useState('');
     
     const fetchPosts = async()=>{
         try {
@@ -23,15 +25,40 @@ export default function SchoolDash10 () {
         fetchPosts();
     }, []);
     console.log(BlockSchoolDash)
+
+
+    console.log(BlockSchoolDash)
+    const sortBlockSchoolDash = BlockSchoolDash.sort((a,b)=>a.district.localeCompare(b.district));
+    console.log(BlockSchoolDash)
+
+    
+    let filterData;
+ 
+        if (district === "") {
+             filterData = BlockSchoolDash
+        } else {
+            //filters district wise data
+         filterData = BlockSchoolDash.filter(item => item.district === district)
+        }
+
+
             
     
     return(
         <div>
           <NavbarDashboard/>
           <h5 style={{textAlign:'center'}}>Haryana Super 100 Block Level Dashboard</h5>
-            {BlockSchoolDash.length > 0 ?(
+          <hr/>
+          <DistrictFilterOnly
+                // on clearing filter drop down filters resets to inital value
+                
+                setDistrict={setDistrict}
+               
+               
+                />
+            {filterData.length > 0 ?(
                 <>
-                {BlockSchoolDash.map((eachDistrict, index)=>(
+                {filterData.map((eachDistrict, index)=>(
                     <Accordion key = {index} deafaultActiveKey = {['0']}alwaysOpen>
                         {eachDistrict.blocks.map((eachBlock, eachBlockIndex)=>(
                             <>

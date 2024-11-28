@@ -3,10 +3,14 @@ import Accordion from 'react-bootstrap/Accordion';
 import DashBoardServices from '../services/DashBoardServices';
 import Table from 'react-bootstrap/Table';
 import NavbarDashboard from "../components/NavbarDashaboard"
+import DistrictFilterOnly from './DistrictFilterOnly';
 
 
 export default function SchoolDash8 () {
     const [BlockSchoolDash, setBlockSchoolDash] = useState([]);
+    const [district, setDistrict] = useState('');
+    const [block, setBlock] = useState('');
+    const [school, setSchool]= useState('')
     
     const fetchPosts = async()=>{
         try {
@@ -25,16 +29,43 @@ export default function SchoolDash8 () {
   
         console.log(BlockSchoolDash)
     const sortBlockSchoolDash = BlockSchoolDash.sort((a,b)=>a.district.localeCompare(b.district));
+    console.log(BlockSchoolDash)
+
+    
+    let filterData;
+ 
+        if (district === "") {
+             filterData = BlockSchoolDash
+        } else {
+            //filters district wise data
+         filterData = BlockSchoolDash.filter(item => item.district === district)
+        }
+
+        
+
+   
+
+        
 
 
     return(
         <div>
            <NavbarDashboard/>
            <h5 style={{textAlign:'center'}}>Mission Buniyaad Block Level Dashboard</h5>
+           <hr/>
+           <DistrictFilterOnly
+                // on clearing filter drop down filters resets to inital value
+                district={district}
+                block={block}
+                school={school}
+                setDistrict={setDistrict}
+                setBlock={setBlock}
+                setSchool={setSchool}
+                />
            
-            {BlockSchoolDash.length > 0 ?(
+            {filterData.length > 0 ?(
                 <>
-                {BlockSchoolDash.map((eachDistrict, index)=>(
+                {filterData.map((eachDistrict, index)=>(
                     <Accordion key = {index} deafaultActiveKey = {['0']}alwaysOpen>
                         {eachDistrict.blocks.map((eachBlock, eachBlockIndex)=>(
                             <>
