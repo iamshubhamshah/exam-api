@@ -32,6 +32,8 @@ import SchoolDash10 from './components/SchoolDash10';
 import DashBoardPage from './pages/DashBoardPage';
 import Verification from './components/Verification';
 
+//Manual entry route
+import Manualentry from './components/Manualentry';
 
 
 function App() {
@@ -119,7 +121,8 @@ function App() {
 
                     <Route path='/verification' element = {<Verification/>}/>
 
-
+                    {/* Manual entry route */}
+                    <Route path='/manualentry' element = {<Manualentry/>}/>
 
             </Routes>
             </StudentProvider>
