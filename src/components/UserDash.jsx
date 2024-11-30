@@ -47,22 +47,7 @@ const {student} = useContext(StudentContext)
 const [downloadSlip, setDownloadSlip] = useState(false)
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   //Hnadling below text dynamically...
-let examLevel;
-let examLevelSlip;
-let examLevelBatch;
-if ((studentSlipData && studentSlipData.grade === "8")) {
-    examLevel = "Mission Buniyaad";
-    examLevelSlip = "Acknowledgement Slip";
-    examLevelBatch = "Batch 2025-27";
-} else {
-    examLevel = "Haryana Super 100";
-    examLevelSlip = "Acknowledgement Slip";
-    examLevelBatch = "Batch 2025-27";
-}
 
-  //________________________________
- 
 
 
 
@@ -72,6 +57,8 @@ if ((studentSlipData && studentSlipData.grade === "8")) {
 
   
   const fetchAllData = async () => {
+
+    
 
     let query = `isRegisteredBy=${user.mobile}&district=${district}&block=${block}&school=${school}&grade=${grade}`.trim();
     
@@ -90,7 +77,11 @@ if ((studentSlipData && studentSlipData.grade === "8")) {
   }, [ district, block, school, grade]);
 
 
-
+//below varibales are being used to dynamically handieing headers of the ack slip
+  let examLevel;
+  let examLevelSlip;
+  let examLevelBatch;
+  ///^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   //Below logic takes the srn as id from the DownloadAckSlip button to below logice
   const DownloadAckSlip = async (id, e) => { 
@@ -107,6 +98,24 @@ if ((studentSlipData && studentSlipData.grade === "8")) {
 
       setDownloadSlip(true);
       //sessionStorage.setItem('user', JSON.stringify(response.data.data)); // Store user data in localStorage
+
+         //Hnadling below text dynamically...
+
+if ((studentSlipData && student.grade === "8")) {
+    examLevel = "Mission Buniyaad";
+    examLevelSlip = "Acknowledgement Slip";
+    examLevelBatch = "Batch 2025-27";
+} else {
+    examLevel = "Haryana Super 100";
+    examLevelSlip = "Acknowledgement Slip";
+    examLevelBatch = "Batch 2025-27";
+}
+
+// console.log('I m student grade below')
+// console.log(student.grade)
+
+  //________________________________
+ 
 
       
 
