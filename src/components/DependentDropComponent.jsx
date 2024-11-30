@@ -281,6 +281,7 @@ placeholder='Select School (स्कूल चुनें) :'
       name="school" 
       placeholder="School Name (स्कूल का नाम)" 
       onChange={(e) => setSchool(e.target.value)} 
+      required
     />
   </Form.Group>
 

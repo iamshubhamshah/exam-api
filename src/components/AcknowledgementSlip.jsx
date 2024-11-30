@@ -140,12 +140,25 @@ if (student.isVerified === "Verified" || isVerified === "Verified") {
     const currentDate = new Date(Date.now()).toLocaleDateString("en-US");
 
     // Check if `student.createdAt` exists and format accordingly
-    const formattedDate = student.createdAt
+    const formattedDateCreatedat = student.createdAt
       ? new Date(student.createdAt).toLocaleDateString("en-US")
       : null;
 
+      //For only those documents which is provided by govt for prefilled.
+      const formattedDateUpdatedAt = student.createdAt
+      ? new Date(student.updatedAt).toLocaleDateString("en-US")
+      : null;
+
     // Use `formattedDate` if it exists; otherwise, use the formatted current date
-    const dateToShow = formattedDate || currentDate;
+    let dateToShow;
+    if (student.dataByGovtForPrefilled === true){
+       dateToShow = formattedDateUpdatedAt
+    } else {
+       dateToShow = formattedDateCreatedat || currentDate;
+
+    }
+
+    
 
     // Add logo to the PDF
     pdf.addImage(logo, "PNG", 10, 10, 20, 20);

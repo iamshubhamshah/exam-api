@@ -56,8 +56,16 @@ XLSX.writeFile(workbook, 'Student_Template.xlsx')
 }
 
     return(
+        <>
+        <h3>* कृपया bulk_uploading के लिए निम्नलिखित निर्देशों का पालन करें:</h3>
+        <hr/>
+        <p>1. dob कॉलम में DD-MM-YYYY फार्मेट का उपयोग करें (जैसे 28-07-2011)| यह भी सुनिश्चित करें कि सेल फार्मेट दिनांक पर सेट है। </p>
+        <p>2. District, Block, School Name, और Grade को केवल टेम्पलेट से कॉपी-पेस्ट करें।</p>
+        <p>3. Previous Class Exam Percentage" कॉलम में केवल छात्र का प्रतिशत दर्ज करें।</p>
+        <p>4. कोई भी कॉलम खाली न छोड़ें।</p>
     <div>
         <Button onClick={DownloadTemplate}>DownloadTemp</Button>
     </div>
+    </>
     );
 }

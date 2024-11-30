@@ -24,10 +24,10 @@ export default function DistrictBlockDash8() {
   }, []);
 
 
-  const sortStateDash = stateDash.sort((a, b) => a.district.localeCompare(b.district));
+  // const sortStateDash = stateDash.sort((a, b) => a.district.localeCompare(b.district));
 
-  console.log("I am sorted dash")
-  console.log(sortStateDash)
+  // console.log("I am sorted dash")
+  // console.log(sortStateDash)
 
   //Below variables are for shwoing total count on dashboars:
   const totalDistrictCount = stateDash.reduce((sum, eachDistrictCount) => {

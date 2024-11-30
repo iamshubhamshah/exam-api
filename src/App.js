@@ -35,6 +35,9 @@ import Verification from './components/Verification';
 //Manual entry route
 import Manualentry from './components/Manualentry';
 
+import ManualFormEntry from './components/ManualFormEntry';
+import ManualEntryInputSrn from './components/ManualEntryInputSrn';
+
 
 function App() {
   return (
@@ -123,6 +126,10 @@ function App() {
 
                     {/* Manual entry route */}
                     <Route path='/manualentry' element = {<Manualentry/>}/>
+                    <Route path='/manualentryinputsrn' element ={<ManualEntryInputSrn/>}/>
+                    <Route path='/manualformentry' element = {<ManualFormEntry/>}/>
+                    {/* Using Same form component for manual entry by users where aadahr will be optional */}
+                    
 
             </Routes>
             </StudentProvider>

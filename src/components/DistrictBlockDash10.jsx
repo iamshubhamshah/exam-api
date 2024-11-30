@@ -29,8 +29,8 @@ useEffect(() =>{
     fetchPosts();
 }, []);
 
-const sortStateDash = stateDash.sort((a, b) => a.district.localeCompare(b.district));
-console.log(sortStateDash)
+// const sortStateDash = stateDash.sort((a, b) => a.district.localeCompare(b.district));
+// console.log(sortStateDash)
 
  //Below variables are for shwoing total count on dashboars:
  const totalDistrictCount = stateDash.reduce((sum, eachDistrictCount) => {
