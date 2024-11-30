@@ -152,14 +152,27 @@ if ((studentSlipData && studentSlipData.grade === "8")) {
   // const slipDataToShow = slipData || {}; // Get slip data or use empty object if not available
   // const { srn, name, father, dob, gender, category, slipId, district, block, school } = slipDataToShow;
 
-// Format the current date
-const currentDate = new Date(Date.now()).toLocaleDateString('en-US');
+ // Format the current date
+ const currentDate = new Date(Date.now()).toLocaleDateString("en-US");
 
-// Check if `studentSlipData.createdAt` exists and format accordingly
-const formattedDate = studentSlipData.createdAt ? new Date(studentSlipData.createdAt).toLocaleDateString('en-US') : null;
+ // Check if `student.createdAt` exists and format accordingly
+ const formattedDateCreatedat = student.createdAt
+   ? new Date(student.createdAt).toLocaleDateString("en-US")
+   : null;
 
-// Use `formattedDate` if it exists; otherwise, use the formatted current date
-const dateToShow = formattedDate || currentDate;
+   //For only those documents which is provided by govt for prefilled.
+   const formattedDateUpdatedAt = student.createdAt
+   ? new Date(student.updatedAt).toLocaleDateString("en-US")
+   : null;
+
+ // Use `formattedDate` if it exists; otherwise, use the formatted current date
+ let dateToShow;
+ if (student.dataByGovtForPrefilled === true){
+    dateToShow = formattedDateUpdatedAt
+ } else {
+    dateToShow = formattedDateCreatedat || currentDate;
+
+ }
 
 
   // Add logo to the PDF
