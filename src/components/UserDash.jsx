@@ -203,7 +203,7 @@ if ((studentSlipData && student.grade === "8")) {
     verificationStatusText = 
       "Your Registration form is verified for Level 1 Examination. ";
   } else if (student.isVerified === "Pending" ) {
-      if (student.verificationRemark === null){
+      if (student.verificationRemark === ""){
   
         verificationStatusText = 
         "Your Registration form is under verification. Check your status after three days.";

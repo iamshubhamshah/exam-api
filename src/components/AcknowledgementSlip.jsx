@@ -30,6 +30,7 @@ export default function AcknowledgementSlip({ showAck, slipData }) {
 
   const { user } = useContext(UserContext);
 
+
   const [modal, setModal] = useState(true);
   const [EditForm, setEditForm] = useState(false);
   //Below hook handles the slip data if user comes here from the student account
@@ -51,6 +52,10 @@ export default function AcknowledgementSlip({ showAck, slipData }) {
     if (user && location.pathname === "/acknowledgementslip-mb") {
       navigate("/srn");
     } else if (user && location.pathname === "/acknowledgementslip-100") {
+      navigate("/srn-100");
+    } else if (user && location.pathname === "/Registration-form/put/MB"){
+      navigate("/srn");
+    } else if (user && location.pathname === "/Registration-form/put/s100"){
       navigate("/srn-100");
     } else if (
       location.pathname === "/acknowledgementslip-mb" ||
@@ -327,7 +332,13 @@ if (student.isVerified === "Verified" || isVerified === "Verified") {
       navigate("/srn");
     } else if (user && location.pathname === "/acknowledgementslip-100") {
       navigate("/srn-100");
-    } else if (
+    } else if (user && location.pathname ==="/Registration-form/put/S100") {
+      navigate("/srn-100");
+    } else if (user && location.pathname ==="/Registration-form/put/MB") {
+      navigate("/srn");
+    }
+    
+    else if (
       location.pathname === "/acknowledgementslip-mb" ||
       location.pathname === "/acknowledgementslip-100" ||
       location.pathname === "/Registration-form/put/MB" ||

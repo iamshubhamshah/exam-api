@@ -26,6 +26,9 @@ function PreFilledRegistrationForm() {
   let isRegisteredBy;
 
   const { user } = useContext(UserContext);
+  console.log('I am user name')
+  console.log(user.userName)
+
 
   //Below varibale is the useNavigate function of react. it is used when a condtion is true then it helps to navigate to the desired route.
   const navigate = useNavigate();

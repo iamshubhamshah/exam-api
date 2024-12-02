@@ -18,7 +18,7 @@ export default function UserSignIn() {
   
 
 
-
+    const {user} = useContext(UserContext)
     const {setUser} = useContext(UserContext);
   const [mobile, setMobile] = useState(null);
   const [password, setPassword] = useState(null);
@@ -61,7 +61,7 @@ export default function UserSignIn() {
         setIsUserMatched(true);
         const userData = response.data.data;
         setUser(userData); // Update context state
-        sessionStorage.setItem('user', JSON.stringify(userData)); // Store user data in localStorage
+        localStorage.setItem('user', JSON.stringify(userData)); // Store user data in localStorage
 
         alert("You are logged in");
         // onMobileSubmit(mobile)
