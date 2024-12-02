@@ -36,8 +36,7 @@ import StudentNavbar from "./StudentNavbar";
 
 export default function RegistrationFormComponent() {
   const { user } = useContext(UserContext);
-  console.log('I am user name')
-  console.log(user.userName)
+  
   const { setStudent } = useContext(StudentContext); // it updates, on the basis of SlipData
 
   const navigate = useNavigate();
