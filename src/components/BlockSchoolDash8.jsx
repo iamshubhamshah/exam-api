@@ -26,7 +26,7 @@ export default function SchoolDash8 () {
     useEffect(() =>{
         fetchPosts();
     }, []);
-  
+        
         console.log(BlockSchoolDash)
     const sortBlockSchoolDash = BlockSchoolDash.sort((a,b)=>a.district.localeCompare(b.district));
     console.log(BlockSchoolDash)
