@@ -30,7 +30,7 @@ const SchoolDash8 = () => {
         setFilterApplied(false)
        }
 
-       let query = `district=${district}&block=${block}&school=${school}&grade=8`.trim();
+       let query = `district=${district}&block=${block}&school=${school}&grade=8&isVerified=Verified&isVerified=Pending`.trim();
       
        
         try {
