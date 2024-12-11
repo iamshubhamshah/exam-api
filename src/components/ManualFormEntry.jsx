@@ -516,7 +516,7 @@ function ManualFormEntry() {
                   placeholder="H. No. (मकान नंबर)"
                   value={houseNumber}
                   onChange={(e) => setHouseNumber(e.target.value)}
-                  required
+                
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="addressInput">
@@ -596,7 +596,7 @@ function ManualFormEntry() {
                     setPreviousClassAnnualExamPercentage(e.target.value)
                     
                   }
-                  required
+                  
                 />
               </Form.Group>
 

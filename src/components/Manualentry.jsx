@@ -405,7 +405,7 @@ export default function Manualentry() {
                   name="houseNumber"
                   placeholder="H. No. (मकान नंबर)"
                   onChange={(e) => setHouseNumber(e.target.value)}
-                  required
+                  
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="addressInput">
@@ -482,7 +482,7 @@ export default function Manualentry() {
                   onChange={(e) =>
                     setPreviousClassAnnualExamPercentage(e.target.value)
                   }
-                  required
+                  
                 />
               </Form.Group>
 

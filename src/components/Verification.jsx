@@ -215,7 +215,7 @@ const [reRunhandleSubmit, setRerunhandlesubmit] = useState(false)
 
 
   const filterStudent = allData.filter(
-    (student) => student.isVerified === "Pending" && student.verificationRemark === null && student.isRegisteredBy === "Self"
+    (student) => student.isVerified === "Pending" && (student.verificationRemark === "" || student.verificationRemark === null) && student.isRegisteredBy === "Self"
 
     
   );

@@ -38,6 +38,9 @@ import Manualentry from './components/Manualentry';
 import ManualFormEntry from './components/ManualFormEntry';
 import ManualEntryInputSrn from './components/ManualEntryInputSrn';
 
+//Admit card
+import AdmitCard from './components/AdmitCard';
+
 
 function App() {
   return (
@@ -124,11 +127,19 @@ function App() {
 
                     <Route path='/verification' element = {<Verification/>}/>
 
+
+                    {/* Using Same form component for manual entry by users where aadahr will be optional */}
                     {/* Manual entry route */}
                     <Route path='/manualentry' element = {<Manualentry/>}/>
                     <Route path='/manualentryinputsrn' element ={<ManualEntryInputSrn/>}/>
                     <Route path='/manualformentry' element = {<ManualFormEntry/>}/>
-                    {/* Using Same form component for manual entry by users where aadahr will be optional */}
+
+
+                    {/* admit card route */}
+
+                    <Route path='/admitcard' element = {<AdmitCard/>}/>  
+
+
                     
 
             </Routes>
