@@ -10,6 +10,7 @@ import { UserContext } from "./ContextApi/UserContextAPI/UserContext";
 import UserNavBar from "./UserNavBar";
 import Footer from "./Footer";
 import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import { useNavigate, useLocation } from "react-router-dom";
 import registrationServiceInstance from "../services/RegistrationFormService";
 
@@ -336,6 +337,166 @@ if ((studentSlipData && student.grade === "8")) {
   const count8 =  allData.filter(each8thSutdent=>each8thSutdent.grade === '8').length
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+
+//Below logic for downloading admit card by users
+
+const DownloadAdmitCard = async (id, e) => {
+  setTimeout(() => {
+    setStudent('')
+  }, 5000)
+
+  const newSrn = id
+
+  try {
+    const response = await registrationServiceInstance.getPostsBySrn(newSrn)
+
+    setStudent(response.data.data)
+
+
+
+
+    if (student === '') {
+
+      document.querySelector('.triggerClickOnUndefinedAdmitCard').click();
+    } else {
+      return fetchAdmitCard ();
+    }
+
+    
+
+  } catch (error) {
+    console.error(error);
+  }
+
+
+}
+
+
+
+function fetchAdmitCard () {
+  const pdf = new jsPDF("p", "mm", "a4");
+
+
+ 
+
+  const admitHrLogo = "/admitHrLogo.png"
+  const vikalpaLogo = "/vikalpalogo.png"
+  const buniyaadLogo = "/admitBuniyaLogo.png"
+
+  
+  
+  //pdf header image
+
+  pdf.addImage("/pratibhakhoj.png", "PNG",  100, 15, 18, 6 );
+
+  //Add logo hrLogo to the left side:
+  pdf.addImage(admitHrLogo, "PNG", 10, 5, 20, 20)
+  pdf.addImage(buniyaadLogo, "PNG", 180, 5, 20, 20)
+
+  //Adding hindi images, cause can't use hindi text
+
+  pdf.addImage("/Name.png", "PNG", 25, 44, 10, 5);
+  pdf.addImage("/Father's Name.png", "PNG", 39, 51.5, 15, 5);
+  pdf.addImage("/DOB.png", "PNG", 36, 58.5, 15 , 5);
+  pdf.addImage("/Category.png", 30, 66.5, 12, 5);
+  pdf.addImage("/SRN.png", "PNG", 24, 74, 15, 5);
+  
+  pdf.addImage("/Roll number.png", "PNG", 46, 81.5, 15, 5);
+  pdf.addImage("/aadhar number.png", "PNG", 41, 89.5, 15, 5);
+  pdf.addImage("/Mobile number.png", "PNG", 40, 97.5, 15, 5);
+  pdf.addImage("/District.png", "PNG", 27, 104.5, 10, 5);
+  pdf.addImage("/Block.png", "PNG", 25, 112.5, 9, 4);
+  pdf.addImage("/Pariksha kendra.png", "PNG", 47, 120, 15, 5);
+  pdf.addImage("/admitinstructions2.png", 5,132,198,135)
+  pdf.addImage("/studentsignature.png", "PNG", 5, 280, 198, 5)
+
+
+  pdf.setFontSize(10);
+  pdf.text('E-Admit Card', 105, 10, {align:'center'})
+  pdf.setFontSize(12);
+  pdf.text('Directorate of School Education (DSE) Shiksha Sadan, Haryana', 105, 15, {align: "center"})
+
+  // pdf.setFontSize(8)
+  // pdf.text('Pratibha Khoj hind', 100, 20)
+  pdf.setFontSize(12);
+  pdf.text('#EXAM TYPE VAR#', 105, 25, {align:'center'})
+  pdf.setFontSize(10);
+  pdf.text('Level-1 Entrance Exam (2025-27)', 105, 30, {align:'center'})
+  pdf.setFontSize(10);
+  pdf.text('Examination Date: #var#', 105, 35,{align:'center'})
+  pdf.setFontSize(10);
+  pdf.text('Reporting Time: #var# AM, Exam Time: #var# AM', 105, 40, {align:"center"})
+  
+    // Table data
+    const rows = [
+      ["Name", student.name ],
+      ["Father's Name", student.father],
+      ["Date of Birth", student.dob],
+      ["Category", student.category],
+      ["SRN", student.srn ],
+      ["Exam Roll Number", student.rollNumber],
+      ["Aadhar Number", student.aadhar],
+      ["Mobile Number", student.mobile],
+      ["District", student.district],
+      ["Block", student.block],
+      ["Examination Center", student.L1examinationCenter]
+
+  ];
+
+  // Generate table
+  autoTable(pdf, {
+      
+      body: rows,
+      startY: 43, // Adjust starting Y position
+      styles: {
+          fillColor: null, // No background color for rows
+          textColor: 0, // Black text color
+          tableLineColor: [0,0,0],
+          lineWidth: 0.5, // Set border line width
+          lineColor: 0,
+          halign: 'left', // Align text to the left
+          valign: 'middle', // Vertically align text in the middle
+      },
+      headStyles: {
+          fillColor: null, // No background color for header
+          textColor: 0, // Black text color for header
+          tableLineColor: [0,0,0],
+          fontStyle: 'normal', // Normal font for header
+          lineWidth: 0.5, // Set border line width for header
+      },
+      alternateRowStyles: {
+          fillColor: null, // Remove alternating row background
+      },
+      //tableLineColor: [0, 0, 0], // Black border color
+   //   tableLineWidth: 0.5, // Border thickness
+      columnStyles: {
+          0: { cellWidth: 50 }, // Column 1 width
+          1: { cellWidth: 100 }, // Column 2 width
+      },
+
+      
+  });
+  
+  const photoText = `If no photograph
+  is available, paste a 
+  school-attested photograph here.`
+
+  pdf.setFontSize(7);
+  pdf.text(photoText, 185, 55,{align:'center'})
+
+  // pdf.setFontSize(7);
+  // pdf.text('paste a school-attested photograph here.', 175, 58,{align:'center'})
+  pdf.rect(166, 42.5, 38,38)
+
+  //Save pdf
+  pdf.save(`${student.name}_${student.srn}_Admit-Card.pdf`)
+
+
+
+}
+
+
+
   return (
     <>
     <UserNavBar/>
@@ -398,6 +559,7 @@ if ((studentSlipData && student.grade === "8")) {
                 <th>Class</th>
                 <th>image</th>
                 <th>Download L1 Slip</th>
+                <th>Download L1 Admit Card</th>
               </tr>
             </thead>
             <tbody>
@@ -419,13 +581,16 @@ if ((studentSlipData && student.grade === "8")) {
                       <td>{eachStudent.grade}</td>
                       <td>
                         <img
-                          src={eachStudent.imageUrl} //${BaseURL}/api/postimages/${eachStudent.image}`
+                          src={`https://vikalpaexamination.blr1.digitaloceanspaces.com/postImages/${eachStudent.imageUrl}`} //${BaseURL}/api/postimages/${eachStudent.image}`
                           alt={eachStudent.name}
                           style={{ width: 100, height: 100 }}
                         />
                       </td>
                       <td>
                         <button className="triggerClickOnUndefined" id={eachStudent.srn} onClick={(e)=>DownloadAckSlip(eachStudent.srn,e)}>Download Slip</button>
+                      </td>
+                      <td>
+                      <button className="triggerClickOnUndefinedAdmitCard" id={eachStudent.srn} onClick={(e)=>DownloadAdmitCard(eachStudent.srn,e)}>Download Slip</button>
                       </td>
                     </tr>
                   ))

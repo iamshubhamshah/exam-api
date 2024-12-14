@@ -215,7 +215,7 @@ const [reRunhandleSubmit, setRerunhandlesubmit] = useState(false)
 
 
   const filterStudent = allData.filter(
-    (student) => student.isVerified === "Pending" && (student.verificationRemark === "" || student.verificationRemark === null) && student.isRegisteredBy === "Self"
+    (student) => student.isVerified === "Pending" && (student.verificationRemark === "" || student.verificationRemark === null) && student.isRegisteredBy === "Self"&& student.grade === "8"
 
     
   );
@@ -324,7 +324,7 @@ const [reRunhandleSubmit, setRerunhandlesubmit] = useState(false)
                               <td>{eachStudent.grade}</td>
                               <td>
                                 <img
-                                  src={`https://vikalpaexamination.blr1.digitaloceanspaces.com/postImages/${eachStudent.imageUrl}`}
+                                  src={`${eachStudent.imageUrl}`}
                                   alt={eachStudent.name}
                                   style={{ width: 100, height: 100 }}
                                 />

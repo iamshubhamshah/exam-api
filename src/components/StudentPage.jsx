@@ -6,6 +6,9 @@ import AcknowledgementSlip from './AcknowledgementSlip';
 import { StudentContext } from './ContextApi/StudentContextAPI/StudentContext';
 import { Container } from 'react-bootstrap';
 
+//Importing admit card
+import AdmitCard from './AdmitCard';
+
 
 const StudentPage = ()=>{
 
@@ -36,6 +39,7 @@ const {student} = useContext(StudentContext);
                         <p>SRN:</p>
                         <p>{student.srn}</p>
                     </section>
+                    
             
                     <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
                         <p>Name:</p>
@@ -78,6 +82,9 @@ const {student} = useContext(StudentContext);
                 <Link to = {'/Acknowledgement'}>Click to download L1 Ack slip</Link>
             </div>
             
+        </div>
+        <div>
+            <AdmitCard/>
         </div>
         <Footer/>
         </>
