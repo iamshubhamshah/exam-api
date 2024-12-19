@@ -40,14 +40,13 @@ function StudentSignIn({}) {
 
     try {
       const response = await registrationServiceInstance.getPostsBySrn(newSrn);
-      console.log(response.data.data.srn);
-      console.log(response.data.data._id);
+      
 
       const SrnSlipId = response.data.srn || inputSrn;
 
       if (
         response.data.data.srn === SrnSlipId &&
-        response.data.data.isVerified != ""
+        response.data.data.isVerified != "" && response.data.data.grade === "8" && response.data.data.rollNumber != ""
       ) {
         setIsSrnMatched(true);
         setId(response.data.data._id);
@@ -58,12 +57,14 @@ function StudentSignIn({}) {
       } else {
         setErrorRedirect(true);
         setIsSrnMatched(false);
+        alert('Admit cards are only available for Mission Buniyaad, and if you are a Mission Buniyaad student, you can download your admit card after 2 days. (प्रवेश पत्र केवल मिशन बुनियाद के लिए उपलब्ध हैं और यदि आप मिशन बुनियाद के छात्र हैं, तो आप अपना प्रवेश पत्र 2 दिनों बाद डाउनलोड कर सकते हैं।)')
       }
     } catch (error) {
       console.error(error);
       setError("Correct SRN needed"); // Set error state for exceptions
       setErrorRedirect(true); // It gives the message if error arrives then says register first.
       setRegisterFrist(true);
+      alert('Admit cards are only available for Mission Buniyaad, and if you are a Mission Buniyaad student, you can download your admit card after 2 days. (प्रवेश पत्र केवल मिशन बुनियाद के लिए उपलब्ध हैं और यदि आप मिशन बुनियाद के छात्र हैं, तो आप अपना प्रवेश पत्र 2 दिनों बाद डाउनलोड कर सकते हैं।)')
     }
   };
 
@@ -108,6 +109,7 @@ function StudentSignIn({}) {
                 <h3>
                   Student-Login. (विद्यार्थी लॉगिन|)
                 </h3>
+                <h6 style={{color:'red'}}>Download Mission Buniyaad Level 1 Admit Card. (मिशन बुनियाद लेवल 1 प्रवेश पत्र डाउनलोड करें।)</h6>
                 <hr/>
               </div>
               <label>SRN Number or Slip ID (अपना एस.आर.एन नंबर दर्ज करें| Or अपना स्लिप आईडी नंबर दर्ज करें।)</label>
@@ -134,10 +136,10 @@ function StudentSignIn({}) {
 
               {errorRedirect ? (
                 <div>
-                  <p>You have not registered for MB l1 examinagtion</p>
+                  <p>If You have not registered for Level 1 examination then click below:</p>
                   <p>
                     Click here to Register yourself:{" "}
-                    <Link to={"/Registration-form/MB"}>Register For L1</Link>
+                    <Link to={"/"}>Register For L1</Link>
                   </p>
                 </div>
               ) : null}

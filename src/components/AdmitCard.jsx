@@ -6,6 +6,7 @@ import autoTable from 'jspdf-autotable'
 
 //Importing student context api
 import { StudentContext } from './ContextApi/StudentContextAPI/StudentContext';
+import registrationServiceInstance from '../services/RegistrationFormService';
 
 
 
@@ -13,10 +14,30 @@ import { StudentContext } from './ContextApi/StudentContextAPI/StudentContext';
 
 export default function AdmitCard () {
 
- const {student} = useContext(StudentContext);
+    const {student} = useContext(StudentContext);
  const {setStudent} = useContext(StudentContext); 
 
+    if (student.rollNumber === ""){
+        alert('Admit card will be available for download in 2 days. Please check back then. (एडमिट कार्ड 2 दिन में डाउनलोड के लिए उपलब्ध होगा।')
+        return;
+    } else  {
+
+    }
+
+ 
+
     async function DownloadAdmitCard () {
+        console.log('i am student id')
+        console.log(student._id)
+
+        
+         //Below var updates the admit card downloading status in the mongodb on the basis of student _id
+         const admitCard1 = true
+         const id = student._id
+         //_________________________________________   
+
+        console.log('i am download admit card function')
+
         const pdf = new jsPDF("p", "mm", "a4");
 
 
@@ -30,7 +51,7 @@ export default function AdmitCard () {
         
         //pdf header image
 
-        pdf.addImage("/pratibhakhoj.png", "PNG",  100, 15, 18, 6 );
+        pdf.addImage("/pratibhakhoj.png", "PNG",  95, 15, 18, 6 );
 
         //Add logo hrLogo to the left side:
         pdf.addImage(admitHrLogo, "PNG", 10, 5, 20, 20)
@@ -47,11 +68,12 @@ export default function AdmitCard () {
         pdf.addImage("/Roll number.png", "PNG", 46, 81.5, 15, 5);
         pdf.addImage("/aadhar number.png", "PNG", 41, 89.5, 15, 5);
         pdf.addImage("/Mobile number.png", "PNG", 40, 97.5, 15, 5);
-        pdf.addImage("/District.png", "PNG", 27, 104.5, 10, 5);
-        pdf.addImage("/Block.png", "PNG", 25, 112.5, 9, 4);
+        pdf.addImage("/District.png", "PNG", 36, 104.5, 10, 5);
+        pdf.addImage("/Block.png", "PNG", 35, 112.5, 9, 4);
         pdf.addImage("/Pariksha kendra.png", "PNG", 47, 120, 15, 5);
         pdf.addImage("/admitinstructions2.png", 5,132,198,135)
         pdf.addImage("/studentsignature.png", "PNG", 5, 280, 198, 5)
+        pdf.addImage("/vikalpaStamp.png", "PNG", 168, 263, 25, 23)
 
     
         pdf.setFontSize(10);
@@ -61,28 +83,47 @@ export default function AdmitCard () {
 
         // pdf.setFontSize(8)
         // pdf.text('Pratibha Khoj hind', 100, 20)
-        pdf.setFontSize(12);
-        pdf.text('#EXAM TYPE VAR#', 105, 25, {align:'center'})
+        // for exam type:
+
+        //below var is to show dynmaic exam type in admit card
+        let examtype
+        if (student.grade === "8") {
+            examtype = "Mission Buniyaad"
+        } else { examtype = "Haryana Super 100"}
+
+        pdf.setFontSize(14);
+        pdf.text(examtype, 105, 25, {align:'center'})
         pdf.setFontSize(10);
         pdf.text('Level-1 Entrance Exam (2025-27)', 105, 30, {align:'center'})
+
+        //for examination date
+        
         pdf.setFontSize(10);
-        pdf.text('Examination Date: #var#', 105, 35,{align:'center'})
+        pdf.text(`Examination Date: ${student.L1examDate}`, 105, 35,{align:'center'})
         pdf.setFontSize(10);
-        pdf.text('Reporting Time: #var# AM, Exam Time: #var# AM', 105, 40, {align:"center"})
+        pdf.text(`Reporting Time: 10:30 AM, Exam Time: ${student.L1examTime}`, 105, 40, {align:"center"})
+
+        //Changind date format to dd-mm-yyyy from db
+        const formatDate = (dob) => {
+            const [year, month, day] = dob.split("-"); // Split the string into year, month, and day
+            return `${day}-${month}-${year}`; // Rearrange and join them in dd-mm-yyyy format
+          };
+
+        //________________________________________________________
         
           // Table data
           const rows = [
-            ["Name", student.name ],
-            ["Father's Name", student.father],
-            ["Date of Birth", student.dob],
-            ["Category", student.category],
+            ["Name", student.name.toUpperCase() ],
+            ["Father's Name", student.father.toUpperCase()],
+            ["Date of Birth", formatDate(student.dob)],
+            ["Category", student.category.toUpperCase()],
             ["SRN", student.srn ],
             ["Exam Roll Number", student.rollNumber],
             ["Aadhar Number", student.aadhar],
             ["Mobile Number", student.mobile],
-            ["District", student.district],
-            ["Block", student.block],
-            ["Examination Center", student.L1examinationCenter]
+            ["District/Code", student.L1districtAdmitCard.toUpperCase()],
+            ["Block/Code", student.L1blockAdmitCard.toUpperCase()],
+            ["Examination Center", student.L1examinationCenter.toUpperCase()]
 
         ];
 
@@ -120,56 +161,90 @@ export default function AdmitCard () {
             
         });
 
-        const admitImage = student.imageUrl
+       
 
-        const getBase64ImageFromURL = async (url) => {
-            return new Promise((resolve, reject) => {
-              const img = new Image();
-              img.crossOrigin = "anonymous"; // To avoid CORS issues
-              img.onload = () => {
-                const canvas = document.createElement("canvas");
-                canvas.width = img.width;
-                canvas.height = img.height;
-                const ctx = canvas.getContext("2d");
-                ctx.drawImage(img, 0, 0);
-                const dataURL = canvas.toDataURL("image/png"); // Specify "image/jpeg"
-                resolve(dataURL);
-              };
-              img.onerror = (err) => reject(err);
-              img.src = url;
-            });
-          };
+    //       // Now use html2canvas to fetch the image and convert it to base64
+    // const getImageBase64 = async (imgUrl) => {
+    //     return new Promise((resolve, reject) => {
+    //       const img = new Image();
+    //       img.crossOrigin = "anonymous"; // To handle CORS issues
+    //       img.onload = () => {
+    //         const canvas = document.createElement("canvas");
+    //         const ctx = canvas.getContext("2d");
+    //         canvas.width = img.width;
+    //         canvas.height = img.height;
+    //         ctx.drawImage(img, 0, 0);
+    //         resolve(canvas.toDataURL("image/png"));
+    //       };
+    //       img.onerror = (error) => reject(error);
+    //       img.src = imgUrl; // Set the image URL here
+    //     });
+    //   };
+        
+
+        //   const base64Image =  await getImageBase64(admitImage);
+
+        //   console.log('i am base64image below')
+        //   console.log(student.imageUrl);
 
         
 
-          const base64Image =  await getBase64ImageFromURL("https://vikalpaexamination.blr1.digitaloceanspaces.com/postImages/1732949096681-10 buniyaad 001 (7).jpg");
+          
+          
 
-          console.log('i am base64image below')
-          console.log(base64Image);
-
-          pdf.addImage(base64Image, "PNG", 20, 20, 50, 50);
-
-        // pdf.addImage(admitImage,"PNG", 166, 42.5, 100,100)
+        // pdf.addImage(admitImage,"PNG", 166, 42.5, 100,100)   
         
-        const photoText = `If no photograph
-        is available, paste a 
-        school-attested photograph here.`
+        
+
+        if (student.image === null || student.image === "" || student.imageUrl === "") {
+
+            const photoText = `If no photograph
+        is available, attach a 
+        passport-sized photo attested 
+        by the school..`
       
-        pdf.setFontSize(7);
-        pdf.text(photoText, 185, 55,{align:'center'})
-        pdf.rect(166, 42.5, 38,38)
+        pdf.setFontSize(8);
+        pdf.text(photoText, 183, 55,{align:'center'})
+
+
+            pdf.rect(166, 42.5, 38,38)
+
+        } else  {
+            pdf.addImage(student.imageUrl, "png", 166, 42.5, 38, 38);
+        }
+        
         //Save pdf
         pdf.save(`${student.name}_${student.srn}_Admit-Card.pdf`)
 
-        
+        //Below api updates the admitCard1 status to true if the card is downloaded
+
+        const formData = new FormData ();
+        formData.append("admitCard1", admitCard1)
+
+        try {
+
+            const response = await registrationServiceInstance.patchDownloadAdmitCardById(
+                id,
+                formData
+            )
+
+            console.log('Admit card downloaded')
+            
+        } catch (error) {
+            console.error("Error Downloading Admit Card:", error);
+            
+        }
 
     }
+
+    
 
 
     return (
         <>
         
-        <Button onClick={DownloadAdmitCard}>Download Admit Card</Button>
+        
+        <Button id={student._id} onClick={DownloadAdmitCard}>Download Admit Card</Button>
         
         </>
 

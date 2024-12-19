@@ -62,6 +62,7 @@ console.log(totalDistrictCount)
         <div>
             <p style={{fontWeight:'bold', color:'red'}}>{eachDistrict.district}</p>
             <p style={{fontWeight:'bold', color:'red'}}>Total Registratios: {eachDistrict.districtCount}</p>
+            
         </div>
         </Accordion.Header>
         <Accordion.Body>

@@ -35,6 +35,11 @@ export default function LandingPage() {
         <Container >
           <Row>
             <Col className="text-center">
+
+            <Link  to="/student-signin" style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
+            <p><BsArrowRight className="blinking-link" />Downlaod Mission Buniyaad Admit Card Class 8th<br/>(मिशन बुनियाद परीक्षा (लेवल 1) का प्रवेश पत्र डाउनलोड करने के लिए यहां क्लिक करें।)</p> 
+            </Link>
+            <br />
             
             <Link  to="/srn" style={{textDecoration:'none', fontSize:'25px'}}>
             <p><BsArrowRight className="blinking-link" />Mission Buniyaad Registration Class 8th <br/>(मिशन बुनियाद परीक्षा के लिए, कक्षा 8 के विद्यार्थी यहाँ क्लिक करें)</p> 

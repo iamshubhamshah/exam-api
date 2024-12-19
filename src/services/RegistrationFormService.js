@@ -40,6 +40,11 @@ class RegistrationService {
         const url = `${BaseURL}/api/MB-form/patchPostById/${id}`;
         return axios.patch(url, formData);
     }
+
+    patchDownloadAdmitCardById (id, admitCard1) {
+        const url = `${BaseURL}/api/MB-form/patchDownloadAdmitCardById/${id}`;
+        return axios.patch (url, admitCard1);
+    }
     
 }
 

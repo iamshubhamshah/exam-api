@@ -347,6 +347,8 @@ const DownloadAdmitCard = async (id, e) => {
 
   const newSrn = id
 
+    
+
   try {
     const response = await registrationServiceInstance.getPostsBySrn(newSrn)
 
@@ -373,7 +375,31 @@ const DownloadAdmitCard = async (id, e) => {
 
 
 
-function fetchAdmitCard () {
+async function fetchAdmitCard () {
+
+
+  try {
+
+    if (student.grade === "10") {
+      alert("Admit cards are only available for Mission Buniyaad. (प्रवेश पत्र केवल मिशन बुनियाद के लिए उपलब्ध हैं|)")
+      return;
+    } else {}
+  
+    
+  } catch (error) {
+    alert('Try Again Please')
+  }
+
+
+  try {
+
+     //Below var updates the admit card downloading status in the mongodb on the basis of student _id
+   const admitCard1 = true
+   const studentIdFromUserDash = student._id
+   //_____________________________
+
+
+
   const pdf = new jsPDF("p", "mm", "a4");
 
 
@@ -387,7 +413,7 @@ function fetchAdmitCard () {
   
   //pdf header image
 
-  pdf.addImage("/pratibhakhoj.png", "PNG",  100, 15, 18, 6 );
+  pdf.addImage("/pratibhakhoj.png", "PNG",  95, 15, 18, 6 );
 
   //Add logo hrLogo to the left side:
   pdf.addImage(admitHrLogo, "PNG", 10, 5, 20, 20)
@@ -404,44 +430,53 @@ function fetchAdmitCard () {
   pdf.addImage("/Roll number.png", "PNG", 46, 81.5, 15, 5);
   pdf.addImage("/aadhar number.png", "PNG", 41, 89.5, 15, 5);
   pdf.addImage("/Mobile number.png", "PNG", 40, 97.5, 15, 5);
-  pdf.addImage("/District.png", "PNG", 27, 104.5, 10, 5);
-  pdf.addImage("/Block.png", "PNG", 25, 112.5, 9, 4);
+  pdf.addImage("/District.png", "PNG", 36, 104.5, 10, 5);
+  pdf.addImage("/Block.png", "PNG", 35, 112.5, 9, 4);
   pdf.addImage("/Pariksha kendra.png", "PNG", 47, 120, 15, 5);
   pdf.addImage("/admitinstructions2.png", 5,132,198,135)
   pdf.addImage("/studentsignature.png", "PNG", 5, 280, 198, 5)
-
+  pdf.addImage("/vikalpaStamp.png", "PNG", 168, 265, 25, 22)
 
   pdf.setFontSize(10);
   pdf.text('E-Admit Card', 105, 10, {align:'center'})
   pdf.setFontSize(12);
   pdf.text('Directorate of School Education (DSE) Shiksha Sadan, Haryana', 105, 15, {align: "center"})
 
-  // pdf.setFontSize(8)
-  // pdf.text('Pratibha Khoj hind', 100, 20)
-  pdf.setFontSize(12);
-  pdf.text('#EXAM TYPE VAR#', 105, 25, {align:'center'})
+
+  let examtype
+  if (student.grade === "8") {
+      examtype = "Mission Buniyaad"
+  } else { examtype = "Haryana Super 100"}
+
+  pdf.setFontSize(14);
+  pdf.text(examtype, 105, 25, {align:'center'})
   pdf.setFontSize(10);
   pdf.text('Level-1 Entrance Exam (2025-27)', 105, 30, {align:'center'})
-  pdf.setFontSize(10);
-  pdf.text('Examination Date: #var#', 105, 35,{align:'center'})
-  pdf.setFontSize(10);
-  pdf.text('Reporting Time: #var# AM, Exam Time: #var# AM', 105, 40, {align:"center"})
-  
-    // Table data
-    const rows = [
-      ["Name", student.name ],
-      ["Father's Name", student.father],
-      ["Date of Birth", student.dob],
-      ["Category", student.category],
-      ["SRN", student.srn ],
-      ["Exam Roll Number", student.rollNumber],
-      ["Aadhar Number", student.aadhar],
-      ["Mobile Number", student.mobile],
-      ["District", student.district],
-      ["Block", student.block],
-      ["Examination Center", student.L1examinationCenter]
 
-  ];
+
+  //for examination date
+        
+  pdf.setFontSize(10);
+  pdf.text(`Examination Date: ${student.L1examDate}`, 105, 35,{align:'center'})
+  pdf.setFontSize(10);
+  pdf.text(`Reporting Time: 10:30 AM, Exam Time: ${student.L1examTime}`, 105, 40, {align:"center"})
+  
+
+  // Table data
+  const rows = [
+    ["Name", student.name.toUpperCase() ],
+    ["Father's Name", student.father.toUpperCase()],
+    ["Date of Birth", student.dob.toUpperCase()],
+    ["Category", student.category.toUpperCase()],
+    ["SRN", student.srn ],
+    ["Exam Roll Number", student.rollNumber],
+    ["Aadhar Number", student.aadhar],
+    ["Mobile Number", student.mobile],
+    ["District/Code", student.L1districtAdmitCard.toUpperCase()],
+    ["Block/Code", student.L1blockAdmitCard.toUpperCase()],
+    ["Examination Center", student.L1examinationCenter.toUpperCase()]
+
+];
 
   // Generate table
   autoTable(pdf, {
@@ -477,20 +512,52 @@ function fetchAdmitCard () {
       
   });
   
-  const photoText = `If no photograph
-  is available, paste a 
-  school-attested photograph here.`
+  if (student.image === null || student.image === "" || student.imageUrl === "") {
 
-  pdf.setFontSize(7);
-  pdf.text(photoText, 185, 55,{align:'center'})
+    const photoText = `If no photograph
+is available, attach a 
+passport-sized photo attested 
+by the school..`
 
-  // pdf.setFontSize(7);
-  // pdf.text('paste a school-attested photograph here.', 175, 58,{align:'center'})
-  pdf.rect(166, 42.5, 38,38)
+pdf.setFontSize(8);
+pdf.text(photoText, 183, 55,{align:'center'})
+
+
+    pdf.rect(166, 42.5, 38,38)
+
+} else  {
+    pdf.addImage(student.imageUrl, "png", 166, 42.5, 38, 38);
+}
 
   //Save pdf
   pdf.save(`${student.name}_${student.srn}_Admit-Card.pdf`)
 
+
+  //Below api updates the admitCard1 status to true if the card is downloaded
+
+  const formData = new FormData ();
+  formData.append("admitCard1", admitCard1)
+
+  try {
+
+      const response = await registrationServiceInstance.patchDownloadAdmitCardById(
+        studentIdFromUserDash,
+          formData
+      )
+
+      console.log('Admit card downloaded')
+      
+  } catch (error) {
+      console.error("Error Downloading Admit Card:", error);
+      
+  }
+    
+  } catch (error) {
+    alert('Try Again')
+  }
+
+
+  
 
 
 }

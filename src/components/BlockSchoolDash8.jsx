@@ -76,6 +76,7 @@ export default function SchoolDash8 () {
                                 <div>
                                 <p style={{fontWeight:'bold', color:'red'}}>{eachBlock.block}</p>
                                 <p style={{fontWeight:'bold', color:'red'}}>Registration Count: {eachBlock.blockCount}</p>
+                                <p style={{fontWeight:'bold', color:'red'}}>Total Admit Card Download: {eachBlock.totalAdmitCardCount}</p>
                                 </div>
                                 <span style={{ marginLeft: '65%' }}>Click Here</span>
                             </Accordion.Header>
@@ -86,6 +87,7 @@ export default function SchoolDash8 () {
                                             <th>#</th>
                                             <th>School</th>
                                             <th>L-1 Registration Count</th>
+                                            <th>L-1 Admit Card Count</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -94,6 +96,7 @@ export default function SchoolDash8 () {
                                                 <td>{eachSchoolIndex+1}</td>
                                                 <td>{eachSchool.school}</td>
                                                 <td>{eachSchool.count}</td>
+                                                <td>{eachSchool.admitCardCount}</td>
 
                                             </tr>
                                         ))}

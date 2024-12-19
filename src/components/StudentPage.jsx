@@ -4,7 +4,7 @@ import Footer from './Footer';
 import { Link } from 'react-router-dom';
 import AcknowledgementSlip from './AcknowledgementSlip';
 import { StudentContext } from './ContextApi/StudentContextAPI/StudentContext';
-import { Container } from 'react-bootstrap';
+import {Col, Row, Container} from 'react-bootstrap'
 
 //Importing admit card
 import AdmitCard from './AdmitCard';
@@ -20,24 +20,31 @@ const {student} = useContext(StudentContext);
 
     return (
         <>
+        <Container fluid>
         <StudentNavbar/>
-        <div className='StudentPage'>
-            <div style={{width:'50%', border:'3px solid', margin:'auto', padding:'10px'}} >
+        <br/>
+        <Row className='StudentPage' style={{width:'100%', border:'3px solid', margin:'auto', padding:'10px'}}>
+            <Col  >
                 <h3>Your Basic Details:</h3>
+                <hr/>
                 <div>
                 <div style={{
                     display: 'flex',        // Parent container as flex
                     flexDirection: 'column', // Stack sections in a column
                     gap: '10px',            // Adds space between the sections
                 }}>
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
+                    {/* <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'25px'}}>
                         <p>Slip ID:</p>
                         <p>{student.name}</p>
-                    </section>
+                    </section> */}
                     
                     <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
                         <p>SRN:</p>
                         <p>{student.srn}</p>
+                    </section>
+                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
+                        <p>Roll Number:</p>
+                        <p>{student.rollNumber}</p>
                     </section>
                     
             
@@ -71,22 +78,25 @@ const {student} = useContext(StudentContext);
                         <p>{student.grade}</p>
                     </section>
             
-                    <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
+                    {/* <section className='ackfont' style={{display:'grid', gridTemplateColumns: '150px 1fr', gap:'50px'}}>
                         <p>Registration Status:</p>
                         <p> </p>
-                    </section>
+                    </section> */}
                 </div>
             </div>
-            </div>
-            <div className='Student-basic-details'>
+            </Col>
+            {/* <div className='Student-basic-details'>
                 <Link to = {'/Acknowledgement'}>Click to download L1 Ack slip</Link>
-            </div>
-            
-        </div>
-        <div>
+            </div> */}
+            <hr/>
+            <div>
             <AdmitCard/>
         </div>
+            
+        </Row>
+       
         <Footer/>
+        </Container>
         </>
     );
 }
