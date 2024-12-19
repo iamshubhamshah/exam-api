@@ -41,14 +41,13 @@ export default function AdmitCard () {
         const pdf = new jsPDF("p", "mm", "a4");
 
 
-       
+       console.log('i am before logo hr')
 
         const admitHrLogo = "/admitHrLogo.png"
-        const vikalpaLogo = "/vikalpalogo.png"
         const buniyaadLogo = "/admitBuniyaLogo.png"
 
         
-        
+        console.log('i am before pratibha khoj logo')
         //pdf header image
 
         pdf.addImage("/pratibhakhoj.png", "PNG",  95, 15, 18, 6 );
