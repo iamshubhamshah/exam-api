@@ -80,6 +80,7 @@ export default function AdmitCard () {
         pdf.setFontSize(12);
         pdf.text('Directorate of School Education (DSE) Shiksha Sadan, Haryana', 105, 15, {align: "center"})
 
+        console.log('i am just after directorate of school')
         // pdf.setFontSize(8)
         // pdf.text('Pratibha Khoj hind', 100, 20)
         // for exam type:
@@ -102,6 +103,9 @@ export default function AdmitCard () {
         pdf.setFontSize(10);
         pdf.text(`Reporting Time: 10:30 AM, Exam Time: ${student.L1examTime}`, 105, 40, {align:"center"})
 
+
+        console.log(' i am just before formateDATE')
+
         //Changind date format to dd-mm-yyyy from db
         const formatDate = (dob) => {
             const [year, month, day] = dob.split("-"); // Split the string into year, month, and day
@@ -109,6 +113,8 @@ export default function AdmitCard () {
           };
 
         //________________________________________________________
+
+        console.log('i am just before table')
         
           // Table data
           const rows = [
@@ -193,7 +199,7 @@ export default function AdmitCard () {
 
         // pdf.addImage(admitImage,"PNG", 166, 42.5, 100,100)   
         
-        
+        console.log('i am just before last if condition photo text')
 
         if (student.image === null || student.image === "" || student.imageUrl === "") {
 
@@ -209,7 +215,8 @@ export default function AdmitCard () {
             pdf.rect(166, 42.5, 38,38)
 
         } else  {
-            pdf.addImage(student.imageUrl, "png", 166, 42.5, 38, 38);
+            console.log('I AM BEFORE STUDENT PHOTO')
+            pdf.addImage(student.imageUrl, "PNG", 166, 42.5, 38, 38);
         }
         
         //Save pdf
