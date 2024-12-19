@@ -49,9 +49,9 @@ export default function AdmitCard () {
         
         console.log('i am before pratibha khoj logo')
         //pdf header image
-        console.log('i am after removing prabibha khoj logo')
+        console.log('i have installed necessary package lik autotable')
 
-        // pdf.addImage("/pratibhakhoj.png", "PNG",  95, 15, 18, 6 );
+        pdf.addImage("/pratibhakhoj.png", "PNG",  95, 15, 18, 6 );
 
         //Add logo hrLogo to the left side:
         pdf.addImage(admitHrLogo, "PNG", 10, 5, 20, 20)
