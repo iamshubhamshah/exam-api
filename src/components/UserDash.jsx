@@ -406,14 +406,30 @@ async function fetchAdmitCard () {
  
 
   const admitHrLogo = "/admitHrLogo.png"
-  const vikalpaLogo = "/vikalpalogo.png"
   const buniyaadLogo = "/admitBuniyaLogo.png"
 
   
   
+  //all the header images
+  const pratibhaKhoj = "/pratibhakhoj.png"
+  const Name = "/Name.png"
+  const Father = "/Father's Name.png"
+  const DOB = "/DOB.png"
+  const Category = "/Category.png"
+  const Srn = "/SRN.png"
+  const RollNumber = "/Roll number.png"
+  const Aadhar = "/aadhar number.png"
+  const Mobile = "/Mobile number.png"
+  const District = "/District.png"
+  const Block = "/Block.png"
+  const ParikshaKendra = "/Pariksha kendra.png"
+  const AdmitInstructions = "/admitinstructions2.png"
+  const StudentSignature = "/studentsignature.png"
+  const VikalpaStamp = "/vikalpaStamp.png"
+  
   //pdf header image
 
-  pdf.addImage("/pratibhakhoj.png", "PNG",  95, 15, 18, 6 );
+  pdf.addImage(pratibhaKhoj, "PNG",  95, 15, 18, 6 );
 
   //Add logo hrLogo to the left side:
   pdf.addImage(admitHrLogo, "PNG", 10, 5, 20, 20)
@@ -421,21 +437,21 @@ async function fetchAdmitCard () {
 
   //Adding hindi images, cause can't use hindi text
 
-  pdf.addImage("/Name.png", "PNG", 25, 44, 10, 5);
-  pdf.addImage("/Father's Name.png", "PNG", 39, 51.5, 15, 5);
-  pdf.addImage("/DOB.png", "PNG", 36, 58.5, 15 , 5);
-  pdf.addImage("/Category.png", 30, 66.5, 12, 5);
-  pdf.addImage("/SRN.png", "PNG", 24, 74, 15, 5);
+  pdf.addImage(Name, "PNG", 25, 44, 10, 5);
+  pdf.addImage(Father, "PNG", 39, 51.5, 15, 5);
+  pdf.addImage(DOB, "PNG", 36, 58.5, 15 , 5);
+  pdf.addImage(Category, 30, 66.5, 12, 5);
+  pdf.addImage(Srn, "PNG", 24, 74, 15, 5);
   
-  pdf.addImage("/Roll number.png", "PNG", 46, 81.5, 15, 5);
-  pdf.addImage("/aadhar number.png", "PNG", 41, 89.5, 15, 5);
-  pdf.addImage("/Mobile number.png", "PNG", 40, 97.5, 15, 5);
-  pdf.addImage("/District.png", "PNG", 36, 104.5, 10, 5);
-  pdf.addImage("/Block.png", "PNG", 35, 112.5, 9, 4);
-  pdf.addImage("/Pariksha kendra.png", "PNG", 47, 120, 15, 5);
-  pdf.addImage("/admitinstructions2.png", 5,132,198,135)
-  pdf.addImage("/studentsignature.png", "PNG", 5, 280, 198, 5)
-  pdf.addImage("/vikalpaStamp.png", "PNG", 168, 265, 25, 22)
+  pdf.addImage(RollNumber, "PNG", 46, 81.5, 15, 5);
+  pdf.addImage(Aadhar, "PNG", 41, 89.5, 15, 5);
+  pdf.addImage(Mobile, "PNG", 40, 97.5, 15, 5);
+  pdf.addImage(District, "PNG", 36, 104.5, 10, 5);
+  pdf.addImage(Block, "PNG", 35, 112.5, 9, 4);
+  pdf.addImage(ParikshaKendra, "PNG", 47, 120, 15, 5);
+  pdf.addImage(AdmitInstructions, 5,132,198,135)
+  pdf.addImage(StudentSignature, "PNG", 5, 280, 198, 5)
+  pdf.addImage(VikalpaStamp, "PNG", 168, 263, 25, 23)
 
   pdf.setFontSize(10);
   pdf.text('E-Admit Card', 105, 10, {align:'center'})
