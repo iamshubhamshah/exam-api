@@ -85,7 +85,7 @@ export default function AdmitCard () {
          pdf.addImage(District, "PNG", 36, 104.5, 10, 5);
          pdf.addImage(Block, "PNG", 35, 112.5, 9, 4);
          pdf.addImage(ParikshaKendra, "PNG", 47, 120, 15, 5);
-         pdf.addImage(AdmitInstructions, 5,132,198,135)
+         pdf.addImage(AdmitInstructions, "PNG", 5,132,198,135)
          pdf.addImage(StudentSignature, "PNG", 5, 280, 198, 5)
          pdf.addImage(VikalpaStamp, "PNG", 168, 263, 25, 23)
 

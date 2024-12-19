@@ -437,19 +437,19 @@ async function fetchAdmitCard () {
 
   //Adding hindi images, cause can't use hindi text
 
-  // pdf.addImage(Name, "PNG", 25, 44, 10, 5);
-  // pdf.addImage(Father, "PNG", 39, 51.5, 15, 5);
-  // pdf.addImage(DOB, "PNG", 36, 58.5, 15 , 5);
-  // pdf.addImage(Category, 30, 66.5, 12, 5);
-  // pdf.addImage(Srn, "PNG", 24, 74, 15, 5);
+  pdf.addImage(Name, "PNG", 25, 44, 10, 5);
+  pdf.addImage(Father, "PNG", 39, 51.5, 15, 5);
+  pdf.addImage(DOB, "PNG", 36, 58.5, 15 , 5);
+  pdf.addImage(Category, "PNG", 30, 66.5, 12, 5);
+  pdf.addImage(Srn, "PNG", 24, 74, 15, 5);
   
-  // pdf.addImage(RollNumber, "PNG", 46, 81.5, 15, 5);
-  // pdf.addImage(Aadhar, "PNG", 41, 89.5, 15, 5);
-  // pdf.addImage(Mobile, "PNG", 40, 97.5, 15, 5);
-  // pdf.addImage(District, "PNG", 36, 104.5, 10, 5);
-  // pdf.addImage(Block, "PNG", 35, 112.5, 9, 4);
-  // pdf.addImage(ParikshaKendra, "PNG", 47, 120, 15, 5);
-   pdf.addImage(AdmitInstructions, 5,132,198,135)
+  pdf.addImage(RollNumber, "PNG", 46, 81.5, 15, 5);
+  pdf.addImage(Aadhar, "PNG", 41, 89.5, 15, 5);
+  pdf.addImage(Mobile, "PNG", 40, 97.5, 15, 5);
+  pdf.addImage(District, "PNG", 36, 104.5, 10, 5);
+  pdf.addImage(Block, "PNG", 35, 112.5, 9, 4);
+  pdf.addImage(ParikshaKendra, "PNG", 47, 120, 15, 5);
+   pdf.addImage(AdmitInstructions,"PNG", 5,132,198,135)
    pdf.addImage(StudentSignature, "PNG", 5, 280, 198, 5)
    pdf.addImage(VikalpaStamp, "PNG", 168, 263, 25, 23)
 
