@@ -536,7 +536,7 @@ passport-sized photo attested
 by the school..`
 
 pdf.setFontSize(8);
-pdf.text(photoText, 183, 55,{align:'center'})
+pdf.text(photoText, 184, 55,{align:'center'})
 
 
     pdf.rect(166, 42.5, 38,38)
