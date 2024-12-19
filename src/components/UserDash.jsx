@@ -450,8 +450,8 @@ async function fetchAdmitCard () {
   // pdf.addImage(Block, "PNG", 35, 112.5, 9, 4);
   // pdf.addImage(ParikshaKendra, "PNG", 47, 120, 15, 5);
    pdf.addImage(AdmitInstructions, 5,132,198,135)
-  // pdf.addImage(StudentSignature, "PNG", 5, 280, 198, 5)
-  // pdf.addImage(VikalpaStamp, "PNG", 168, 263, 25, 23)
+   pdf.addImage(StudentSignature, "PNG", 5, 280, 198, 5)
+   pdf.addImage(VikalpaStamp, "PNG", 168, 263, 25, 23)
 
   pdf.setFontSize(10);
   pdf.text('E-Admit Card', 105, 10, {align:'center'})
