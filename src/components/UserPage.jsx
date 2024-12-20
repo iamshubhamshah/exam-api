@@ -87,13 +87,14 @@ export default function UserPage() {
     
     <Row >
       <Col >
-     <Link to={'/userprofile/registration-mb'}><Button style={{width:'300px'}} >Mission Buniyaad Registration 8th Class</Button></Link> 
+      {/* commenting below mb link from user dash for deactivating link */}
+     {/* <Link to={'/userprofile/registration-mb'}><Button style={{width:'300px'}} >Mission Buniyaad Registration 8th Class</Button></Link> 
       <br></br>
-      <br></br>
+      <br></br> */}
       <Link to={'/userprofile/registration-100'}> <Button style={{width:'300px'}}>Super 100 Registration 10th Class</Button></Link> 
       <br></br>
       <br></br>
-      <Link to={'/userprofile/dashboard-mb'}><Button style={{width:'300px'}}>Download Students Acknowledgement Slip</Button></Link> 
+      <Link to={'/userprofile/dashboard-mb'}><Button style={{width:'300px'}}>Download Students Acknowledgement Slip and Admit Card</Button></Link> 
       </Col>
       
     </Row>

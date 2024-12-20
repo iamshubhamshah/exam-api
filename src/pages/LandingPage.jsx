@@ -41,10 +41,12 @@ export default function LandingPage() {
             </Link>
             <br />
             
-            <Link  to="/srn" style={{textDecoration:'none', fontSize:'25px'}}>
+
+            {/* Commenting below link for deactivating */}
+            {/* <Link  to="/srn" style={{textDecoration:'none', fontSize:'25px'}}>
             <p><BsArrowRight className="blinking-link" />Mission Buniyaad Registration Class 8th <br/>(मिशन बुनियाद परीक्षा के लिए, कक्षा 8 के विद्यार्थी यहाँ क्लिक करें)</p> 
             </Link>
-            <br />
+            <br /> */}
            
             
             <Link to="/srn-100" style={{textDecoration:'none', fontSize:'25px'}}>

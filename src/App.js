@@ -52,13 +52,13 @@ function App() {
 
                 <Route path="/" element={<LandingPage />} />  
 
-                <Route path="/srn" element={<InputSrn />} />
+                <Route path="/srn-deactivated" element={<InputSrn />} />
                 <Route path="/srn-100" element={<InputSrn />} />
 
 
                 {/* below are the self links */}
-                <Route path="/Registration-form/MB" element={<RegistrationFormComponent />} />
-                <Route path="/Registration-form/put/MB" element={<RegistrationFormPutComponent />} />
+                <Route path="/Registration-form/MB-deactivated" element={<RegistrationFormComponent />} />
+                <Route path="/Registration-form/put/MB-deactivated" element={<RegistrationFormPutComponent />} />
                 <Route path="/Registration-form/S100" element={<RegistrationForm />} />
                 <Route path="/Registration-form/put/S100" element={<RegistrationFormPutComponent />} />
 
@@ -77,8 +77,8 @@ function App() {
                 <Route path="/user-srn" element = {<InputSrn/>}/>
                 <Route path = '/userprofile' element = {<UserPage/>}/>
 
-                <Route path="/user-Registration-form/MB" element={<RegistrationForm />} />
-                <Route path="/user-Registration-form/put/MB" element={<RegistrationFormPutComponent />} />
+                <Route path="/user-Registration-form/MB-deactivated" element={<RegistrationForm />} />
+                <Route path="/user-Registration-form/put/MB-deactivated" element={<RegistrationFormPutComponent />} />
 
                 <Route path='/userprofile/registration-mb' element ={<UserRegistrationPageMB/>}/> 
                 <Route path='/userprofile/registration-100' element ={<UserRegistrationPage100/>}/>
@@ -86,7 +86,7 @@ function App() {
                   {/* BulkUpload */}
 
                   <Route path="/Bulkupload" element={<BulkUpload />} />
-                  <Route path="/userprofile/bulkregister-mb" element={<BulkUploadWithDistBC />} />
+                  <Route path="/userprofile/bulkregister-mb-deactivated" element={<BulkUploadWithDistBC />} />
                   <Route path="/userprofile/bulkregister-100" element={<BulkUploadWithDistBC />} />  
 
 
