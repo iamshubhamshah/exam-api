@@ -43,6 +43,12 @@ export default function DashBoardPage () {
       return sum + eachDistrictCount.districtCount;
     }, 0);
   console.log(totalDistrictCount8)
+
+  //made live on 20-Dec-2024
+  const totalAdmitCardCount8 = stateDash8.reduce((sum, eachAdmitCardCount) => {
+    return sum + eachAdmitCardCount.totalAdmitCardCount;
+  }, 0);
+console.log(totalDistrictCount8)
   
     //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -86,9 +92,15 @@ export default function DashBoardPage () {
         <Container style={{textAlign:"center"}}>
             <Row>
                 <Col>
-                <h5 style={{fontWeight:'bold'}}>Mission Buniyaad: {totalDistrictCount8}</h5>
+                <h5 style={{fontWeight:'bold'}}>Mission Buniyaad Registration: {totalDistrictCount8}</h5>
                 </Col>
+                
             </Row>
+            <Row>
+            <Col><h5 style={{fontWeight:'bold', color:'red'}}>Mission Buniyaad Admit Card: {totalAdmitCardCount8}</h5></Col>
+
+            </Row>
+
             <Row>
                 <Col>
                 <h5 style={{fontWeight:'bold'}}>Haryana Super 100: {totalDistrictCount10}</h5>
