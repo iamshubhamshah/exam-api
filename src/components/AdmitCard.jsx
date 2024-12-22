@@ -216,12 +216,14 @@ export default function AdmitCard () {
         
         console.log('i am just before last if condition photo text')
 
-        if (student.image === null || student.image === "" || student.imageUrl === "" || !student.image || !student.imageUrl ) {
-
-            const photoText = `If no photograph
+        const photoText = `If no photograph
         is available, attach a 
         passport-sized photo attested 
         by the school..`
+
+        if (student.image === null || student.image === "" || student.imageUrl === "" || !student.image || !student.imageUrl ) {
+
+        
       
         pdf.setFontSize(8);
         pdf.text(photoText, 182, 55,{align:'center'})
@@ -231,7 +233,15 @@ export default function AdmitCard () {
 
         } else  {
             console.log('I AM BEFORE STUDENT PHOTO')
-            pdf.addImage(student.imageUrl, "PNG", 166, 42.5, 38, 38);
+
+            //Some people uploaded pdf file for the student images, so below logic handles that.
+            if(student.imageUrl.slice(-3) === "pdf") {
+                pdf.setFontSize(8);
+                pdf.text(photoText, 182, 55,{align:'center'})
+                pdf.rect(166, 42.5, 38,38)
+            }else{pdf.addImage(student.imageUrl, "PNG", 166, 42.5, 38, 38);}
+
+            
         }
         
         //Save pdf
