@@ -528,7 +528,7 @@ async function fetchAdmitCard () {
       
   });
   
-  if (student.image === null || student.image === "" || student.imageUrl === "") {
+  if (student.image === null || student.image === "" || student.imageUrl === "" || !student.image || !student.imageUrl ) {
 
     const photoText = `If no photograph
 is available, attach a 
@@ -536,7 +536,7 @@ passport-sized photo attested
 by the school..`
 
 pdf.setFontSize(8);
-pdf.text(photoText, 184, 55,{align:'center'})
+pdf.text(photoText, 182, 55,{align:'center'})
 
 
     pdf.rect(166, 42.5, 38,38)

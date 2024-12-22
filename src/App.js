@@ -41,6 +41,8 @@ import ManualEntryInputSrn from './components/ManualEntryInputSrn';
 //Admit card
 import AdmitCard from './components/AdmitCard';
 
+import DistrictDash8 from './components/DistrictDash8';
+
 
 function App() {
   return (
@@ -121,6 +123,7 @@ function App() {
                   <Route path='/blockschooldash-100' element = {<BlockSchoolDash10/>}/>
                   <Route path = '/schooldash-mb' element = {<SchoolDash8/>}/>
                   <Route path = '/schooldash-100' element = {<SchoolDash10/>}/>
+                  <Route path = '/districtdash-mb' element = {<DistrictDash8/>}/>
 
 
                     {/* Routes for verifcation portal */}
