@@ -43,6 +43,8 @@ import AdmitCard from './components/AdmitCard';
 
 import DistrictDash8 from './components/DistrictDash8';
 
+//Attendance sheet
+import Attendance8 from './components/Attendance8';
 
 function App() {
   return (
@@ -141,6 +143,9 @@ function App() {
                     {/* admit card route */}
 
                     <Route path='/admitcard' element = {<AdmitCard/>}/>  
+
+                    {/* Attendance sheet routes */}
+                    <Route path='/pratibhakhoj-attendance/mb' element = {<Attendance8/>}/>
 
 
                     
