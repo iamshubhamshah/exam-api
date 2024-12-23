@@ -81,13 +81,13 @@ export default function Attendance8() {
         const pageHeight = 297;
         const pageWidth = 210;
         // Removed Category column and adjusted the column widths accordingly
-        const columnWidths = [8, 20, 20, 20, 20, 20, 20, 20, 55]; // Adjusted column widths
+        const columnWidths = [8, 20, 20, 20, 25, 20, 20, 20, 50]; // Adjusted column widths
         const imageHeight = 30; // Fixed image height for the row (in mm)
         const imageWidth = 35;  // Fixed image width (in mm)
         let currentY = 20;  // Start after the header
     
         // Calculate row height based on the image height
-       const getRowHeight = 15;
+       const getRowHeight = 20;
     
 
         let emptyPhotText = `Attest your passport 
@@ -313,8 +313,8 @@ export default function Attendance8() {
                                                 <th>Gender</th>
                                                 <th>Category</th>
                                                 <th>School</th>
-                                                <th>Image</th>
                                                 <th>RollNo.</th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
