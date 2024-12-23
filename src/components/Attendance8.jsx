@@ -51,6 +51,7 @@ export default function Attendance8() {
     };
 
     const admitCard1 = true;
+    const attendancePdf = true;
     const handleFilterSubmit = async () => {
         if (selectedDistrict && selectedBlock && selectedCenters) {
             setFilterApplied(true);
@@ -71,36 +72,49 @@ export default function Attendance8() {
 
     const sortAllData = allData.sort((a, b) => a.rollNumber.localeCompare(b.rollNumber));
 
+        const admitHrLogo = "/admitHrLogo.png"
+        const buniyaadLogo = "/admitBuniyaLogo.png"
+
     const generatePDF = () => {
-        const doc = new jsPDF('l', 'mm', 'a4'); // Landscape orientation
-        const margin = 10;
+        const doc = new jsPDF('p', 'mm', 'a4'); // Landscape orientation
+        const margin = 5;
         const pageHeight = 297;
         const pageWidth = 210;
         // Removed Category column and adjusted the column widths accordingly
-        const columnWidths = [8, 20, 20, 20, 20, 20, 50, 20, 30, 60]; // Adjusted column widths
+        const columnWidths = [8, 20, 20, 20, 20, 20, 20, 20, 55]; // Adjusted column widths
         const imageHeight = 30; // Fixed image height for the row (in mm)
         const imageWidth = 35;  // Fixed image width (in mm)
         let currentY = 20;  // Start after the header
     
         // Calculate row height based on the image height
-        const getRowHeight = () => imageHeight;
+       const getRowHeight = 15;
     
 
         let emptyPhotText = `Attest your passport 
          size photo`
-        const addImage = (imgUrl, x, y) => {
-            if (imgUrl) {
-                doc.addImage(imgUrl, 'JPEG', x, y, imageWidth, imageHeight); // Add image with fixed width and height
-            } else {
-                // If the image URL is missing, draw a blank square
-                doc.text(emptyPhotText, x + 2, y + imageHeight / 2); // Display text in the empty cell
-            }
-        };
+        // const addImage = (imgUrl, x, y) => {
+        //     if (imgUrl) {
+        //         doc.addImage(imgUrl, 'JPEG', x, y, imageWidth, imageHeight); // Add image with fixed width and height
+        //     } else {
+        //         // If the image URL is missing, draw a blank square
+        //         doc.text(emptyPhotText, x + 2, y + imageHeight / 2); // Display text in the empty cell
+        //     }
+        // };
+
+        doc.addImage(admitHrLogo, "PNG", 10, 3, 15, 15)
+        doc.addImage(buniyaadLogo, "PNG", 180, 3, 15, 15)
 
         
+        doc.setFontSize(10);
+        doc.text('Mission Buniyaad Level-1 Attendance Sheet Batch 2025-27', 110, 8, {align:'center'})
+        doc.setFontSize(12);
+        doc.text(`District: ${selectedDistrict}, Block: ${selectedBlock}`, 110, 12, {align: "center"})
+        doc.setFontSize(12);
+        doc.text(`Center: ${selectedCenters}`, 110, 17, {align: "center"})
+
     
         const addRow = (index, student) => {
-            const rowHeight = 40; // Use image height for row height
+            const rowHeight = 25; // Use image height for row height
     
             // Adding borders for each column and wrapping the text
             doc.setFontSize(8);
@@ -130,14 +144,19 @@ export default function Attendance8() {
             const schoolText = doc.splitTextToSize(student.school, columnWidths[5] - 2); // Wrap text for School column
             doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4], currentY, columnWidths[5], rowHeight); // Border for School column
             doc.text(schoolText, margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + 2, currentY + 5);
-    
-            doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5], currentY, columnWidths[6], rowHeight); // Border for Image column
-            addImage(student.imageUrl, margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + 2, currentY + 2);
-    
+            
+
             doc.setFontSize(8);
-            const rollNumberText = doc.splitTextToSize(student.rollNumber, columnWidths[7] - 2); // Wrap text for School column
+            const rollNumberText = doc.splitTextToSize(student.rollNumber, columnWidths[6] - 2); // Wrap text for School column
+            doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5], currentY, columnWidths[6], rowHeight); // Border for Image column
+            doc.text(rollNumberText, margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + 2, currentY + 2);
+    
+            //doc.setFontSize(8);
+            //const rollNumberText = doc.splitTextToSize(student.rollNumber, columnWidths[7] - 2); // Wrap text for School column
+            
+            doc.setFontSize(8);
             doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6], currentY, columnWidths[7], rowHeight); // Border for RollNo column
-            doc.text(rollNumberText, margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + 2, currentY + 5);
+            doc.text(" ", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + 2, currentY + 5);
     
 
 
@@ -146,10 +165,10 @@ export default function Attendance8() {
         doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7], currentY, columnWidths[8], rowHeight); // Border for Paper Code column
         doc.text("", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + 2, currentY + 5); // Empty text for Paper Code column
 
-        doc.setFontSize(8);
-        // Adding Signature column (blank)
-        doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + columnWidths[8], currentY, columnWidths[9], rowHeight); // Border for Signature column
-        doc.text("", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + columnWidths[8] + 2, currentY + 5); // Empty text for Signature column
+        // doc.setFontSize(8);
+        // // Adding Signature column (blank)
+        // doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + columnWidths[8], currentY, columnWidths[9], rowHeight); // Border for Signature column
+        // doc.text("", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + columnWidths[8] + 2, currentY + 5); // Empty text for Signature column
 
      
 
@@ -162,13 +181,7 @@ export default function Attendance8() {
             
             doc.setFont("helvetica", "bold");
 
-            doc.setFontSize(10);
-        doc.text('Mission Buniyaad Level-1 Attendance Sheet Batch 2025-27', 130, 8, {align:'center'})
-        doc.setFontSize(12);
-        doc.text(`District: ${selectedDistrict}, Block: ${selectedBlock}`, 130, 12, {align: "center"})
-        doc.setFontSize(12);
-        doc.text(`Center: ${selectedCenters}`, 130, 17, {align: "center"})
-
+     
     
             // Adding headers and borders
             doc.setFontSize(8)
@@ -203,21 +216,21 @@ export default function Attendance8() {
             
             doc.setFontSize(8)
             doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5], currentY, columnWidths[6], 10); // Header border for Image column
-            doc.text("Image", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + 2, currentY + 7);
+            doc.text("Roll No.", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + 2, currentY + 7);
     
             doc.setFontSize(8)
             doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6], currentY, columnWidths[7], 10); // Header border for RollNo column
-            doc.text("RollNo.", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + 2, currentY + 7);
+            doc.text("Paper Code.", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + 2, currentY + 7);
 
             
             
          // Paper Code header
          doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7], currentY, columnWidths[8], 10); // Header border for Paper Code column
-         doc.text("Paper code", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + 2, currentY + 7); // Paper code header
+         doc.text("Signature", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + 2, currentY + 7); // Paper code header
  
-         // Signature header
-         doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + columnWidths[8], currentY, columnWidths[9], 10); // Header border for Signature column
-         doc.text("Signature", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + columnWidths[8] + 2, currentY + 7); // Signature header
+        //  // Signature header
+        //  doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + columnWidths[8], currentY, columnWidths[9], 10); // Header border for Signature column
+        //  doc.text("Signature", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + columnWidths[8] + 2, currentY + 7); // Signature header
  
          currentY += 10; // Move currentY down after header
      };
@@ -225,7 +238,7 @@ export default function Attendance8() {
     
         addTableHeader();
         sortAllData.forEach((student, index) => {
-            if (currentY + getRowHeight() > pageHeight - margin) {
+            if (currentY + getRowHeight > pageHeight - margin) {
                 doc.addPage(); // Add a new page if the content exceeds page height
                 currentY = 20; // Reset Y to top of the new page
                 addTableHeader(); // Add the header again
@@ -315,13 +328,13 @@ export default function Attendance8() {
                                                         <td>{eachStudent.gender}</td>
                                                         <td>{eachStudent.category}</td>
                                                         <td>{eachStudent.school}</td>
-                                                        <td>
+                                                        {/* <td>
                                                             <img
                                                                 src={eachStudent.imageUrl}
                                                                 alt={eachStudent.name}
                                                                 style={{ width: 100, height: 100 }}
                                                             />
-                                                        </td>
+                                                        </td> */}
                                                         <td>{eachStudent.rollNumber}</td>
                                                     </tr>
                                                 ))
