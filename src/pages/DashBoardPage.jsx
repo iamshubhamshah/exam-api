@@ -90,7 +90,7 @@ console.log(totalDistrictCount8)
         <NavbarDashboard/>
         <br/>
         <Container style={{textAlign:"center"}}>
-            <Row>
+            {/* <Row>
                 <Col>
                 <h5 style={{fontWeight:'bold'}}>Mission Buniyaad Registration: {totalDistrictCount8}</h5>
                 </Col>
@@ -99,7 +99,7 @@ console.log(totalDistrictCount8)
             <Row>
             <Col><h5 style={{fontWeight:'bold', color:'red'}}>Mission Buniyaad Admit Card: {totalAdmitCardCount8}</h5></Col>
 
-            </Row>
+            </Row> */}
 
             <Row>
                 <Col>
@@ -125,11 +125,11 @@ console.log(totalDistrictCount8)
 
             <hr/>
            <Row>
-            <h3>Misson Buniyaad Dashboards</h3>
+            {/* <h3>Misson Buniyaad Dashboards</h3>
             
             <Link to={'/districtblockdash-mb'}>District Dashboard MB</Link>
             <Link to={'/blockschooldash-mb'}>Block Dashboard MB</Link>
-            <Link to={'/schooldash-mb'}>School Dashboard MB</Link>
+            <Link to={'/schooldash-mb'}>School Dashboard MB</Link> */}
 
             <h3>Haryana Super 100 Dashboards</h3>
             <Link to={'/districtblockdash-100'}>District Dashboard 100</Link>
