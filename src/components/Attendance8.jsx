@@ -59,7 +59,7 @@ export default function Attendance8() {
             setFilterApplied(false);
         }
 
-        let query = `district=${selectedDistrict}&block=${selectedBlock}&L1examinationCenter=${selectedCenters}&admitCard1=${admitCard1}&grade=8&isVerified!=Rejected`.trim();
+        let query = `district=${selectedDistrict}&block=${selectedBlock}&L1examinationCenter=${selectedCenters}&admitCard1=${admitCard1}&grade=8`.trim();
 
         try {
             const response = await DashBoardServices.GetAllStudentData(query);

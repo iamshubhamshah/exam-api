@@ -103,8 +103,8 @@ function App() {
 
                   {/* StudentLogin page and Student Account */}
 
-                  <Route path='/student-signin' element = {<StudentSignIn/>}/>
-                  <Route path = '/Student-dash' element = {<StudentPage/>}/>
+                  <Route path='/student-signin-deactivated' element = {<StudentSignIn/>}/>
+                  <Route path = '/Student-dash-deactivated' element = {<StudentPage/>}/>
 
                   {/* Dashboard routes below */}
                   <Route path='/User-dash' element = {<UserDash8/>}/>
@@ -142,10 +142,10 @@ function App() {
 
                     {/* admit card route */}
 
-                    <Route path='/admitcard' element = {<AdmitCard/>}/>  
+                    <Route path='/admitcard-deactivated' element = {<AdmitCard/>}/>  
 
                     {/* Attendance sheet routes */}
-                    <Route path='/pratibhakhoj-attendance/mb' element = {<Attendance8/>}/>
+                    <Route path='/pratibhakhoj-attendance/mb-deactivated' element = {<Attendance8/>}/>
 
 
                     
