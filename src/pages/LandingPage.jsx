@@ -40,6 +40,11 @@ export default function LandingPage() {
             <p><BsArrowRight className="blinking-link" />Downlaod Mission Buniyaad Admit Card Class 8th<br/>(मिशन बुनियाद परीक्षा (लेवल 1) का प्रवेश पत्र डाउनलोड करने के लिए यहां क्लिक करें।)</p> 
             </Link>
             <br /> */}
+
+            {/* <Link  to="" style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
+            <p><BsArrowRight className="blinking-link" />Mission Buniyaad Level 1 Result is coming out on 20th-Jan-2025<br/>(मिशन बुनियाद स्तर 1 का परिणाम 20 जनवरी 2025 को आ रहा है।)</p> 
+            </Link>
+            <br /> */}
             
 
             {/* Commenting below link for deactivating */}

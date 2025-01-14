@@ -16,7 +16,7 @@ const StudentPage = ()=>{
 const {setStudent} =  useContext(StudentContext);
 
 const {student} = useContext(StudentContext);
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     return (
         <>

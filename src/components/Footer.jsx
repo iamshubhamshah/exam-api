@@ -35,10 +35,14 @@ export default function Footer() {
                 justifyContent: "center",
               }}
             >
+              <div>
               <img
                 src="/vikalpalogo.png"
                 style={{ width: "100px", height: "auto" }}
               />
+              <h6 style={{ color: "#F2FFD7", fontWeight: "bold",  }}>Vikalpa Foundation Trust</h6>
+              </div>
+             
               <h6 style={{ color: "#F2FFD7", fontWeight: "bold",  }}>
                 
                 पंजीकरण से संबंधित किसी भी जानकारी या समस्या के लिए, नीचे दिए गए
