@@ -57,14 +57,14 @@ function StudentSignIn({}) {
       } else {
         setErrorRedirect(true);
         setIsSrnMatched(false);
-        alert('Admit cards are only available for Mission Buniyaad, and if you are a Mission Buniyaad student, you can download your admit card after 2 days. (प्रवेश पत्र केवल मिशन बुनियाद के लिए उपलब्ध हैं और यदि आप मिशन बुनियाद के छात्र हैं, तो आप अपना प्रवेश पत्र 2 दिनों बाद डाउनलोड कर सकते हैं।)')
+        alert('Your SRN is not registered on the Mission Buniyad examination portal. Please verify your SRN and try again. (आपका SRN मिशन बुनियाद परीक्षा पोर्टल पर पंजीकृत नहीं है। कृपया अपना SRN सत्यापित करें और पुनः प्रयास करें।)')
       }
     } catch (error) {
       console.error(error);
       setError("Correct SRN needed"); // Set error state for exceptions
       setErrorRedirect(true); // It gives the message if error arrives then says register first.
       setRegisterFrist(true);
-      alert('Admit cards are only available for Mission Buniyaad, and if you are a Mission Buniyaad student, you can download your admit card after 2 days. (प्रवेश पत्र केवल मिशन बुनियाद के लिए उपलब्ध हैं और यदि आप मिशन बुनियाद के छात्र हैं, तो आप अपना प्रवेश पत्र 2 दिनों बाद डाउनलोड कर सकते हैं।)')
+      alert('Your SRN is not registered on the Mission Buniyad examination portal. Please verify your SRN and try again. (आपका SRN मिशन बुनियाद परीक्षा पोर्टल पर पंजीकृत नहीं है। कृपया अपना SRN सत्यापित करें और पुनः प्रयास करें।)')
     }
   };
 
