@@ -57,14 +57,14 @@ function StudentSignIn({}) {
       } else {
         setErrorRedirect(true);
         setIsSrnMatched(false);
-        alert('Your SRN is not registered on the Mission Buniyad examination portal. Please verify your SRN and try again. (आपका SRN मिशन बुनियाद परीक्षा पोर्टल पर पंजीकृत नहीं है। कृपया अपना SRN सत्यापित करें और पुनः प्रयास करें।)')
+        alert('Your SRN is not registered on the Mission Buniyaad examination portal. Please verify your SRN and try again. (आपका SRN मिशन बुनियाद परीक्षा पोर्टल पर पंजीकृत नहीं है। कृपया अपना SRN सत्यापित करें और पुनः प्रयास करें।)')
       }
     } catch (error) {
       console.error(error);
       setError("Correct SRN needed"); // Set error state for exceptions
       setErrorRedirect(true); // It gives the message if error arrives then says register first.
       setRegisterFrist(true);
-      alert('Your SRN is not registered on the Mission Buniyad examination portal. Please verify your SRN and try again. (आपका SRN मिशन बुनियाद परीक्षा पोर्टल पर पंजीकृत नहीं है। कृपया अपना SRN सत्यापित करें और पुनः प्रयास करें।)')
+      alert('Your SRN is not registered on the Mission Buniyaad examination portal. Please verify your SRN and try again. (आपका SRN मिशन बुनियाद परीक्षा पोर्टल पर पंजीकृत नहीं है। कृपया अपना SRN सत्यापित करें और पुनः प्रयास करें।)')
     }
   };
 
