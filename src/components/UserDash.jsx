@@ -49,7 +49,10 @@ const [downloadSlip, setDownloadSlip] = useState(false)
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+//Below varibale controls the level of exam and shwos the data accordingly in dashboard.
+const examLevelMB = "Level1"
 
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
   console.log(district)
@@ -65,8 +68,15 @@ const [downloadSlip, setDownloadSlip] = useState(false)
     
     try {
       const response = await DashBoardServices.GetAllStudentData(query);
-      
-      setAllData(response.data || []);
+
+      // Filter the data to include only students where isQualified is true
+      const filteredData = response.data.filter(student => 
+        (student.grade === "8" && student.isQualifiedL1 === true) || 
+        student.grade === "10"
+    );
+   
+    setAllData(filteredData || []);
+      //setAllData(response.data || []);
     } catch (error) 
        { console.log("Error fetching data:", error);
         setAllData([]) //Clear all data to set an empty array if filter don't match
@@ -77,7 +87,8 @@ const [downloadSlip, setDownloadSlip] = useState(false)
     fetchAllData();
   }, [ district, block, school, grade]);
 
-
+  //Below variable filters the data dynamically according to the level of examination
+   
 //below varibales are being used to dynamically handieing headers of the ack slip
   let examLevel;
   let examLevelSlip;
@@ -394,7 +405,7 @@ async function fetchAdmitCard () {
   try {
 
      //Below var updates the admit card downloading status in the mongodb on the basis of student _id
-   const admitCard1 = true
+   const admitCard2 = true
    const studentIdFromUserDash = student._id
    //_____________________________
 
@@ -423,7 +434,7 @@ async function fetchAdmitCard () {
   const District = "/District.png"
   const Block = "/Block.png"
   const ParikshaKendra = "/hindiParikshakendra.png"
-  const AdmitInstructions = "/admitinstructions2.png"
+  const AdmitInstructions = "/admitinstructionsLevel2.png"
   const StudentSignature = "/studentsignature.png"
   const VikalpaStamp = "/vikalpaStamp.png"
   
@@ -435,20 +446,7 @@ async function fetchAdmitCard () {
   pdf.addImage(admitHrLogo, "PNG", 10, 5, 20, 20)
   pdf.addImage(buniyaadLogo, "PNG", 180, 5, 20, 20)
 
-  //Adding hindi images, cause can't use hindi text
 
-  // pdf.addImage(Name, "PNG", 25, 44, 10, 5);
-  // pdf.addImage(Father, "PNG", 39, 51.5, 15, 5);
-  // pdf.addImage(DOB, "PNG", 36, 58.5, 15 , 5);
-  // pdf.addImage(Category, "PNG", 30, 66.5, 12, 5);
-  // pdf.addImage(Srn, "PNG", 24, 74, 15, 5);
-  
-  // pdf.addImage(RollNumber, "PNG", 46, 81.5, 15, 5);
-  // pdf.addImage(Aadhar, "PNG", 41, 89.5, 15, 5);
-  // pdf.addImage(Mobile, "PNG", 40, 97.5, 15, 5);
-  // pdf.addImage(District, "PNG", 36, 104.5, 10, 5);
-  // pdf.addImage(Block, "PNG", 35, 112.5, 9, 4);
-  // pdf.addImage(ParikshaKendra, "PNG", 47, 120, 15, 5);
    pdf.addImage(AdmitInstructions,"PNG", 5,132,198,135)
    pdf.addImage(StudentSignature, "PNG", 5, 280, 198, 5)
    pdf.addImage(VikalpaStamp, "PNG", 168, 263, 25, 23)
@@ -467,15 +465,15 @@ async function fetchAdmitCard () {
   pdf.setFontSize(14);
   pdf.text(examtype, 105, 25, {align:'center'})
   pdf.setFontSize(10);
-  pdf.text('Level-1 Entrance Exam (2025-27)', 105, 30, {align:'center'})
+  pdf.text('Entrance Examination Level-2(2025-27)', 105, 30, {align:'center'})
 
 
   //for examination date
         
   pdf.setFontSize(10);
-  pdf.text(`Examination Date: ${student.L1examDate}`, 105, 35,{align:'center'})
+  pdf.text(`Examination Date: ${student.L2examDate}`, 105, 35,{align:'center'})
   pdf.setFontSize(10);
-  pdf.text(`Reporting Time: 10:30 AM, Exam Time: ${student.L1examTime}`, 105, 40, {align:"center"})
+  pdf.text(`Reporting Time: 10:30 AM, Exam Time: ${student.L2examTime}`, 105, 40, {align:"center"})
   
 
   // Table data
@@ -490,7 +488,7 @@ async function fetchAdmitCard () {
     ["Mobile Number", student.mobile],
     ["District/Code", student.L1districtAdmitCard.toUpperCase()],
     ["Block/Code", student.L1blockAdmitCard.toUpperCase()],
-    ["Examination Center", student.L1examinationCenter.toUpperCase()]
+    ["Examination Center", student.L2examinationCenter.toUpperCase()]
 
 ];
 
@@ -559,11 +557,21 @@ pdf.text(photoText, 182, 55,{align:'center'})
   //Save pdf
   pdf.save(`${student.name}_${student.srn}_Admit-Card.pdf`)
 
+          //below const updates the resultStatus1 that tells us that student has checked...
+        // his or her result on portal.
+        //Logic of this is, i am assuming if student downlods his/her admit card or...
+        //level 1 qualifying certificate then we update the resultStatus1 field in ...
+        //mongoDB to True.
+        const resultStatus1 = true; 
+        //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+        
+
 
   //Below api updates the admitCard1 status to true if the card is downloaded
 
   const formData = new FormData ();
-  formData.append("admitCard1", admitCard1)
+  formData.append("admitCard2", admitCard2)
+  formData.append("resultStatus1", resultStatus1)
 
   try {
 
@@ -652,8 +660,8 @@ pdf.text(photoText, 182, 55,{align:'center'})
                 <th>School</th>
                 <th>Class</th>
                 <th>image</th>
-                <th>Download L1 Slip</th>
-                <th>Download L1 Admit Card</th>
+                {/* <th>Download L1 Slip</th> */}
+                <th>Download Mission Buniyaad L2 Admit Card</th>
               </tr>
             </thead>
             <tbody>
@@ -680,11 +688,11 @@ pdf.text(photoText, 182, 55,{align:'center'})
                           style={{ width: 100, height: 100 }}
                         />
                       </td>
-                      <td>
+                      {/* <td>
                         <button className="triggerClickOnUndefined" id={eachStudent.srn} onClick={(e)=>DownloadAckSlip(eachStudent.srn,e)}>Download Slip</button>
-                      </td>
+                      </td> */}
                       <td>
-                      <button className="triggerClickOnUndefinedAdmitCard" id={eachStudent.srn} onClick={(e)=>DownloadAdmitCard(eachStudent.srn,e)}>Download Slip</button>
+                      <button className="triggerClickOnUndefinedAdmitCard" id={eachStudent.srn} onClick={(e)=>DownloadAdmitCard(eachStudent.srn,e)}>Download L-2 Admit Card</button>
                       </td>
                     </tr>
                   ))

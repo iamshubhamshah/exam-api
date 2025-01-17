@@ -103,7 +103,7 @@ function App() {
 
                   {/* StudentLogin page and Student Account */}
 
-                  <Route path='/student-signin-deactivated' element = {<StudentSignIn/>}/>
+                  <Route path='/student-signin' element = {<StudentSignIn/>}/>
                   <Route path = '/Student-dash' element = {<StudentPage/>}/>
 
                   {/* Dashboard routes below */}

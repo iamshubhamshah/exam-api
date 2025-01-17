@@ -14,6 +14,17 @@ import registrationServiceInstance from '../services/RegistrationFormService';
 
 export default function AdmitCard () {
 
+    let admitCard1;
+    let admitCard2;
+    let admitCard3;
+    //Below variables controls the level of admit card.
+    const levelofAdmitCard = "Level2"
+    const admitcardLevelMB = levelofAdmitCard
+    // level2, level3 dynamnically changes admitcardLevel
+
+    
+    
+
     const {student} = useContext(StudentContext);
  const {setStudent} = useContext(StudentContext); 
 
@@ -25,14 +36,27 @@ export default function AdmitCard () {
     }
 
  
+    //below logic handles admit card level and examType(mb or s100 dynamically)
+
+    
 
     async function DownloadAdmitCard () {
-        console.log('i am student id')
+
+        //Below logic handles the mb admit card
+
+        if (student.grade === "8" && admitcardLevelMB === "Level2") {
+
+            console.log('i am student id')
         console.log(student._id)
 
         
          //Below var updates the admit card downloading status in the mongodb on the basis of student _id
+
+            
+
          const admitCard1 = true
+         const admitCard2 =  true
+         const admitCard3 = true
          const id = student._id
          //_________________________________________   
 
@@ -59,7 +83,8 @@ export default function AdmitCard () {
         const District = "/District.png"
         const Block = "/Block.png"
         const ParikshaKendra = "/hindiParikshakendra.png"
-        const AdmitInstructions = "/admitinstructions2.png"
+        const AdmitInstructions = "/admitinstructionsLevel2.png"
+    
         const StudentSignature = "/studentsignature.png"
         const VikalpaStamp = "/vikalpaStamp.png"
         
@@ -71,20 +96,7 @@ export default function AdmitCard () {
         pdf.addImage(admitHrLogo, "PNG", 10, 5, 20, 20)
         pdf.addImage(buniyaadLogo, "PNG", 180, 5, 20, 20)
 
-        //Adding hindi images, cause can't use hindi text
-
-        // pdf.addImage(Name, "PNG", 25, 44, 10, 5);
-        // pdf.addImage(Father, "PNG", 39, 51.5, 15, 5);
-        // pdf.addImage(DOB, "PNG", 36, 58.5, 15 , 5);
-        // pdf.addImage(Category, "PNG", 30, 66.5, 12, 5);
-        // pdf.addImage(Srn, "PNG", 24, 74, 15, 5);
-        
-        // pdf.addImage(RollNumber, "PNG", 46, 81.5, 15, 5);
-        // pdf.addImage(Aadhar, "PNG", 41, 89.5, 15, 5);
-        // pdf.addImage(Mobile, "PNG", 40, 97.5, 15, 5);
-        //  pdf.addImage(District, "PNG", 36, 104.5, 10, 5);
-        //  pdf.addImage(Block, "PNG", 35, 112.5, 9, 4);
-        //  pdf.addImage(ParikshaKendra, "PNG", 47, 120, 15, 5);
+     
          pdf.addImage(AdmitInstructions, "PNG", 5,132,198,135)
          pdf.addImage(StudentSignature, "PNG", 5, 280, 198, 5)
          pdf.addImage(VikalpaStamp, "PNG", 168, 263, 25, 23)
@@ -109,14 +121,20 @@ export default function AdmitCard () {
         pdf.setFontSize(14);
         pdf.text(examtype, 105, 25, {align:'center'})
         pdf.setFontSize(10);
-        pdf.text('Level-1 Entrance Exam (2025-27)', 105, 30, {align:'center'})
+        if (admitcardLevelMB === "Level1"){
+            pdf.text('Level-1 Entrance Exam (2025-27)', 105, 30, {align:'center'})
+        } else if (admitcardLevelMB === "Level2") {
+            pdf.text('Entrance Examination Level-2 (2025-27)', 105, 30, {align:'center'})
+        }
+       
 
         //for examination date
         
         pdf.setFontSize(10);
-        pdf.text(`Examination Date: ${student.L1examDate}`, 105, 35,{align:'center'})
+        pdf.text(`Examination Date: ${student.L2examDate}`, 105, 35,{align:'center'})
+        
         pdf.setFontSize(10);
-        pdf.text(`Reporting Time: 10:30 AM, Exam Time: ${student.L1examTime}`, 105, 40, {align:"center"})
+        pdf.text(`Reporting Time: 10:30 AM, Exam Time: ${student.L2examTime}`, 105, 40, {align:"center"})
 
 
         console.log(' i am just before formateDATE')
@@ -143,7 +161,7 @@ export default function AdmitCard () {
             ["Mobile Number", student.mobile],
             ["District/Code", student.L1districtAdmitCard.toUpperCase()],
             ["Block/Code", student.L1blockAdmitCard.toUpperCase()],
-            ["Examination Center", student.L1examinationCenter.toUpperCase()]
+            ["Examination Center", student.L2examinationCenter.toUpperCase()]
 
         ];
 
@@ -183,39 +201,6 @@ export default function AdmitCard () {
 
        
 
-    //       // Now use html2canvas to fetch the image and convert it to base64
-    // const getImageBase64 = async (imgUrl) => {
-    //     return new Promise((resolve, reject) => {
-    //       const img = new Image();
-    //       img.crossOrigin = "anonymous"; // To handle CORS issues
-    //       img.onload = () => {
-    //         const canvas = document.createElement("canvas");
-    //         const ctx = canvas.getContext("2d");
-    //         canvas.width = img.width;
-    //         canvas.height = img.height;
-    //         ctx.drawImage(img, 0, 0);
-    //         resolve(canvas.toDataURL("image/png"));
-    //       };
-    //       img.onerror = (error) => reject(error);
-    //       img.src = imgUrl; // Set the image URL here
-    //     });
-    //   };
-        
-
-        //   const base64Image =  await getImageBase64(admitImage);
-
-        //   console.log('i am base64image below')
-        //   console.log(student.imageUrl);
-
-        
-
-          
-          
-
-        // pdf.addImage(admitImage,"PNG", 166, 42.5, 100,100)   
-        
-        console.log('i am just before last if condition photo text')
-
         const photoText = `If no photograph
         is available, attach a 
         passport-sized photo attested 
@@ -247,10 +232,27 @@ export default function AdmitCard () {
         //Save pdf
         pdf.save(`${student.name}_${student.srn}_Admit-Card.pdf`)
 
-        //Below api updates the admitCard1 status to true if the card is downloaded
 
+        
+        //below const updates the resultStatus1 that tells us that student has checked...
+        // his or her result on portal.
+        //Logic of this is, i am assuming if student downlods his/her admit card or...
+        //level 1 qualifying certificate then we update the resultStatus1 field in ...
+        //mongoDB to True.
+        const resultStatus1 = true; 
+        //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+        
+
+        //Below api updates the admitCard1 status to true if the card is downloaded
+        //Below api handles the admit card according to the level of exam.
         const formData = new FormData ();
-        formData.append("admitCard1", admitCard1)
+        if (admitcardLevelMB === "Level1") {
+            formData.append("admitCard1", admitCard1)
+        } else if (admitcardLevelMB === "Level2") {
+            formData.append("admitCard2", admitCard2)
+        }
+        formData.append("resultStatus1", resultStatus1)
+
 
         try {
 
@@ -266,6 +268,218 @@ export default function AdmitCard () {
             
         }
 
+
+        //if block ends here
+        
+        }
+        // below else if block is for super 100
+        else if (student.grade === "10" && admitcardLevelMB === "Level1") {
+            //below code generates super 100 admit card
+            console.log('i am student id')
+            console.log(student._id)
+    
+            
+             //Below var updates the admit card downloading status in the mongodb on the basis of student _id
+    
+                
+    
+             //const admitCard1 = true
+             const id = student._id
+             //_________________________________________   
+    
+            console.log('i am download admit card function')
+    
+            const pdf = new jsPDF("p", "mm", "a4");
+    
+    
+           console.log('i am before logo hr')
+    
+            const admitHrLogo = "/admitHrLogo.png"
+            const buniyaadLogo = "/admitBuniyaLogo.png"
+    
+            //all the header images
+            const pratibhaKhoj = "/pratibhakhoj.png"
+            const Name = "/Name.png"
+            const Father = "/hindiFather.png"
+            const DOB = "/DOB.png"
+            const Category = "/Category.png"
+            const Srn = "/SRN.png"
+            const RollNumber = "/hindiRollnumber.png"
+            const Aadhar = "/hindiAadhar.png"
+            const Mobile = "/hindiMobile.png"
+            const District = "/District.png"
+            const Block = "/Block.png"
+            const ParikshaKendra = "/hindiParikshakendra.png"
+            const AdmitInstructions = "/admitinstructions2.png"
+            const StudentSignature = "/studentsignature.png"
+            const VikalpaStamp = "/vikalpaStamp.png"
+            
+            //pdf header image
+    
+            pdf.addImage(pratibhaKhoj, "PNG",  95, 15, 18, 6 );
+    
+            //Add logo hrLogo to the left side:
+            pdf.addImage(admitHrLogo, "PNG", 10, 5, 20, 20)
+            pdf.addImage(buniyaadLogo, "PNG", 180, 5, 20, 20)
+    
+         
+             pdf.addImage(AdmitInstructions, "PNG", 5,132,198,135)
+             pdf.addImage(StudentSignature, "PNG", 5, 280, 198, 5)
+             pdf.addImage(VikalpaStamp, "PNG", 168, 263, 25, 23)
+    
+        
+            pdf.setFontSize(10);
+            pdf.text('E-Admit Card', 105, 10, {align:'center'})
+            pdf.setFontSize(12);
+            pdf.text('Directorate of School Education (DSE) Shiksha Sadan, Haryana', 105, 15, {align: "center"})
+    
+            console.log('i am just after directorate of school')
+            // pdf.setFontSize(8)
+            // pdf.text('Pratibha Khoj hind', 100, 20)
+            // for exam type:
+    
+            //below var is to show dynmaic exam type in admit card
+            let examtype
+            if (student.grade === "8") {
+                examtype = "Mission Buniyaad"
+            } else { examtype = "Haryana Super 100"}
+    
+            pdf.setFontSize(14);
+            pdf.text(examtype, 105, 25, {align:'center'})
+            pdf.setFontSize(10);
+            pdf.text('Level-1 Entrance Exam (2025-27)', 105, 30, {align:'center'})
+    
+            //for examination date
+            
+            pdf.setFontSize(10);
+            pdf.text(`Examination Date: ${student.L1examDate}`, 105, 35,{align:'center'})
+            pdf.setFontSize(10);
+            pdf.text(`Reporting Time: 10:30 AM, Exam Time: ${student.L1examTime}`, 105, 40, {align:"center"})
+    
+    
+            console.log(' i am just before formateDATE')
+    
+            //Changind date format to dd-mm-yyyy from db
+            const formatDate = (dob) => {
+                const [year, month, day] = dob.split("-"); // Split the string into year, month, and day
+                return `${day}-${month}-${year}`; // Rearrange and join them in dd-mm-yyyy format
+              };
+    
+            //________________________________________________________
+    
+            console.log('i am just before table')
+            
+              // Table data
+              const rows = [
+                ["Name", student.name.toUpperCase() ],
+                ["Father's Name", student.father.toUpperCase()],
+                ["Date of Birth", formatDate(student.dob)],
+                ["Category", student.category.toUpperCase()],
+                ["SRN", student.srn ],
+                ["Exam Roll Number", student.rollNumber],
+                ["Aadhar Number", student.aadhar],
+                ["Mobile Number", student.mobile],
+                ["District/Code", student.L1districtAdmitCard.toUpperCase()],
+                ["Block/Code", student.L1blockAdmitCard.toUpperCase()],
+                ["Examination Center", student.L1examinationCenter.toUpperCase()]
+    
+            ];
+    
+            // Generate table
+            autoTable(pdf, {
+                
+                body: rows,
+                startY: 43, // Adjust starting Y position
+                styles: {
+                    fillColor: null, // No background color for rows
+                    textColor: 0, // Black text color
+                    tableLineColor: [0,0,0],
+                    lineWidth: 0.5, // Set border line width
+                    lineColor: 0,
+                    halign: 'left', // Align text to the left
+                    valign: 'middle', // Vertically align text in the middle
+                },
+                headStyles: {
+                    fillColor: null, // No background color for header
+                    textColor: 0, // Black text color for header
+                    tableLineColor: [0,0,0],
+                    fontStyle: 'normal', // Normal font for header
+                    lineWidth: 0.5, // Set border line width for header
+                },
+                alternateRowStyles: {
+                    fillColor: null, // Remove alternating row background
+                },
+                //tableLineColor: [0, 0, 0], // Black border color
+             //   tableLineWidth: 0.5, // Border thickness
+                columnStyles: {
+                    0: { cellWidth: 50 }, // Column 1 width
+                    1: { cellWidth: 100 }, // Column 2 width
+                },
+    
+                
+            });
+    
+           
+    
+            const photoText = `If no photograph
+            is available, attach a 
+            passport-sized photo attested 
+            by the school..`
+    
+            if (student.image === null || student.image === "" || student.imageUrl === "" || !student.image || !student.imageUrl ) {
+    
+            
+          
+            pdf.setFontSize(8);
+            pdf.text(photoText, 182, 55,{align:'center'})
+    
+    
+                pdf.rect(166, 42.5, 38,38)
+    
+            } else  {
+                console.log('I AM BEFORE STUDENT PHOTO')
+    
+                //Some people uploaded pdf file for the student images, so below logic handles that.
+                if(student.imageUrl.slice(-3) === "pdf") {
+                    pdf.setFontSize(8);
+                    pdf.text(photoText, 182, 55,{align:'center'})
+                    pdf.rect(166, 42.5, 38,38)
+                }else{pdf.addImage(student.imageUrl, "PNG", 166, 42.5, 38, 38);}
+    
+                
+            }
+            
+            //Save pdf
+            pdf.save(`${student.name}_${student.srn}_Admit-Card.pdf`)
+    
+            //Below api updates the admitCard1 status to true if the card is downloaded
+            //Below api handles the admit card according to the level of exam.
+            const formData = new FormData ();
+            if (admitcardLevelMB === "Level1") {
+                formData.append("admitCard1", admitCard1)
+            } else if (admitcardLevelMB === "Level2") {
+                formData.append("admitCard2", admitCard2)
+            }
+            
+    
+            try {
+    
+                const response = await registrationServiceInstance.patchDownloadAdmitCardById(
+                    id,
+                    formData
+                )
+    
+                console.log('Admit card downloaded')
+                
+            } catch (error) {
+                console.error("Error Downloading Admit Card:", error);
+                
+            }
+
+
+        }
+
+        
     }
 
     
@@ -275,7 +489,7 @@ export default function AdmitCard () {
         <>
         
         
-        <Button id={student._id} onClick={DownloadAdmitCard}>Download Admit Card</Button>
+        <button class="blinking-text" id={student._id} onClick={DownloadAdmitCard} style={{fontSize:'20px'}}>Download <span style={{fontSize:"30px"}}>Admit Card</span> Mission Buinyaad <span style={{fontSize:"30px"}}>Level 2</span>. <br/>(मिशन बुनियाद लेवल 2 एडमिट कार्ड डाउनलोड करने के लिए यहां क्लिक करें।) </button>
         
         </>
 

@@ -109,10 +109,10 @@ function StudentSignIn({}) {
                 <h3>
                   Student-Login. (विद्यार्थी लॉगिन|)
                 </h3>
-                <h6 style={{color:'red'}}>Download Mission Buniyaad Level 1 Admit Card. (मिशन बुनियाद लेवल 1 प्रवेश पत्र डाउनलोड करें।)</h6>
+                <h6 style={{color:'red'}}>Mission Buniyaad Entrance Examination Level-1 Result. <br/>(मिशन बुनियाद प्रवेश परीक्षा लेवल-1 परिणाम।)</h6>
                 <hr/>
               </div>
-              <label>SRN Number or Slip ID (अपना एस.आर.एन नंबर दर्ज करें| Or अपना स्लिप आईडी नंबर दर्ज करें।)</label>
+              <label>SRN Number(अपना एस.आर.एन नंबर दर्ज करें।)</label>
               <br />
               <input
                 type="text"

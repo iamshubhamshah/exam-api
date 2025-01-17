@@ -346,4 +346,30 @@ modal css */
 
 
 
+/* Below css targets the downloadCertificate button, to style it and to show it as a plane text with a blinking effect */
+.blinking-text {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 25px;
+  cursor: pointer;
+  text-decoration: underline;
+  animation: blink-animation 1s infinite;
+  outline: none;
+  
+}
+
+@keyframes blink-animation {
+  0% {
+    color: red;
+  }
+  50% {
+    color: green;
+  }
+  100% {
+    color: red;
+  }
+}
+
+
 
