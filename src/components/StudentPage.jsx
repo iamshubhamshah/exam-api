@@ -335,9 +335,9 @@ const StudentPage = () => {
                         <h4 style={{ textAlign: "center" }}>
                           Dear Student, You’ve shown great effort in the Mission
                           Buniyaad level 1 Entrance Exam (2025-27). Though Not
-                          qualified , securing a Rank below 21138. Keep striving
+                          qualified , securing a Rank more than 21138. Keep striving
                           for success! Best wishes, Mission Buniyaad Team.<br/><br/>
-                          (प्रिय छात्र, आपने मिशन बुनियाद लेवल 1 प्रवेश परीक्षा (2025-27) में बहुत अच्छा प्रयास किया। हालांकि, आप इस परीक्षा को पास नहीं कर पाए हैं, क्योंकि आपकी रैंक 21138 से नीचे है। सफलता के लिए निरंतर प्रयास करते रहें। शुभकामनाएँ,
+                          (प्रिय छात्र, आपने मिशन बुनियाद लेवल 1 प्रवेश परीक्षा (2025-27) में बहुत अच्छा प्रयास किया। हालांकि, आप इस परीक्षा को पास नहीं कर पाए हैं, क्योंकि आपकी रैंक 21138 से अधिक है। सफलता के लिए निरंतर प्रयास करते रहें। शुभकामनाएँ,
                           मिशन बुनियाद टीम|)
                           <br />
                         </h4>
