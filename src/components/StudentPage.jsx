@@ -333,7 +333,7 @@ const StudentPage = () => {
                         </h3>
                         <hr />
                         <h4 style={{ textAlign: "center" }}>
-                        Dear Student, You put in commendable effort in the Mission Buniyad Level 1 Entrance Exam. While you did not qualify (cut-off: 30 marks) because your rank is higher than the 21,138 selected students. Keep striving for success!<br/><br/>
+                        Dear Student, You put in commendable effort in the Mission Buniyad Level 1 Entrance Exam. You did not qualify (cut-off: 30 marks) because your rank is higher than the 21,138 selected students. Keep striving for success!<br/><br/>
                           (प्रिय छात्र, आपने मिशन बुनियाद लेवल 1 प्रवेश परीक्षा में सराहनीय प्रयास किया। हालाँकि आप उत्तीर्ण नहीं हुए (कट-ऑफ: 30 अंक) क्योंकि आपकी रैंक 21,138 चयनित छात्रों से अधिक है। सफलता के लिए प्रयास करते रहें!|)
                           <br />
                         </h4>
