@@ -31,7 +31,7 @@ export default function DistrictBlockDash8() {
 
   //Below variables are for shwoing total count on dashboars:
   const totalDistrictCount = stateDash.reduce((sum, eachDistrictCount) => {
-    return sum + eachDistrictCount.districtCount;
+    return sum + eachDistrictCount.totalQualifiedCount1;
   }, 0);
 console.log(totalDistrictCount)
 
@@ -43,7 +43,7 @@ console.log(totalDistrictCount)
       
       <h5 style={{textAlign:'center'}}>Mission Buniyaad Dash Board-District Level</h5>
       <hr/>
-      <p style={{fontSize:'30', textAlign:'center'}}> Registration Count: {totalDistrictCount}</p>
+      {/* <p style={{fontSize:'30', textAlign:'center'}}> Registration Count: {totalDistrictCount}</p> */}
       <hr/>
       {stateDash.length > 0 ? (
         <>
@@ -55,8 +55,8 @@ console.log(totalDistrictCount)
                 <Accordion.Header>
                   <div>
                     <p style={{ fontWeight:'bold', color:'red'}}>{eachDistrict.district}</p>
-                    <p style={{ fontWeight:'bold', color:'red'}}>Total Registration: {eachDistrict.districtCount}</p>
-                    <p style={{ fontWeight:'bold', color:'red'}}>Total Admit Card Download: {eachDistrict.totalAdmitCardCount}</p>
+                    <p style={{ fontWeight:'bold', color:'red'}}>Total L-1 Qualified: {eachDistrict.totalQualifiedCount1}</p>
+                    <p style={{ fontWeight:'bold', color:'red'}}>Total L-2 Admit Card Download: {eachDistrict.totalAdmitCardCount2}</p>
                     
                   </div>
                 </Accordion.Header>
@@ -76,8 +76,8 @@ console.log(totalDistrictCount)
                         <tr key={blockIndex}>
                           <td>{blockIndex + 1}</td>
                           <td>{eachBlock.block}</td>
-                          <td>{eachBlock.blockCount}</td>
-                          <td>{eachBlock.totalAdmitCardCount}</td>
+                          <td>{eachBlock.totalQualifiedCount1}</td>
+                          <td>{eachBlock.totalAdmitCardCount2}</td>
                         </tr>
                       ))}
                     </tbody>

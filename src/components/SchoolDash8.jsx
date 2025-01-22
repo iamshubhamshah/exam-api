@@ -62,6 +62,7 @@ const SchoolDash8 = () => {
 
       console.log(filterApplied)
 
+
       return (
         <>
         <NavbarDashboard/>
@@ -116,6 +117,7 @@ const SchoolDash8 = () => {
                             <th>School</th>
                             <th>Class</th>
                             <th>Image</th>
+                            <th>Qualified/Not-Qualified</th>
 
                         </tr>
                     </thead>
@@ -139,6 +141,9 @@ const SchoolDash8 = () => {
                                         src={`https://vikalpaexamination.blr1.digitaloceanspaces.com/postImages/${eachStudent.imageUrl}`}
                                         alt={eachStudent.name}
                                         style={{width:100, height:100}}/>
+                                    </td>
+                                    <td>
+                                    {eachStudent.isQualifiedL1 ? 'Qualified' : 'Not Qualified'}
                                     </td>
 
                                 </tr>

@@ -40,13 +40,14 @@ export default function DashBoardPage () {
   
     //Below variables are for shwoing total count on dashboars:
     const totalDistrictCount8 = stateDash8.reduce((sum, eachDistrictCount) => {
-      return sum + eachDistrictCount.districtCount;
+      return sum + eachDistrictCount.totalQualifiedCount1;
     }, 0);
   console.log(totalDistrictCount8)
 
   //made live on 20-Dec-2024
+
   const totalAdmitCardCount8 = stateDash8.reduce((sum, eachAdmitCardCount) => {
-    return sum + eachAdmitCardCount.totalAdmitCardCount;
+    return sum + eachAdmitCardCount.totalAdmitCardCount2;
   }, 0);
 console.log(totalDistrictCount8)
   
@@ -90,16 +91,17 @@ console.log(totalDistrictCount8)
         <NavbarDashboard/>
         <br/>
         <Container style={{textAlign:"center"}}>
-            {/* <Row>
+            <Row>
                 <Col>
-                <h5 style={{fontWeight:'bold'}}>Mission Buniyaad Registration: {totalDistrictCount8}</h5>
+                <h5 style={{fontWeight:'bold'}}>Mission Buniyaad L-1 Qualified Student: 21138 </h5> 
                 </Col>
+                {/* {totalDistrictCount8} */}
                 
             </Row>
             <Row>
-            <Col><h5 style={{fontWeight:'bold', color:'red'}}>Mission Buniyaad Admit Card: {totalAdmitCardCount8}</h5></Col>
+            <Col><h5 style={{fontWeight:'bold', color:'red'}}>Mission Buniyaad L-2 Admit Card: {totalAdmitCardCount8}</h5></Col>
 
-            </Row> */}
+            </Row> 
 
             <Row>
                 <Col>
@@ -125,11 +127,11 @@ console.log(totalDistrictCount8)
 
             <hr/>
            <Row>
-            {/* <h3>Misson Buniyaad Dashboards</h3>
+            <h3>Misson Buniyaad Dashboards</h3>
             
             <Link to={'/districtblockdash-mb'}>District Dashboard MB</Link>
             <Link to={'/blockschooldash-mb'}>Block Dashboard MB</Link>
-            <Link to={'/schooldash-mb'}>School Dashboard MB</Link> */}
+            <Link to={'/schooldash-mb'}>School Dashboard MB</Link>
 
             <h3>Haryana Super 100 Dashboards</h3>
             <Link to={'/districtblockdash-100'}>District Dashboard 100</Link>
