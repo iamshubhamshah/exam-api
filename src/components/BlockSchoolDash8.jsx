@@ -75,8 +75,8 @@ export default function SchoolDash8 () {
 
                                 <div>
                                 <p style={{fontWeight:'bold', color:'red'}}>{eachBlock.block}</p>
-                                <p style={{fontWeight:'bold', color:'red'}}>L-1 Qualified Count: {eachBlock.totalQualifiedCount1}</p>
-                                <p style={{fontWeight:'bold', color:'red'}}>Total L-2 Admit Card Download: {eachBlock.totalAdmitCardCount2}</p>
+                                <p style={{fontWeight:'bold', color:'red'}}>MB Level-1 Qualified: {eachBlock.totalQualifiedCount1}</p>
+                                <p style={{fontWeight:'bold', color:'red'}}>MB Level-2 Admit Card Download: {eachBlock.totalAdmitCardCount2}</p>
                                 </div>
                                 <span style={{ marginLeft: '65%' }}>Click Here</span>
                             </Accordion.Header>
@@ -86,8 +86,8 @@ export default function SchoolDash8 () {
                                         <tr>
                                             <th>#</th>
                                             <th>School</th>
-                                            <th>L-1 Qualified Count</th>
-                                            <th>L-2 Admit Card Count</th>
+                                            <th>MB Level-1 Qualified</th>
+                                            <th>MB Level-2 Admit Card</th>
                                         </tr>
                                     </thead>
                                     <tbody>

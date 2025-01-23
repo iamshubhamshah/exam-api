@@ -55,8 +55,8 @@ console.log(totalDistrictCount)
                 <Accordion.Header>
                   <div>
                     <p style={{ fontWeight:'bold', color:'red'}}>{eachDistrict.district}</p>
-                    <p style={{ fontWeight:'bold', color:'red'}}>Total L-1 Qualified: {eachDistrict.totalQualifiedCount1}</p>
-                    <p style={{ fontWeight:'bold', color:'red'}}>Total L-2 Admit Card Download: {eachDistrict.totalAdmitCardCount2}</p>
+                    <p style={{ fontWeight:'bold', color:'red'}}>MB Level-1 Qualified: {eachDistrict.totalQualifiedCount1}</p>
+                    <p style={{ fontWeight:'bold', color:'red'}}>MB Level-2 Admit Card Download: {eachDistrict.totalAdmitCardCount2}</p>
                     
                   </div>
                 </Accordion.Header>
@@ -66,8 +66,8 @@ console.log(totalDistrictCount)
                       <tr>
                         <th>#</th>
                         <th>Block</th>
-                        <th>Block Count</th>
-                        <th>Admit Card Count</th>
+                        <th>MB Level-1 Qualified</th>
+                        <th>MB Level-2 Admit Card</th>
                       </tr>
                     </thead>
                     <tbody>

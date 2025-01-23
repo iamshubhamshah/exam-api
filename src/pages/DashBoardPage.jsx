@@ -93,7 +93,7 @@ console.log(totalDistrictCount8)
         <Container style={{textAlign:"center"}}>
             <Row>
                 <Col>
-                <h5 style={{fontWeight:'bold'}}>Mission Buniyaad L-1 Qualified Student: 21138 </h5> 
+                <h5 style={{fontWeight:'bold'}}>Mission Buniyaad L-1 Qualified Students: 21138 </h5> 
                 </Col>
                 {/* {totalDistrictCount8} */}
                 
