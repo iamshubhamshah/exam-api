@@ -147,7 +147,7 @@ function App() {
                     {/* https://registration.buniyaadhry.com/student-signin-s100 */}
 
                     {/* Attendance sheet routes */}
-                    <Route path='/pratibhakhoj-attendance/mb-deactivated' element = {<Attendance8/>}/>
+                    <Route path='/pratibhakhoj-attendance/mb' element = {<Attendance8/>}/>
                     {/* <Route path='/pratibhakhoj-attendance/s100' element = {<Attendance8/>}/> */}
 
 

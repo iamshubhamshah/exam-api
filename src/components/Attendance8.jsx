@@ -42,9 +42,24 @@ export default function Attendance8() {
         setSelectedBlock(selectedOption.value);
     };
 
+    //activate below snippet for level 1 only
+
+    // const filteredCenters = examinationCentersList.filter(
+    //     (eachCenter) =>
+    //         eachCenter.blockName === selectedBlock &&
+    //         eachCenter.examinationLevel === "2" &&
+    //         eachCenter.examType === "MB"
+    // );
+
+//Activate below snippet for level 2
     const filteredCenters = examinationCentersList.filter(
-        (eachCenter) => eachCenter.blockName === selectedBlock
+        (eachCenter) =>
+            eachCenter.district === selectedDistrict &&
+            eachCenter.examinationLevel === "2" &&
+            eachCenter.examType === "MB"
     );
+
+
 
     const handleCenterChange = (selectedOption) => {
         setSelectedCenters(selectedOption.value);
@@ -52,14 +67,32 @@ export default function Attendance8() {
 
     const admitCard1 = true;
     const attendancePdf = true;
-    const handleFilterSubmit = async () => {
-        if (selectedDistrict && selectedBlock && selectedCenters) {
+
+    //Activate below for level 1
+
+    // const handleFilterSubmit = async () => {
+    //     if (selectedDistrict && selectedBlock && selectedCenters) {
+    //         setFilterApplied(true);
+    //     } else {
+    //         setFilterApplied(false);
+    //     }
+
+
+      // Activate below for level 2  
+
+      const handleFilterSubmit = async () => {
+        if (selectedDistrict && selectedCenters) {
             setFilterApplied(true);
         } else {
             setFilterApplied(false);
         }
 
-        let query = `district=${selectedDistrict}&block=${selectedBlock}&L1examinationCenter=${selectedCenters}&admitCard1=${admitCard1}&grade=8`.trim();
+        //activate below query for level 1
+
+        // let query = `district=${selectedDistrict}&block=${selectedBlock}&L1examinationCenter=${selectedCenters}&admitCard1=${admitCard1}&grade=8`.trim();
+
+        //activate below query for level 2
+        let query = `district=${selectedDistrict}&L2examinationCenter=${selectedCenters}&grade=8`.trim();
 
         try {
             const response = await DashBoardServices.GetAllStudentData(query);
@@ -75,181 +108,215 @@ export default function Attendance8() {
         const admitHrLogo = "/admitHrLogo.png"
         const buniyaadLogo = "/admitBuniyaLogo.png"
 
-    const generatePDF = () => {
-        const doc = new jsPDF('p', 'mm', 'a4'); // Landscape orientation
-        const margin = 5;
-        const pageHeight = 297;
-        const pageWidth = 210;
-        // Removed Category column and adjusted the column widths accordingly
-        const columnWidths = [8, 20, 20, 20, 25, 20, 20, 20, 50]; // Adjusted column widths
-        const imageHeight = 30; // Fixed image height for the row (in mm)
-        const imageWidth = 35;  // Fixed image width (in mm)
-        let currentY = 20;  // Start after the header
-    
-        // Calculate row height based on the image height
-       const getRowHeight = 20;
-    
 
-        let emptyPhotText = `Attest your passport 
-         size photo`
-        // const addImage = (imgUrl, x, y) => {
-        //     if (imgUrl) {
-        //         doc.addImage(imgUrl, 'JPEG', x, y, imageWidth, imageHeight); // Add image with fixed width and height
-        //     } else {
-        //         // If the image URL is missing, draw a blank square
-        //         doc.text(emptyPhotText, x + 2, y + imageHeight / 2); // Display text in the empty cell
-        //     }
-        // };
-
-        doc.addImage(admitHrLogo, "PNG", 10, 3, 15, 15)
-        doc.addImage(buniyaadLogo, "PNG", 180, 3, 15, 15)
 
         
-        doc.setFontSize(10);
-        doc.text('Mission Buniyaad Level-1 Attendance Sheet Batch 2025-27', 110, 8, {align:'center'})
-        doc.setFontSize(12);
-        doc.text(`District: ${selectedDistrict}, Block: ${selectedBlock}`, 110, 12, {align: "center"})
-        doc.setFontSize(12);
-        doc.text(`Center: ${selectedCenters}`, 110, 17, {align: "center"})
 
-    
-        const addRow = (index, student) => {
-            const rowHeight = 25; // Use image height for row height
-    
-            // Adding borders for each column and wrapping the text
-            doc.setFontSize(8);
-            doc.rect(margin, currentY, columnWidths[0], rowHeight); // Border for # column
-            doc.text(String(index + 1), margin + 2, currentY + 5);
+        const generatePDF = async () => {
+            const pdf = new jsPDF('l', 'mm', 'a4');
+            const tableData = allData.map((student, index) => ({
+                serialNumber: index + 1,
+                srn: student.srn,
+                name: student.name,
+                father: student.father,
+                gender: student.gender,
+                school: student.school,
+                rollNumber: student.rollNumber,
+                imageUrl: student.imageUrl, // Assuming imageUrl is a valid URL
+            }));
+        
+            const headerOffset = 20; // Space at the top of the first page for header
+            let yPositionStart = headerOffset; // Start drawing the content after the header space
+            const pageWidth = pdf.internal.pageSize.width;
+            const columnWidths = [25, 25, 25, 25, 25, 25, 25, 25, 25, 25]; // Set all column widths to 25
+            const imageWidth = 20; // Width of the image
+            const imageHeight = 20; // Height of the image
+        
+            // Compress image using Canvas (target 15KB)
+            const compressImage = (imageUrl) =>
+                new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.crossOrigin = "anonymous"; // Allow cross-origin
+                    img.src = imageUrl;
+                    img.onload = () => {
+                        const canvas = document.createElement("canvas");
+                        const ctx = canvas.getContext("2d");
+        
+                        const maxWidth = 100; // Adjust width to compress the image
+                        const scaleFactor = maxWidth / img.width;
+                        canvas.width = maxWidth;
+                        canvas.height = img.height * scaleFactor;
+        
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        let quality = 0.5;
+                        let compressedImage = canvas.toDataURL("image/jpeg", quality);
+        
+                        // Check if the compressed image is still too large, adjust quality until it's under 15KB
+                        while (compressedImage.length / 1024 > 15 && quality > 0.1) {
+                            quality -= 0.05; // Decrease quality to get the target size
+                            compressedImage = canvas.toDataURL("image/jpeg", quality);
+                        }
+        
+                        resolve(compressedImage);
+                    };
+                    img.onerror = () => reject("Image loading failed");
+                });
+        
+            // Add header to the first page
+            pdf.addImage(admitHrLogo, "PNG", 10, 3, 15, 15);
+            pdf.addImage(buniyaadLogo, "PNG", 270, 3, 15, 15);
             
-            doc.setFontSize(8);
-            const srnText = doc.splitTextToSize(student.srn, columnWidths[1] - 2); // Wrap text for Name column
-            doc.rect(margin + columnWidths[0], currentY, columnWidths[1], rowHeight); // Border for SRN column
-            doc.text(srnText, margin + columnWidths[0] + 2, currentY + 5);
-    
-            doc.setFontSize(8);
-            const nameText = doc.splitTextToSize(student.name, columnWidths[2] - 2); // Wrap text for Name column
-            doc.rect(margin + columnWidths[0] + columnWidths[1], currentY, columnWidths[2], rowHeight); // Border for Name column
-            doc.text(nameText, margin + columnWidths[0] + columnWidths[1] + 2, currentY + 5);
-    
-            doc.setFontSize(8);
-            const fatherText = doc.splitTextToSize(student.father, columnWidths[3] - 2); // Wrap text for Father column
-            doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2], currentY, columnWidths[3], rowHeight); // Border for Father column
-            doc.text(fatherText, margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + 2, currentY + 5);
-    
-            doc.setFontSize(8);
-            doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3], currentY, columnWidths[4], rowHeight); // Border for Gender column
-            doc.text(student.gender, margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + 2, currentY + 5);
-    
-            doc.setFontSize(8);
-            const schoolText = doc.splitTextToSize(student.school, columnWidths[5] - 2); // Wrap text for School column
-            doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4], currentY, columnWidths[5], rowHeight); // Border for School column
-            doc.text(schoolText, margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + 2, currentY + 5);
-            
-
-            doc.setFontSize(8);
-            const rollNumberText = doc.splitTextToSize(student.rollNumber, columnWidths[6] - 2); // Wrap text for School column
-            doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5], currentY, columnWidths[6], rowHeight); // Border for Image column
-            doc.text(rollNumberText, margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + 2, currentY + 2);
-    
-            //doc.setFontSize(8);
-            //const rollNumberText = doc.splitTextToSize(student.rollNumber, columnWidths[7] - 2); // Wrap text for School column
-            
-            doc.setFontSize(8);
-            doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6], currentY, columnWidths[7], rowHeight); // Border for RollNo column
-            doc.text(" ", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + 2, currentY + 5);
-    
-
-
-                // Adding Paper Code column (blank)
-                doc.setFontSize(8);
-        doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7], currentY, columnWidths[8], rowHeight); // Border for Paper Code column
-        doc.text("", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + 2, currentY + 5); // Empty text for Paper Code column
-
-        // doc.setFontSize(8);
-        // // Adding Signature column (blank)
-        // doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + columnWidths[8], currentY, columnWidths[9], rowHeight); // Border for Signature column
-        // doc.text("", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + columnWidths[8] + 2, currentY + 5); // Empty text for Signature column
-
-     
-
-
-
-            currentY += rowHeight; // Increase currentY by the dynamic row height (image height)
-        };
-    
-        const addTableHeader = () => {
-            
-            doc.setFont("helvetica", "bold");
-
-     
-    
-            // Adding headers and borders
-            doc.setFontSize(8)
-            doc.rect(margin, currentY, columnWidths[0], 10); // Header border for # column
-            doc.text("#", margin + 2, currentY + 7);
-    
-            
-            doc.setFontSize(8)
-            doc.rect(margin + columnWidths[0], currentY, columnWidths[1], 10); // Header border for SRN column
-            doc.text("SRN", margin + columnWidths[0] + 2, currentY + 7);
-    
-            
-            doc.setFontSize(8)
-            doc.rect(margin + columnWidths[0] + columnWidths[1], currentY, columnWidths[2], 10); // Header border for Name column
-            doc.text("Name", margin + columnWidths[0] + columnWidths[1] + 2, currentY + 7);
-    
-            
-            doc.setFontSize(8)
-            doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2], currentY, columnWidths[3], 10); // Header border for Father column
-            doc.text("Father", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + 2, currentY + 7);
-    
-            
-            doc.setFontSize(8)
-            doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3], currentY, columnWidths[4], 10); // Header border for Gender column
-            doc.text("Gender", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + 2, currentY + 7);
-    
-            
-            doc.setFontSize(8)
-            doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4], currentY, columnWidths[5], 10); // Header border for School column
-            doc.text("School", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + 2, currentY + 7);
-    
-            
-            doc.setFontSize(8)
-            doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5], currentY, columnWidths[6], 10); // Header border for Image column
-            doc.text("Roll No.", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + 2, currentY + 7);
-    
-            doc.setFontSize(8)
-            doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6], currentY, columnWidths[7], 10); // Header border for RollNo column
-            doc.text("Paper Code.", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + 2, currentY + 7);
-
-            
-            
-         // Paper Code header
-         doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7], currentY, columnWidths[8], 10); // Header border for Paper Code column
-         doc.text("Signature", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + 2, currentY + 7); // Paper code header
- 
-        //  // Signature header
-        //  doc.rect(margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + columnWidths[8], currentY, columnWidths[9], 10); // Header border for Signature column
-        //  doc.text("Signature", margin + columnWidths[0] + columnWidths[1] + columnWidths[2] + columnWidths[3] + columnWidths[4] + columnWidths[5] + columnWidths[6] + columnWidths[7] + columnWidths[8] + 2, currentY + 7); // Signature header
- 
-         currentY += 10; // Move currentY down after header
-     };
- 
-    
-        addTableHeader();
-        sortAllData.forEach((student, index) => {
-            if (currentY + getRowHeight > pageHeight - margin) {
-                doc.addPage(); // Add a new page if the content exceeds page height
-                currentY = 20; // Reset Y to top of the new page
-                addTableHeader(); // Add the header again
+            pdf.setFontSize(10);
+            pdf.text('Mission Buniyaad Level-2 Attendance Sheet Batch 2025-27', 150, 8, { align: 'center' });
+            pdf.setFontSize(12);
+            pdf.text(`District: ${selectedDistrict}`, 150, 12, { align: "center" });
+            pdf.setFontSize(12);
+            pdf.text(`Center: ${selectedCenters}`, 150, 17, { align: "center" });
+        
+            // Add table header
+            const addTableHeader = () => {
+                pdf.setFont("helvetica", "bold");
+                pdf.setFontSize(8);
+                let xPosition = 10;
+        
+                const headers = [
+                    "#", "SRN", "Name", "Father", "Gender", "School",
+                    "Roll No.", "Photo", "Paper Code", "Signature",
+                ];
+        
+                headers.forEach((header, index) => {
+                    pdf.text(header, xPosition + 6, 25);
+                    xPosition += columnWidths[index];
+                });
+        
+                yPositionStart += 10; // Move down for rows
+            };
+        
+            // Draw grid lines around header and content
+            const drawGridLines = () => {
+                let xPosition = 10;
+                let yPosition = yPositionStart ;
+        
+                // Draw vertical column grid lines
+                columnWidths.forEach(width => {
+                    pdf.setLineWidth(0.5);
+                    pdf.line(xPosition, yPosition, xPosition, yPositionStart + (tableData.length * 30)); // Full column height
+                    xPosition += width ;
+                });
+        
+                // Draw horizontal row grid lines
+                for (let i = 0; i < tableData.length + 1; i++) { // +1 for header row
+                    pdf.setLineWidth(0.5);
+                    pdf.line(10, yPosition + i * 30, pageWidth - 10, yPosition + i * 30); // Draw horizontal lines
+                }
+        
+                // Draw grid lines around the header
+                xPosition = 10;
+                let headerHeight = 10; // Height of the header row
+                let headerYPosition = headerOffset; // Start position for header
+        
+                // Vertical lines around header
+                pdf.setLineWidth(0.5);
+                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // Left side of header
+                xPosition += columnWidths[0];
+                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "#"
+                xPosition += columnWidths[1];
+                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "SRN"
+                xPosition += columnWidths[2];
+                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "Name"
+                xPosition += columnWidths[3];
+                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "Father"
+                xPosition += columnWidths[4];
+                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "Gender"
+                xPosition += columnWidths[5];
+                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "School"
+                xPosition += columnWidths[6];
+                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "Roll No."
+                xPosition += columnWidths[7];
+                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "Photo"
+                xPosition += columnWidths[8];
+                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "Paper Code"
+                xPosition += columnWidths[9];
+                // pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "Signature"
+        
+                // Horizontal lines around header
+                pdf.line(10, headerYPosition, pageWidth - 10, headerYPosition); // Top side of header
+                pdf.line(10, headerYPosition + headerHeight, pageWidth - 10, headerYPosition + headerHeight); // Bottom side of header
+            };
+        
+            // Add table rows
+            const addTableRow = async (data) => {
+                pdf.setFont("helvetica", "normal");
+                pdf.setFontSize(8);
+                let xPosition = 10;
+        
+                // Wrap text for all columns
+                const wrappedSerialNumber = pdf.splitTextToSize(String(data.serialNumber), columnWidths[0] - 4);
+                pdf.text(wrappedSerialNumber, xPosition + 2, yPositionStart + 7);
+                xPosition += columnWidths[0];
+        
+                const wrappedSrn = pdf.splitTextToSize(String(data.srn), columnWidths[1] - 4);
+                pdf.text(wrappedSrn, xPosition + 2, yPositionStart + 7);
+                xPosition += columnWidths[1];
+        
+                const wrappedName = pdf.splitTextToSize(data.name, columnWidths[2] - 4);
+                pdf.text(wrappedName, xPosition + 2, yPositionStart + 7);
+                xPosition += columnWidths[2];
+        
+                const wrappedFather = pdf.splitTextToSize(data.father, columnWidths[3] - 4);
+                pdf.text(wrappedFather, xPosition + 2, yPositionStart + 7);
+                xPosition += columnWidths[3];
+        
+                const wrappedGender = pdf.splitTextToSize(data.gender, columnWidths[4] - 4);
+                pdf.text(wrappedGender, xPosition + 2, yPositionStart + 7);
+                xPosition += columnWidths[4];
+        
+                const wrappedSchool = pdf.splitTextToSize(data.school, columnWidths[5] - 4);
+                // Align school text left and move it up slightly
+                pdf.text(wrappedSchool, xPosition + 2, yPositionStart + 3);  // Move text a bit closer to the row line
+                xPosition += columnWidths[5];
+        
+                const wrappedRollNumber = pdf.splitTextToSize(String(data.rollNumber), columnWidths[6] - 4);
+                pdf.text(wrappedRollNumber, xPosition + 2, yPositionStart + 7);
+                xPosition += columnWidths[6];
+        
+                if (data.imageUrl) {
+                    try {
+                        const compressedImage = await compressImage(data.imageUrl);
+                        pdf.addImage(compressedImage, "PNG", xPosition + 2, yPositionStart + 2, imageWidth, imageHeight);
+                    } catch (error) {
+                        console.error("Error loading image:", error);
+                    }
+                }
+                xPosition += columnWidths[7];
+                pdf.text("", xPosition + 2, yPositionStart + 7); // Paper Code Column
+                xPosition += columnWidths[8];
+                pdf.text("", xPosition + 2, yPositionStart + 7); // Signature Column
+                xPosition += columnWidths[9];
+        
+                yPositionStart += 30; // Adjust for the next row
+            };
+        
+            addTableHeader();
+            drawGridLines(); // Draw grid lines for the header and content
+        
+            for (const data of tableData) {
+                if (yPositionStart > pdf.internal.pageSize.height - 30) {
+                    pdf.addPage();
+                    yPositionStart = headerOffset; // Reset the Y position for the new page with header space
+                    addTableHeader();
+                    drawGridLines(); // Draw grid lines on the new page
+                }
+                await addTableRow(data);
             }
-            addRow(index, student);
-        });
-    
-        doc.save("StudentDetails.pdf"); // Download PDF
-    };
-    
-    
+        
+            pdf.save(`${selectedCenters}_MB-L2-Attendance.pdf`);
+        };
+        
+        
+        
+        
+        
     
     
     
@@ -267,21 +334,28 @@ export default function Attendance8() {
                                 onChange={handleDistrictChange}
                             />
                         </Col>
-                        <Col>
+
+
+                        {/* activate below dropdown at the time of level1 */}
+
+                        {/* <Col>
                             <label>Block</label>
                             <Select
                                 placeholder="Block"
                                 options={unqFilteredBlock.map(block => ({ value: block, label: block }))}
                                 onChange={handleBlockChange}
                             />
-                        </Col>
+                        </Col> */}
+
+
+
                         <Col>
                             <label>Center</label>
                             <Select
                                 placeholder="Center"
                                 options={filteredCenters.map(center => ({
-                                    value: center.L1examinationCenters,
-                                    label: center.L1examinationCenters
+                                    value: center.examinationCenters,
+                                    label: center.examinationCenters
                                 }))}
                                 onChange={handleCenterChange}
                             />
