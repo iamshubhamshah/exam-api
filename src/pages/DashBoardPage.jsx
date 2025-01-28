@@ -93,13 +93,13 @@ console.log(totalDistrictCount8)
         <Container style={{textAlign:"center"}}>
             <Row>
                 <Col>
-                <h5 style={{fontWeight:'bold'}}>Mission Buniyaad L-1 Qualified Students: 21138 </h5> 
+                {/* <h5 style={{fontWeight:'bold'}}>Mission Buniyaad L-1 Qualified Students: 21138 </h5>  */}
                 </Col>
                 {/* {totalDistrictCount8} */}
                 
             </Row>
             <Row>
-            <Col><h5 style={{fontWeight:'bold', color:'red'}}>Mission Buniyaad L-2 Admit Card: {totalAdmitCardCount8}</h5></Col>
+            {/* <Col><h5 style={{fontWeight:'bold', color:'red'}}>Mission Buniyaad L-2 Admit Card: {totalAdmitCardCount8}</h5></Col> */}
 
             </Row> 
 
@@ -127,11 +127,11 @@ console.log(totalDistrictCount8)
 
             <hr/>
            <Row>
-            <h3>Misson Buniyaad Dashboards</h3>
+            {/* <h3>Misson Buniyaad Dashboards</h3>
             
             <Link to={'/districtblockdash-mb'}>District Dashboard MB</Link>
             <Link to={'/blockschooldash-mb'}>Block Dashboard MB</Link>
-            <Link to={'/schooldash-mb'}>School Dashboard MB</Link>
+            <Link to={'/schooldash-mb'}>School Dashboard MB</Link> */}
 
             <h3>Haryana Super 100 Dashboards</h3>
             <Link to={'/districtblockdash-100'}>District Dashboard 100</Link>

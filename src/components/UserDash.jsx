@@ -661,7 +661,7 @@ pdf.text(photoText, 182, 55,{align:'center'})
                 <th>Class</th>
                 <th>image</th>
                 {/* <th>Download L1 Slip</th> */}
-                <th>Download Mission Buniyaad L2 Admit Card</th>
+                {/* <th>Download Mission Buniyaad L2 Admit Card</th> */}
               </tr>
             </thead>
             <tbody>
@@ -691,9 +691,9 @@ pdf.text(photoText, 182, 55,{align:'center'})
                       {/* <td>
                         <button className="triggerClickOnUndefined" id={eachStudent.srn} onClick={(e)=>DownloadAckSlip(eachStudent.srn,e)}>Download Slip</button>
                       </td> */}
-                      <td>
+                      {/* <td>
                       <button className="triggerClickOnUndefinedAdmitCard" id={eachStudent.srn} onClick={(e)=>DownloadAdmitCard(eachStudent.srn,e)}>Download L-2 Admit Card</button>
-                      </td>
+                      </td> */}
                     </tr>
                   ))
                 
