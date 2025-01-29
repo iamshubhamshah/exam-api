@@ -61,7 +61,8 @@ console.log(totalDistrictCount)
         <Accordion.Header>
         <div>
             <p style={{fontWeight:'bold', color:'red'}}>{eachDistrict.district}</p>
-            <p style={{fontWeight:'bold', color:'red'}}>Total Registratios: {eachDistrict.districtCount}</p>
+            <p style={{fontWeight:'bold', color:'red'}}>Total Registrations: {eachDistrict.districtCount}</p>
+            <p style={{ fontWeight:'bold', color:'red'}}>Super 100 Level-1 Admit Card Download: {eachDistrict.totalAdmitCardCount}</p>
             
         </div>
         </Accordion.Header>
@@ -73,6 +74,7 @@ console.log(totalDistrictCount)
             <th>#</th>
                           <th>Block</th>
                           <th>Block Count</th>
+                          <th>Admit Card</th>
                         </tr>
       </thead>
       <tbody>
@@ -82,6 +84,7 @@ console.log(totalDistrictCount)
                             <td>{blockIndex + 1}</td>
                             <td>{eachBlock.block}</td>
                             <td>{eachBlock.blockCount}</td>
+                            <td>{eachBlock.totalAdmitCardCount}</td>
                           </tr>
                         ))}
         

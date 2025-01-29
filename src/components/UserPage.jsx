@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import UserService from "../services/UserService";
 import UserSignUp from "./UserSignup";
+import { BsArrowRight } from "react-icons/bs";
 import {
   Link,
   Form,
@@ -56,7 +57,6 @@ export default function UserPage() {
 
   // Below function use the sessionStorageg so that on the page refresh the usestate don't change and hides the button and
   // renders desired data conditionally.
-
   const handleClick8 = () => {
     setMB(true);
     setIs8ButtonVisible(false);
@@ -65,7 +65,6 @@ export default function UserPage() {
   };
 
   //conditionally handles condition when user clicks on the class 10th button.
-
   const handleClick10 = () => {
     setS100(true);
     setIs10ButtonVisible(false);
@@ -91,16 +90,19 @@ export default function UserPage() {
      {/* <Link to={'/userprofile/registration-mb'}><Button style={{width:'300px'}} >Mission Buniyaad Registration 8th Class</Button></Link> 
       <br></br>
       <br></br> */}
-      <Link to={'/userprofile/registration-100'}> <Button style={{width:'300px'}}>Super 100 Registration 10th Class</Button></Link> 
+      {/* <Link to={'/userprofile/registration-100'}> <Button style={{width:'300px'}}>Super 100 Registration 10th Class</Button></Link>  */}
       <br></br>
       <br></br>
-      <Link to={'/userprofile/dashboard-mb'}><Button style={{width:'300px'}}>Download Students Acknowledgement Slip and Admit Card</Button></Link> 
+      <p style={{fontSize:'25px'}}>Download Super 100 Examination Level - 1 Admit Card. (Click on below button)</p>
+      <hr/>
+      
+      <Link to={'/userprofile/dashboard-mb'}><Button style={{width:'300px'}}>Download Super 100 Admit Card</Button></Link> 
       </Col>
       
     </Row>
     <br></br>
     <Row>
-      <Col>Video Grid here for How to</Col>
+      <Col></Col>
      
     </Row>
     

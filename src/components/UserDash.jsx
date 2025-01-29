@@ -391,8 +391,8 @@ async function fetchAdmitCard () {
 
   try {
 
-    if (student.grade === "10") {
-      alert("Admit cards are only available for Mission Buniyaad. (प्रवेश पत्र केवल मिशन बुनियाद के लिए उपलब्ध हैं|)")
+    if (student.grade === "8") {
+      alert("Admit cards are only available for Haryana Super 100. (प्रवेश पत्र केवल मिशन बुनियाद के लिए उपलब्ध हैं|)")
       return;
     } else {}
   
@@ -434,7 +434,7 @@ async function fetchAdmitCard () {
   const District = "/District.png"
   const Block = "/Block.png"
   const ParikshaKendra = "/hindiParikshakendra.png"
-  const AdmitInstructions = "/admitinstructionsLevel2.png"
+  const AdmitInstructions = "/admitinstructions2.png"
   const StudentSignature = "/studentsignature.png"
   const VikalpaStamp = "/vikalpaStamp.png"
   
@@ -465,15 +465,15 @@ async function fetchAdmitCard () {
   pdf.setFontSize(14);
   pdf.text(examtype, 105, 25, {align:'center'})
   pdf.setFontSize(10);
-  pdf.text('Entrance Examination Level-2(2025-27)', 105, 30, {align:'center'})
+  pdf.text('Entrance Examination Level-1(2025-27)', 105, 30, {align:'center'})
 
 
   //for examination date
         
   pdf.setFontSize(10);
-  pdf.text(`Examination Date: ${student.L2examDate}`, 105, 35,{align:'center'})
+  pdf.text(`Examination Date: ${student.L1examDate}`, 105, 35,{align:'center'})
   pdf.setFontSize(10);
-  pdf.text(`Reporting Time: 10:30 AM, Exam Time: ${student.L2examTime}`, 105, 40, {align:"center"})
+  pdf.text(`Reporting Time: 10:30 AM, Exam Time: ${student.L1examTime}`, 105, 40, {align:"center"})
   
 
   // Table data
@@ -488,7 +488,7 @@ async function fetchAdmitCard () {
     ["Mobile Number", student.mobile],
     ["District/Code", student.L1districtAdmitCard.toUpperCase()],
     ["Block/Code", student.L1blockAdmitCard.toUpperCase()],
-    ["Examination Center", student.L2examinationCenter.toUpperCase()]
+    ["Examination Center", student.L1examinationCenter.toUpperCase()]
 
 ];
 
@@ -562,7 +562,10 @@ pdf.text(photoText, 182, 55,{align:'center'})
         //Logic of this is, i am assuming if student downlods his/her admit card or...
         //level 1 qualifying certificate then we update the resultStatus1 field in ...
         //mongoDB to True.
-        const resultStatus1 = true; 
+
+
+        // const resultStatus1 = true; 
+        const admitCard1 = true;
         //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
         
 
@@ -570,8 +573,8 @@ pdf.text(photoText, 182, 55,{align:'center'})
   //Below api updates the admitCard1 status to true if the card is downloaded
 
   const formData = new FormData ();
-  formData.append("admitCard2", admitCard2)
-  formData.append("resultStatus1", resultStatus1)
+  formData.append("admitCard1", admitCard1)
+  // formData.append("resultStatus1", resultStatus1)
 
   try {
 
@@ -661,7 +664,7 @@ pdf.text(photoText, 182, 55,{align:'center'})
                 <th>Class</th>
                 <th>image</th>
                 {/* <th>Download L1 Slip</th> */}
-                {/* <th>Download Mission Buniyaad L2 Admit Card</th> */}
+                <th>Download Super 100 Admit Card</th>
               </tr>
             </thead>
             <tbody>
@@ -691,9 +694,9 @@ pdf.text(photoText, 182, 55,{align:'center'})
                       {/* <td>
                         <button className="triggerClickOnUndefined" id={eachStudent.srn} onClick={(e)=>DownloadAckSlip(eachStudent.srn,e)}>Download Slip</button>
                       </td> */}
-                      {/* <td>
-                      <button className="triggerClickOnUndefinedAdmitCard" id={eachStudent.srn} onClick={(e)=>DownloadAdmitCard(eachStudent.srn,e)}>Download L-2 Admit Card</button>
-                      </td> */}
+                      <td>
+                      <button className="triggerClickOnUndefinedAdmitCard" id={eachStudent.srn} onClick={(e)=>DownloadAdmitCard(eachStudent.srn,e)}>Download L-1 Admit Card</button>
+                      </td>
                     </tr>
                   ))
                 

@@ -57,14 +57,14 @@ function App() {
                 <Route path="/" element={<LandingPage />} />  
 
                 <Route path="/srn-deactivated" element={<InputSrn />} />
-                <Route path="/srn-100" element={<InputSrn />} />
+                <Route path="/srn-100-deactivated" element={<InputSrn />} />
 
 
                 {/* below are the self links */}
                 <Route path="/Registration-form/MB-deactivated" element={<RegistrationFormComponent />} />
                 <Route path="/Registration-form/put/MB-deactivated" element={<RegistrationFormPutComponent />} />
-                <Route path="/Registration-form/S100" element={<RegistrationForm />} />
-                <Route path="/Registration-form/put/S100" element={<RegistrationFormPutComponent />} />
+                <Route path="/Registration-form/S100-deactivated" element={<RegistrationForm />} />
+                <Route path="/Registration-form/put/S100-deactivated" element={<RegistrationFormPutComponent />} />
 
                 <Route path='/Registration-dash' element = {<RegistrationDashComponent/>}/>
                 
@@ -91,7 +91,7 @@ function App() {
 
                   <Route path="/Bulkupload" element={<BulkUpload />} />
                   <Route path="/userprofile/bulkregister-mb-deactivated" element={<BulkUploadWithDistBC />} />
-                  <Route path="/userprofile/bulkregister-100" element={<BulkUploadWithDistBC />} />  
+                  <Route path="/userprofile/bulkregister-100-deactivated" element={<BulkUploadWithDistBC />} />  
 
 
                   
@@ -104,6 +104,8 @@ function App() {
                   {/* StudentLogin page and Student Account */}
 
                   <Route path='/student-signin' element = {<StudentSignIn/>}/>
+
+                  <Route path='/student-signin-s100' element = {<StudentSignIn/>}/>
                   <Route path = '/Student-dash' element = {<StudentPage/>}/>
 
                   {/* Dashboard routes below */}

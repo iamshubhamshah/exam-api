@@ -18,7 +18,7 @@ export default function AdmitCard () {
     let admitCard2;
     let admitCard3;
     //Below variables controls the level of admit card.
-    const levelofAdmitCard = "Level2"
+    const levelofAdmitCard = "Level1"
     const admitcardLevelMB = levelofAdmitCard
     // level2, level3 dynamnically changes admitcardLevel
 
@@ -282,8 +282,8 @@ export default function AdmitCard () {
              //Below var updates the admit card downloading status in the mongodb on the basis of student _id
     
                 
-    
-             //const admitCard1 = true
+                //Activate or deactivate below const admitCard1 to send the boolean stamp in db
+             const admitCard1 = true
              const id = student._id
              //_________________________________________   
     
@@ -347,7 +347,7 @@ export default function AdmitCard () {
             pdf.setFontSize(14);
             pdf.text(examtype, 105, 25, {align:'center'})
             pdf.setFontSize(10);
-            pdf.text('Level-1 Entrance Exam (2025-27)', 105, 30, {align:'center'})
+            pdf.text('Entrance Examination Level-1(2025-27)', 105, 30, {align:'center'})
     
             //for examination date
             
@@ -489,7 +489,7 @@ export default function AdmitCard () {
         <>
         
         
-        <button class="blinking-text" id={student._id} onClick={DownloadAdmitCard} style={{fontSize:'20px'}}>Download <span style={{fontSize:"30px"}}>Admit Card</span> Mission Buinyaad <span style={{fontSize:"30px"}}>Level 2</span>. <br/>(मिशन बुनियाद लेवल 2 एडमिट कार्ड डाउनलोड करने के लिए यहां क्लिक करें।) </button>
+        <button class="blinking-text" id={student._id} onClick={DownloadAdmitCard} style={{fontSize:'20px'}}>Download <span style={{fontSize:"30px"}}>Admit Card</span> Haryana Super 100 <span style={{fontSize:"30px"}}>Level 1</span>. <br/>(हरियाणा सुपर 100 लेवल 1 एडमिट कार्ड डाउनलोड करने के लिए यहां क्लिक करें।) </button>
         
         </>
 

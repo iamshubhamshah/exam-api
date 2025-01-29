@@ -44,7 +44,7 @@ export default function DashBoardPage () {
     }, 0);
   console.log(totalDistrictCount8)
 
-  //made live on 20-Dec-2024
+  //made live on 20-Dec-2024 (Admit Card count class 8th)
 
   const totalAdmitCardCount8 = stateDash8.reduce((sum, eachAdmitCardCount) => {
     return sum + eachAdmitCardCount.totalAdmitCardCount2;
@@ -81,6 +81,15 @@ console.log(totalDistrictCount8)
     console.log(totalDistrictCount10)
     
     //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    
+  //made live on 28-Jan-2025 (Admit Card count class 10th)
+  const totalAdmitCardCount10 = stateDash10.reduce((sum10, eachAdmitCardCount10) => {
+    return sum10 + eachAdmitCardCount10.totalAdmitCardCount;
+  }, 0);
+console.log(totalDistrictCount8)
+  
+    //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     
 
  const mbBack = '/Buniyaad.png'
@@ -108,6 +117,11 @@ console.log(totalDistrictCount8)
                 <h5 style={{fontWeight:'bold'}}>Haryana Super 100: {totalDistrictCount10}</h5>
                 </Col>
             </Row>
+
+            <Row>
+            <Col><h5 style={{fontWeight:'bold', color:'red'}}>Haryana Super 100 L-1 Admit Card: {totalAdmitCardCount10}</h5></Col>
+
+            </Row> 
         
 
 {/* 

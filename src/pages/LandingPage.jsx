@@ -52,12 +52,25 @@ export default function LandingPage() {
             <p><BsArrowRight className="blinking-link" />Mission Buniyaad Registration Class 8th <br/>(मिशन बुनियाद परीक्षा के लिए, कक्षा 8 के विद्यार्थी यहाँ क्लिक करें)</p> 
             </Link>
             <br /> */}
+
+
+
+              {/* below links are for super 100 registraion, admitcard, and result */}
+
+
+                {/* HARYANA SUPER 100 ADMIT CARD */}
+
+                <Link  to="/student-signin-s100" style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
+            <p><BsArrowRight className="blinking-link" />Downlaod Haryana Super 100 Level-1 Admit Card Class 10th<br/>(हरियाणा सुपर 100 परीक्षा (लेवल 1) का प्रवेश पत्र डाउनलोड करने के लिए यहां क्लिक करें।)</p> 
+            </Link>
+            <br />
+
            
-            
+{/*             
             <Link to="/srn-100" style={{textDecoration:'none', fontSize:'25px'}}>
             <p><BsArrowRight className="blinking-link" /> Haryana Super 100 Registration Class 10th <br/> (हरियाणा सुपर 100 परीक्षा के लिए, कक्षा 10 के विद्यार्थी यहाँ क्लिक करें)</p>
             </Link>
-            <br />
+            <br /> */}
             
             <Link to="/user-signin" style={{textDecoration:'none', fontSize:'25px'}}>
            <p><BsArrowRight className="blinking-link" />SCHOOL/ABRC/BRP/Officials Login (स्कूल/ABRC/BRP/अन्य अधिकारी यहाँ क्लिक करे)</p>

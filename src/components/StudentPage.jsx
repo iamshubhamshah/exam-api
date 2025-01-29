@@ -23,7 +23,7 @@ const StudentPage = () => {
   //It switches the level like, when admit card needs to be downloaded then do this, and if result needs to...
   //... needs to be downloaded then do this
 
-  const switchLevel = "Level2";
+  const switchLevel = "Level1";
 
   //below values can be used student page content according to the level of exam
 

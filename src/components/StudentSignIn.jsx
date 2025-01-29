@@ -15,6 +15,29 @@ function StudentSignIn({}) {
   const { setStudent } = useContext(StudentContext);
   //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+  //User useLocation to dynamically change the text content of student-sign in box(according to super 100 and mb)
+  const location = useLocation()
+  
+  //dynamically changes the text content on the based on student grade(class 8, class 10th)
+  let studentSignInBoxSubHeader;
+
+  if (location.pathname === "/student-signin") {
+    studentSignInBoxSubHeader = `Mission Buniyaad Entrance Examination Level-1 Result.
+(मिशन बुनियाद प्रवेश परीक्षा लेवल-1 परिणाम।)
+    `
+} else if (location.pathname === "/student-signin-s100" ){
+  studentSignInBoxSubHeader = `Haryana Super 100 Examination Level-1 Admit Card.
+(हरियाणा सुपर 100 परीक्षा लेवल-1 प्रवेश पत्र।)
+    `
+}
+
+
+
+
+
+
+  //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   const [inputSrn, setInputSrn] = useState(null);
   const [slipId, setSlipId] = useState(null);
   const [id, setId] = useState(""); //Gets the student Id for updation in students' data
@@ -46,7 +69,7 @@ function StudentSignIn({}) {
 
       if (
         response.data.data.srn === SrnSlipId &&
-        response.data.data.isVerified != "" && response.data.data.grade === "8" && response.data.data.rollNumber != ""
+        response.data.data.isVerified != "" && response.data.data.grade === "10" && response.data.data.rollNumber != ""
       ) {
         setIsSrnMatched(true);
         setId(response.data.data._id);
@@ -57,14 +80,14 @@ function StudentSignIn({}) {
       } else {
         setErrorRedirect(true);
         setIsSrnMatched(false);
-        alert('Your SRN is not registered on the Mission Buniyaad examination portal. Please verify your SRN and try again. (आपका SRN मिशन बुनियाद परीक्षा पोर्टल पर पंजीकृत नहीं है। कृपया अपना SRN सत्यापित करें और पुनः प्रयास करें।)')
+        alert('Your SRN is not registered on the examination portal. Please verify your SRN and try again. (आपका SRN परीक्षा पोर्टल पर पंजीकृत नहीं है। कृपया अपना SRN सत्यापित करें और पुनः प्रयास करें।)')
       }
     } catch (error) {
       console.error(error);
       setError("Correct SRN needed"); // Set error state for exceptions
       setErrorRedirect(true); // It gives the message if error arrives then says register first.
       setRegisterFrist(true);
-      alert('Your SRN is not registered on the Mission Buniyaad examination portal. Please verify your SRN and try again. (आपका SRN मिशन बुनियाद परीक्षा पोर्टल पर पंजीकृत नहीं है। कृपया अपना SRN सत्यापित करें और पुनः प्रयास करें।)')
+      alert('Your SRN is not registered on the examination portal. Please verify your SRN and try again. (आपका SRN परीक्षा पोर्टल पर पंजीकृत नहीं है। कृपया अपना SRN सत्यापित करें और पुनः प्रयास करें।)')
     }
   };
 
@@ -109,7 +132,7 @@ function StudentSignIn({}) {
                 <h3>
                   Student-Login. (विद्यार्थी लॉगिन|)
                 </h3>
-                <h6 style={{color:'red'}}>Mission Buniyaad Entrance Examination Level-1 Result. <br/>(मिशन बुनियाद प्रवेश परीक्षा लेवल-1 परिणाम।)</h6>
+                <h6 style={{color:'red'}}>{studentSignInBoxSubHeader}</h6>
                 <hr/>
               </div>
               <label>SRN Number(अपना एस.आर.एन नंबर दर्ज करें।)</label>
@@ -136,11 +159,11 @@ function StudentSignIn({}) {
 
               {errorRedirect ? (
                 <div>
-                  <p>If You have not registered for Level 1 examination then click below:</p>
+                  {/* <p>If You have not registered for Level 1 examination then click below:</p>
                   <p>
                     Click here to Register yourself:{" "}
                     <Link to={"/"}>Register For L1</Link>
-                  </p>
+                  </p> */}
                 </div>
               ) : null}
             </form>
