@@ -84,8 +84,8 @@ function App() {
                 <Route path="/user-Registration-form/MB-deactivated" element={<RegistrationForm />} />
                 <Route path="/user-Registration-form/put/MB-deactivated" element={<RegistrationFormPutComponent />} />
 
-                <Route path='/userprofile/registration-mb' element ={<UserRegistrationPageMB/>}/> 
-                <Route path='/userprofile/registration-100' element ={<UserRegistrationPage100/>}/>
+                <Route path='/userprofile/registration-mb-deactivated' element ={<UserRegistrationPageMB/>}/> 
+                <Route path='/userprofile/registration-100-deactivated' element ={<UserRegistrationPage100/>}/>
 
                   {/* BulkUpload */}
 
@@ -132,14 +132,14 @@ function App() {
 
                     {/* Routes for verifcation portal */}
 
-                    <Route path='/verification' element = {<Verification/>}/>
+                    <Route path='/verification-deactivated' element = {<Verification/>}/>
 
 
                     {/* Using Same form component for manual entry by users where aadahr will be optional */}
                     {/* Manual entry route */}
-                    <Route path='/manualentry' element = {<Manualentry/>}/>
-                    <Route path='/manualentryinputsrn' element ={<ManualEntryInputSrn/>}/>
-                    <Route path='/manualformentry' element = {<ManualFormEntry/>}/>
+                    <Route path='/manualentry-deactivated' element = {<Manualentry/>}/>
+                    <Route path='/manualentryinputsrn-deactivated' element ={<ManualEntryInputSrn/>}/>
+                    <Route path='/manualformentry-deactivated' element = {<ManualFormEntry/>}/>
 
 
                     {/* admit card route */}
