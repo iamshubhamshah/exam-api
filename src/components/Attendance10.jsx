@@ -331,7 +331,7 @@ export default function Attendance10() {
             setAttendanceSheetLoading(false);
 
         
-            pdf.save(`${selectedCenters}_MB-L2-Attendance.pdf`);
+            pdf.save(`${selectedCenters}_HS100-L1-Attendance.pdf`);
         };
         
         
