@@ -31,6 +31,7 @@ import SchoolDash8 from './components/SchoolDash8';
 import SchoolDash10 from './components/SchoolDash10';
 import DashBoardPage from './pages/DashBoardPage';
 import Verification from './components/Verification';
+import Attendance10 from './components/Attendance10';
 
 //Manual entry route
 import Manualentry from './components/Manualentry';
@@ -150,7 +151,7 @@ function App() {
 
                     {/* Attendance sheet routes */}
                     <Route path='/pratibhakhoj-attendance/mb-deactivated' element = {<Attendance8/>}/>
-                    {/* <Route path='/pratibhakhoj-attendance/s100' element = {<Attendance8/>}/> */}
+                    <Route path='/pratibhakhoj-attendance/s100' element = {<Attendance10/>}/>
 
 
                     
