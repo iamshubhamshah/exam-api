@@ -54,16 +54,31 @@ export default function LandingPage() {
             <br /> */}
 
 
+             <Link  to="" style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
+            <p><BsArrowRight className="blinking-link" />Mission Buniyaad Entrance Examination Level-2 Result Coming Soon.<br/>(मिशन बुनियाद प्रवेश परीक्षा लेवल-2 परिणाम जल्द आ रहा है।)</p> 
+            </Link>
+            <br />
+
+
+
 
               {/* below links are for super 100 registraion, admitcard, and result */}
 
 
                 {/* HARYANA SUPER 100 ADMIT CARD */}
 
-                <Link  to="/student-signin-s100" style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
+                {/* <Link  to="/student-signin-s100" style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
             <p><BsArrowRight className="blinking-link" />Downlaod Haryana Super 100 Level-1 Admit Card Class 10th<br/>(हरियाणा सुपर 100 परीक्षा (लेवल 1) का प्रवेश पत्र डाउनलोड करने के लिए यहां क्लिक करें।)</p> 
+            </Link> */}
+            <br />
+
+
+            <Link  to="" style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
+            <p><BsArrowRight className="blinking-link" />Haryana Super 100 Entrance Examination Level-1 Result Coming Soon. <br/> (हरियाणा सुपर 100 प्रवेश परीक्षा लेवल-1 परिणाम जल्द आ रहा है।)</p> 
             </Link>
             <br />
+
+
 
            
 {/*             
@@ -72,11 +87,16 @@ export default function LandingPage() {
             </Link>
             <br /> */}
             
-            <Link to="/user-signin" style={{textDecoration:'none', fontSize:'25px'}}>
+          {/* BELOW LINKS ARE FOR ABRC/SCHOOL/CC LOGIN */}
+
+            {/* <Link to="/user-signin" style={{textDecoration:'none', fontSize:'25px'}}>
            <p><BsArrowRight className="blinking-link" />SCHOOL/ABRC/BRP/Officials Login (स्कूल/ABRC/BRP/अन्य अधिकारी यहाँ क्लिक करे)</p>
-            </Link>
+            </Link> */}
 
             <br />
+
+
+            
            
             {/* //Below Student Login is just for testing purpose right now. I will place it at it's right place in future. */}
             </Col>
