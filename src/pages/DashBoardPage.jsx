@@ -47,7 +47,7 @@ export default function DashBoardPage () {
   //made live on 20-Dec-2024 (Admit Card count class 8th)
 
   const totalAdmitCardCount8 = stateDash8.reduce((sum, eachAdmitCardCount) => {
-    return sum + eachAdmitCardCount.totalAdmitCardCount2;
+    return sum + eachAdmitCardCount.totalResultStatusCount2;
   }, 0);
 console.log(totalDistrictCount8)
   
@@ -102,24 +102,24 @@ console.log(totalDistrictCount8)
         <Container style={{textAlign:"center"}}>
             <Row>
                 <Col>
-                {/* <h5 style={{fontWeight:'bold'}}>Mission Buniyaad L-1 Qualified Students: 21138 </h5>  */}
+                <h5 style={{fontWeight:'bold'}}>Mission Buniyaad Level-2 Qualified Students: 6672 </h5> 
                 </Col>
                 {/* {totalDistrictCount8} */}
                 
             </Row>
             <Row>
-            {/* <Col><h5 style={{fontWeight:'bold', color:'red'}}>Mission Buniyaad L-2 Admit Card: {totalAdmitCardCount8}</h5></Col> */}
+            <Col><h5 style={{fontWeight:'bold', color:'red'}}>Mission Buniyaad Level-2 Result: {totalAdmitCardCount8}</h5></Col>
 
             </Row> 
 
             <Row>
                 <Col>
-                <h5 style={{fontWeight:'bold'}}>Haryana Super 100: {totalDistrictCount10}</h5>
+                {/* <h5 style={{fontWeight:'bold'}}>Haryana Super 100: {totalDistrictCount10}</h5> */}
                 </Col>
             </Row>
 
             <Row>
-            <Col><h5 style={{fontWeight:'bold', color:'red'}}>Haryana Super 100 L-1 Admit Card: {totalAdmitCardCount10}</h5></Col>
+            {/* <Col><h5 style={{fontWeight:'bold', color:'red'}}>Haryana Super 100 L-1 Admit Card: {totalAdmitCardCount10}</h5></Col> */}
 
             </Row> 
         
@@ -141,18 +141,18 @@ console.log(totalDistrictCount8)
 
             <hr/>
            <Row>
-            {/* <h3>Misson Buniyaad Dashboards</h3>
+            <h3>Misson Buniyaad Dashboards</h3>
             
             <Link to={'/districtblockdash-mb'}>District Dashboard MB</Link>
             <Link to={'/blockschooldash-mb'}>Block Dashboard MB</Link>
-            <Link to={'/schooldash-mb'}>School Dashboard MB</Link> */}
+            <Link to={'/schooldash-mb'}>School Dashboard MB</Link>
 
-            <h3>Haryana Super 100 Dashboards</h3>
-            <Link to={'/districtblockdash-100'}>District Dashboard 100</Link>
+            {/* <h3>Haryana Super 100 Dashboards</h3> */}
+            {/* <Link to={'/districtblockdash-100'}>District Dashboard 100</Link>
             
             <Link to={'/blockschooldash-100'}>Block Dashboard 100</Link>
             
-            <Link to={'/schooldash-100'}>School Dashboard Super 100</Link>
+            <Link to={'/schooldash-100'}>School Dashboard Super 100</Link> */}
            </Row>
         
         </Container>

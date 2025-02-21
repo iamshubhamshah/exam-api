@@ -71,7 +71,7 @@ const examLevelMB = "Level1"
 
       // Filter the data to include only students where isQualified is true
       const filteredData = response.data.filter(student => 
-        (student.grade === "8" && student.isQualifiedL1 === true) || 
+        (student.grade === "8" && student.isQualifiedL2 === true) || 
         student.grade === "10"
     );
    
@@ -391,8 +391,15 @@ async function fetchAdmitCard () {
 
   try {
 
-    if (student.grade === "8") {
-      alert("Admit cards are only available for Haryana Super 100. (प्रवेश पत्र केवल मिशन बुनियाद के लिए उपलब्ध हैं|)")
+    if (student.grade === "10") {
+
+      alert("Haryana Super Level 2 examination admit card coming soon. (हरियाणा सुपर लेवल 2 परीक्षा के एडमिट कार्ड जल्द ही आएंगे।)")
+
+      //alert("Admit cards are only available for Haryana Super 100. (प्रवेश पत्र केवल मिशन बुनियाद के लिए उपलब्ध हैं|)")
+      return;
+    } else if (student.grade === "8") {
+      
+      alert("Mission Buniyaad Level 3 examination admit card coming soon. (हरियाणा सुपर लेवल 2 परीक्षा के एडमिट कार्ड जल्द ही आएंगे।)")
       return;
     } else {}
   
@@ -664,7 +671,7 @@ pdf.text(photoText, 182, 55,{align:'center'})
                 <th>Class</th>
                 <th>image</th>
                 {/* <th>Download L1 Slip</th> */}
-                <th>Download Super 100 Admit Card</th>
+                <th>Download Admit Card</th>
               </tr>
             </thead>
             <tbody>
@@ -695,7 +702,7 @@ pdf.text(photoText, 182, 55,{align:'center'})
                         <button className="triggerClickOnUndefined" id={eachStudent.srn} onClick={(e)=>DownloadAckSlip(eachStudent.srn,e)}>Download Slip</button>
                       </td> */}
                       <td>
-                      <button className="triggerClickOnUndefinedAdmitCard" id={eachStudent.srn} onClick={(e)=>DownloadAdmitCard(eachStudent.srn,e)}>Download L-1 Admit Card</button>
+                      <button className="triggerClickOnUndefinedAdmitCard" id={eachStudent.srn} onClick={(e)=>DownloadAdmitCard(eachStudent.srn,e)}>Download Admit Card</button>
                       </td>
                     </tr>
                   ))

@@ -36,6 +36,8 @@ export default function LandingPage() {
           <Row>
             <Col className="text-center">
 
+            {/* below links are for mission bniyaad */}
+
             {/* <Link  to="/student-signin" style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
             <p><BsArrowRight className="blinking-link" />Downlaod Mission Buniyaad Admit Card Class 8th<br/>(मिशन बुनियाद परीक्षा (लेवल 1) का प्रवेश पत्र डाउनलोड करने के लिए यहां क्लिक करें।)</p> 
             </Link>
@@ -54,8 +56,14 @@ export default function LandingPage() {
             <br /> */}
 
 
-             <Link  to="" style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
+             {/* <Link  to="" style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
             <p><BsArrowRight className="blinking-link" />Mission Buniyaad Entrance Examination Level-2 Result Coming Soon.<br/>(मिशन बुनियाद प्रवेश परीक्षा लेवल-2 परिणाम जल्द आ रहा है।)</p> 
+            </Link>
+            <br /> */}
+
+
+            <Link  to="/student-signin" style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
+            <p><BsArrowRight className="blinking-link" />Click here for Mission Buniyaad Entrance Examination Level-2 Result.<br/>(मिशन बुनियाद प्रवेश परीक्षा लेवल 2 परिणाम के लिए यहां क्लिक करें।)</p> 
             </Link>
             <br />
 
@@ -89,9 +97,9 @@ export default function LandingPage() {
             
           {/* BELOW LINKS ARE FOR ABRC/SCHOOL/CC LOGIN */}
 
-            {/* <Link to="/user-signin" style={{textDecoration:'none', fontSize:'25px'}}>
+            <Link to="/user-signin" style={{textDecoration:'none', fontSize:'25px'}}>
            <p><BsArrowRight className="blinking-link" />SCHOOL/ABRC/BRP/Officials Login (स्कूल/ABRC/BRP/अन्य अधिकारी यहाँ क्लिक करे)</p>
-            </Link> */}
+            </Link>
 
             <br />
 

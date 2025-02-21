@@ -76,7 +76,7 @@ function App() {
                 {/* Below routes are for users */}
 
                 <Route path='/user-signup-deactivated' element = {<UserSignUp/>}/>
-                <Route path = '/user-signin-deactivated' element = {<UserSignIn/>}/>
+                <Route path = '/user-signin' element = {<UserSignIn/>}/>
                 <Route path = '/user-page' element = {<UserPage/>}/>
 
                 <Route path="/user-srn" element = {<InputSrn/>}/>
@@ -107,7 +107,7 @@ function App() {
                   <Route path='/student-signin' element = {<StudentSignIn/>}/>
 
                   <Route path='/student-signin-s100-deactivated' element = {<StudentSignIn/>}/>
-                  <Route path = '/Student-dash-deactivated' element = {<StudentPage/>}/>
+                  <Route path = '/Student-dash' element = {<StudentPage/>}/>
 
                   {/* Dashboard routes below */}
                   <Route path='/User-dash' element = {<UserDash8/>}/>
@@ -119,7 +119,7 @@ function App() {
 
 
                   {/* Dasdhboar routes */}
-                  <Route path = '/examination/dashboard-deactivated' element = {<DashBoardPage/>}/>
+                  <Route path = '/examination/dashboard' element = {<DashBoardPage/>}/>
                   <Route path='/userprofile/dashboard-mb' element = {<UserDash/>}/>
                   <Route path='/userprofile/dashboard-100' element = {<UserDash/>}/>
                   <Route path='/districtblockdash-mb' element = {<DistrictBlockDash8/>}/>

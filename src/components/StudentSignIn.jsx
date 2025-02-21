@@ -22,8 +22,8 @@ function StudentSignIn({}) {
   let studentSignInBoxSubHeader;
 
   if (location.pathname === "/student-signin") {
-    studentSignInBoxSubHeader = `Mission Buniyaad Entrance Examination Level-1 Result.
-(मिशन बुनियाद प्रवेश परीक्षा लेवल-1 परिणाम।)
+    studentSignInBoxSubHeader = `Mission Buniyaad Entrance Examination Level-2 Result.
+(मिशन बुनियाद प्रवेश परीक्षा लेवल-2 परिणाम।)
     `
 } else if (location.pathname === "/student-signin-s100" ){
   studentSignInBoxSubHeader = `Haryana Super 100 Examination Level-1 Admit Card.
@@ -69,7 +69,7 @@ function StudentSignIn({}) {
 
       if (
         response.data.data.srn === SrnSlipId &&
-        response.data.data.isVerified != "" && response.data.data.grade === "10" && response.data.data.rollNumber != ""
+        response.data.data.isVerified != "" && response.data.data.grade === "8" && response.data.data.rollNumber != ""
       ) {
         setIsSrnMatched(true);
         setId(response.data.data._id);

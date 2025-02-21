@@ -87,19 +87,30 @@ export default function UserPage() {
     <Row >
       <Col >
       {/* commenting below mb link from user dash for deactivating link */}
+
      {/* <Link to={'/userprofile/registration-mb'}><Button style={{width:'300px'}} >Mission Buniyaad Registration 8th Class</Button></Link> 
       <br></br>
       <br></br> */}
       {/* <Link to={'/userprofile/registration-100'}> <Button style={{width:'300px'}}>Super 100 Registration 10th Class</Button></Link>  */}
       <br></br>
       <br></br>
-      <p style={{fontSize:'25px'}}>Download Super 100 Examination Level - 1 Admit Card. (Click on below button)</p>
+      <p style={{fontSize:'25px', color:'red', fontWeight:'bold'}}>Mission Buniyaad Level 2 Result out now. (Click on below button)</p>
+      <hr></hr>
+      <p>Read Following Notes:<br></br>
+          1 मिशन बुनियाद लेवल 3 एडमिट कार्ड जल्द ही डाउनलोड के लिए उपलब्ध होगा।<br></br>
+          2 हरियाणा सुपर 100 लेवल 1 परीक्षा परिणाम जल्द ही जारी किया जाएगा।
+      </p>
+
+
       <hr/>
       
-      <Link to={'/userprofile/dashboard-mb'}><Button style={{width:'300px'}}>Download Super 100 Admit Card</Button></Link> 
+      {/* uncomment below link for for user dash */}
+
+      <Link to={'/userprofile/dashboard-mb'}><Button style={{width:'600px'}}>Check Result or Download Admit Cards of students Registered by You.</Button></Link> 
       </Col>
       
     </Row>
+   
     <br></br>
     <Row>
       <Col></Col>

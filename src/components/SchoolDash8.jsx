@@ -30,7 +30,13 @@ const SchoolDash8 = () => {
         setFilterApplied(false)
        }
 
-       let query = `district=${district}&block=${block}&school=${school}&grade=8&isVerified=Verified&isVerified=Pending`.trim();
+       //below variables pulls ony those data on dashboard which were qualified in respective levels of exams.
+       let isQualifiedL1 = true;
+       let isQualifiedL2 = true;
+       //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+       let query = `district=${district}&block=${block}&school=${school}&grade=8&isVerified=Verified&isVerified=Pending&isQualifiedL1=${isQualifiedL1}`.trim();
       
        
         try {
@@ -143,7 +149,7 @@ const SchoolDash8 = () => {
                                         style={{width:100, height:100}}/>
                                     </td>
                                     <td>
-                                    {eachStudent.isQualifiedL1 ? 'Qualified' : 'Not Qualified'}
+                                    {eachStudent.isQualifiedL2 ? 'Qualified' : 'Not Qualified'}
                                     </td>
 
                                 </tr>

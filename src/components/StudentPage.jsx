@@ -8,6 +8,7 @@ import { Col, Row, Container } from "react-bootstrap";
 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import registrationServiceInstance from '../services/RegistrationFormService';
 
 //Importing admit card
 import AdmitCard from "./AdmitCard";
@@ -23,7 +24,7 @@ const StudentPage = () => {
   //It switches the level like, when admit card needs to be downloaded then do this, and if result needs to...
   //... needs to be downloaded then do this
 
-  const switchLevel = "Level1";
+  const switchLevel = "Level2";
 
   //below values can be used student page content according to the level of exam
 
@@ -36,7 +37,7 @@ const StudentPage = () => {
     const pdf = new jsPDF("landscape", "mm", [297, 210]);
 
     //certificate png below in public folder of frontend folder
-    const certificate = "/L1QualificationCertificateblank.png";
+    const certificate = "/L2QualificationCertificateblank.png";
 
     pdf.addImage(certificate, "PNG", 0, 0, 297, 210);
 
@@ -46,22 +47,32 @@ const StudentPage = () => {
     const district = student.district.toUpperCase();
     const block = student.block.toUpperCase();
     const schoolName = student.school;
-    const stateRank = student.L1StateRank;
-    const districtRank = student.L1DistrictRank;
+    const stateRank = student.L2StateRank;
+    const districtRank = student.L2DistrictRank;
 
     //text of certificate
+
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(13)
+    pdf.text("FOR QUALIFYING MISSION BUNIYAAD ENTRANCE EXAMINATION LEVEL-2", 150, 85, {align:'center'} )
+
+
+    pdf.setFont("helvetica", "normal");
     pdf.setFontSize(14);
     pdf.text(`This is to certify that "${studentName}"`, 41, 105, {
       align: "left",
     });
     pdf.line(86, 106, 145, 106);
 
+    pdf.setFont("helvetica", "normal");
     pdf.setFontSize(14);
     pdf.text(`, Son/Daughter of Shri "${fatherName}"`, 146, 105, {
       align: "left",
     });
     pdf.line(196, 106, 255, 106);
 
+
+    pdf.setFont("helvetica", "normal");
     pdf.setFontSize(14);
     pdf.text(`from ${district}`, 42, 116, {
       align: "left",
@@ -69,26 +80,45 @@ const StudentPage = () => {
 
     pdf.line(52, 117, 105, 117);
 
+
+    pdf.setFont("helvetica", "normal");
     pdf.setFontSize(14)
     pdf.text(`${block}`, 110, 116, {align:'left'})
     pdf.line(107, 117, 169, 117);
 
+    //Below enclosed block dynamically changes the schoolName font according to the schoolName length...
+    //...it is needed cause in the certificate if the school length is large then text overlaps with other texts...
+    let fontSizeOfSchoolName;
+
+    if (schoolName.length > 60){
+      fontSizeOfSchoolName = 8
+    } else {
+      fontSizeOfSchoolName = 14
+    }
+
+    pdf.setFont("helvetica", "normal");
     pdf.setFontSize(14);
+    pdf.text("studying at ", 41, 127, {align: "left"})
+
+    pdf.setFontSize(fontSizeOfSchoolName);
     pdf.text(
-      `studying at "${schoolName}"`,
-      41,
+      `"${schoolName}"`,
+      66,
       127,
       { align: "left" }
     );
+
+  //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     pdf.line(66, 128, 220, 128);
     pdf.setFontSize(14);
     pdf.text(', has qualified the', 220, 127, {align:'left'})
-    
 
-    pdf.setFont("Helvetica", "bold");
+
+
+    pdf.setFont("helvetica", "bold");
     pdf.setFontSize(14);
     pdf.text(
-      `Mission Buinyaad Entrance Examination  Level-1 for the batch of 2025-27.`,
+      `Mission Buinyaad Entrance Examination  Level-2 for the batch of 2025-27.`,
       40,
       138,
       { align: "left" }
@@ -105,7 +135,39 @@ const StudentPage = () => {
     pdf.line(74, 161, 95, 161); //82
 
     //Save pdf
-    pdf.save(`${student.name}_${student.srn}_L1Qualifying.pdf`);
+    pdf.save(`${student.name}_${student.srn}_L2Qualifying.pdf`);
+
+
+// Below logic updates the resultStatus to true if student downloads his/her certificate in the backedn
+
+    //below variable sets the result status to true.
+    let id = student._id
+    let resultStatus2 = true
+
+    //Below api updates the resultStatus to true if the result or certificate is downloaded is downloaded
+        //Below api handles the admit card according to the level of exam.
+        const formData = new FormData ();
+        formData.append("resultStatus2", resultStatus2)
+
+        try {
+
+          const response = await registrationServiceInstance.patchDownloadAdmitCardById(
+              id,
+              formData
+          )
+
+          console.log('Certificate downloaded downloaded')
+          
+      } catch (error) {
+          console.error("Error Downloading certificate:", error);
+          
+      }
+  //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+
+
   }
   //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -273,13 +335,13 @@ const StudentPage = () => {
               <Row >
                 {/* below snippet checks if the student is qualified or not, in exam. if yes then show download certificate, other wise notqalified text */}
 
-                {student.isQualifiedL1 === true ? (
+                {student.isQualifiedL2 === true ? (
                   <div>
                     <Container style={{ width: "60%" }}>
                       <Row className="border mb-3 rounded-2">
                         <h3 style={{ textAlign: "center", color: "red" }}>
                           You have qualified Mission Buinyaad Entrance
-                          Examination Level-1
+                          Examination Level-2
                         </h3>
                         <hr />
                         <h4 style={{ textAlign: "center" }}>
@@ -287,7 +349,7 @@ const StudentPage = () => {
                           <u>{student.father.toUpperCase()}</u> from district{" "}
                           {student.L1districtAdmitCard} and block{" "}
                           {student.L1blockAdmitCard} for qualifying Mission
-                          Buinyaad Entrance Examination Level-1 .
+                          Buinyaad Entrance Examination Level-2.
                           <br />
                         </h4>
                       </Row>
@@ -328,15 +390,30 @@ const StudentPage = () => {
                     <Container style={{ width: "60%" }}>
                       <Row className="border mb-3 rounded-2">
                         <h3 style={{ textAlign: "center", color: "red" }}>
-                          You have not qualified Mission Buinyaad Level-1
+                          You have not qualified Mission Buinyaad Level-2
                           Entrance Examination
                         </h3>
                         <hr />
-                        <h4 style={{ textAlign: "center" }}>
-                        Dear Student, You put in commendable effort in the Mission Buniyad Level 1 Entrance Exam. You did not qualify because your rank is higher than the 21,138 selected students. Keep striving for success!<br/><br/>
-                          (प्रिय छात्र, आपने मिशन बुनियाद लेवल 1 प्रवेश परीक्षा में सराहनीय प्रयास किया। हालाँकि आप उत्तीर्ण नहीं हुए क्योंकि आपकी रैंक 21,138 चयनित छात्रों से अधिक है। सफलता के लिए प्रयास करते रहें!|)
+
+                        {/* below text to be shown when student don't pass the level 1 examination. uncomment in level 1 */}
+
+                        {/* <h4 style={{ textAlign: "center" }}>
+                        Dear Student, You put in commendable effort in the Mission Buniyad Level 1 Entrance Exam. You did not qualify because your rank is higher than the 21183 selected students. Keep striving for success!<br/><br/>
+                          (प्रिय छात्र, आपने मिशन बुनियाद लेवल 2 प्रवेश परीक्षा में सराहनीय प्रयास किया। हालाँकि आप उत्तीर्ण नहीं हुए क्योंकि आपकी रैंक 6672 चयनित छात्रों से अधिक है। सफलता के लिए प्रयास करते रहें!|)
+                          <br />
+                        </h4> */}
+
+
+                       {/* below text to be shown when student don't pass the level 2 examination. uncomment in level 2 */}
+
+
+                         <h4 style={{ textAlign: "center" }}>
+                        Dear Student, You put in commendable effort in the Mission Buniyad Level 2 Entrance Exam. You did not qualify because your rank is higher than the 6672 selected students. Keep striving for success!<br/><br/>
+                          (प्रिय छात्र, आपने मिशन बुनियाद लेवल 2 प्रवेश परीक्षा में सराहनीय प्रयास किया। हालाँकि आप उत्तीर्ण नहीं हुए क्योंकि आपकी रैंक 6672 चयनित छात्रों से अधिक है। सफलता के लिए प्रयास करते रहें।)
                           <br />
                         </h4>
+
+
                       </Row>
                       
                     </Container>

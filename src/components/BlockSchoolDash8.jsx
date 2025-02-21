@@ -75,8 +75,8 @@ export default function SchoolDash8 () {
 
                                 <div>
                                 <p style={{fontWeight:'bold', color:'red'}}>{eachBlock.block}</p>
-                                <p style={{fontWeight:'bold', color:'red'}}>MB Level-1 Qualified: {eachBlock.totalQualifiedCount1}</p>
-                                <p style={{fontWeight:'bold', color:'red'}}>MB Level-2 Admit Card Download: {eachBlock.totalAdmitCardCount2}</p>
+                                <p style={{fontWeight:'bold', color:'red'}}>MB Level-2 Qualified: {eachBlock.totalQualifiedCount2}</p>
+                                <p style={{fontWeight:'bold', color:'red'}}>MB Level-2 Result Status: {eachBlock.totalResultStatusCount2}</p>
                                 </div>
                                 <span style={{ marginLeft: '65%' }}>Click Here</span>
                             </Accordion.Header>
@@ -86,8 +86,8 @@ export default function SchoolDash8 () {
                                         <tr>
                                             <th>#</th>
                                             <th>School</th>
-                                            <th>MB Level-1 Qualified</th>
-                                            <th>MB Level-2 Admit Card</th>
+                                            <th>MB Level-2 Qualified</th>
+                                            <th>MB Level-2 Result Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -95,8 +95,8 @@ export default function SchoolDash8 () {
                                             <tr key={eachSchoolIndex}>
                                                 <td>{eachSchoolIndex+1}</td>
                                                 <td>{eachSchool.school}</td>
-                                                <td>{eachSchool.qualifiedCount1}</td>
-                                                <td>{eachSchool.admitCardCount2}</td>
+                                                <td>{eachSchool.qualifiedCount2}</td>
+                                                <td>{eachSchool.resultStatusCount2}</td>
 
                                             </tr>
                                         ))}
