@@ -68,7 +68,7 @@ console.log(totalDistrictCount)
                       <tr>
                         <th>#</th>
                         <th>Block</th>
-                        <th>MB Level-1 Qualified</th>
+                        <th>MB Level-2 Qualified</th>
                         <th>MB Level-2 Result Status</th>
                       </tr>
                     </thead>

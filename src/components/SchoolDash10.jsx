@@ -28,7 +28,15 @@ const SchoolDash10 = () => {
 
        } else{
         setFilterApplied(false)
+
+        
        }
+
+       //below variables pulls ony those data on dashboard which were qualified in respective levels of exams.
+       let isQualifiedL1 = true;
+       let isQualifiedL2 = true;
+       //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
        let query = `district=${district}&block=${block}&school=${school}&grade=10&isVerified=Verified&isVerified=Pending`.trim();
       
@@ -116,6 +124,7 @@ const SchoolDash10 = () => {
                             <th>School</th>
                             <th>Class</th>
                             <th>Image</th>
+                            <th>Qualified/Not-Qualified</th>
 
                         </tr>
                     </thead>
@@ -136,9 +145,12 @@ const SchoolDash10 = () => {
                                     <td>{eachStudent.grade}</td>
                                     <td>
                                         <img
-                                        src={`https://vikalpaexamination.blr1.digitaloceanspaces.com/postImages/${eachStudent.image}`}
+                                        src={`https://vikalpaexamination.blr1.digitaloceanspaces.com/postImages/${eachStudent.imageUrl}`}
                                         alt={eachStudent.name}
                                         style={{width:100, height:100}}/>
+                                    </td>
+                                    <td>
+                                    {eachStudent.isQualifiedL1 ? 'Qualified' : 'Not Qualified'}
                                     </td>
 
                                 </tr>

@@ -26,8 +26,8 @@ function StudentSignIn({}) {
 (मिशन बुनियाद प्रवेश परीक्षा लेवल-2 परिणाम।)
     `
 } else if (location.pathname === "/student-signin-s100" ){
-  studentSignInBoxSubHeader = `Haryana Super 100 Examination Level-1 Admit Card.
-(हरियाणा सुपर 100 परीक्षा लेवल-1 प्रवेश पत्र।)
+  studentSignInBoxSubHeader = `Haryana Super 100 Entrance Examination Level-1 Result.
+(हरियाणा सुपर 100 प्रवेश परीक्षा लेवल-1 का परिणाम।)
     `
 }
 
@@ -69,7 +69,7 @@ function StudentSignIn({}) {
 
       if (
         response.data.data.srn === SrnSlipId &&
-        response.data.data.isVerified != "" && response.data.data.grade === "8" && response.data.data.rollNumber != ""
+        response.data.data.isVerified != "" && response.data.data.grade === "8" || response.data.data.grade === "10" && response.data.data.rollNumber != ""
       ) {
         setIsSrnMatched(true);
         setId(response.data.data._id);

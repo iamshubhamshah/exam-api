@@ -85,7 +85,7 @@ console.log(totalDistrictCount8)
     
   //made live on 28-Jan-2025 (Admit Card count class 10th)
   const totalAdmitCardCount10 = stateDash10.reduce((sum10, eachAdmitCardCount10) => {
-    return sum10 + eachAdmitCardCount10.totalAdmitCardCount;
+    return sum10 + eachAdmitCardCount10.totalResultStatusCount1;
   }, 0);
 console.log(totalDistrictCount8)
   
@@ -114,12 +114,12 @@ console.log(totalDistrictCount8)
 
             <Row>
                 <Col>
-                {/* <h5 style={{fontWeight:'bold'}}>Haryana Super 100: {totalDistrictCount10}</h5> */}
+                <h5 style={{fontWeight:'bold'}}>Haryana Super 100 Level-1 Result: 2243</h5>
                 </Col>
             </Row>
 
             <Row>
-            {/* <Col><h5 style={{fontWeight:'bold', color:'red'}}>Haryana Super 100 L-1 Admit Card: {totalAdmitCardCount10}</h5></Col> */}
+            <Col><h5 style={{fontWeight:'bold', color:'red'}}>Haryana Super 100 L-1 Result: {totalAdmitCardCount10}</h5></Col>
 
             </Row> 
         
@@ -147,12 +147,12 @@ console.log(totalDistrictCount8)
             <Link to={'/blockschooldash-mb'}>Block Dashboard MB</Link>
             <Link to={'/schooldash-mb'}>School Dashboard MB</Link>
 
-            {/* <h3>Haryana Super 100 Dashboards</h3> */}
-            {/* <Link to={'/districtblockdash-100'}>District Dashboard 100</Link>
+            <h3>Haryana Super 100 Dashboards</h3>
+            <Link to={'/districtblockdash-100'}>District Dashboard 100</Link>
             
             <Link to={'/blockschooldash-100'}>Block Dashboard 100</Link>
             
-            <Link to={'/schooldash-100'}>School Dashboard Super 100</Link> */}
+            <Link to={'/schooldash-100'}>School Dashboard Super 100</Link>
            </Row>
         
         </Container>

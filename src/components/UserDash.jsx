@@ -72,7 +72,7 @@ const examLevelMB = "Level1"
       // Filter the data to include only students where isQualified is true
       const filteredData = response.data.filter(student => 
         (student.grade === "8" && student.isQualifiedL2 === true) || 
-        student.grade === "10"
+        (student.grade === "10" && student.isQualifiedL1 === true)
     );
    
     setAllData(filteredData || []);

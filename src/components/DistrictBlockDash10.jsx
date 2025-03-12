@@ -45,7 +45,7 @@ console.log(totalDistrictCount)
           <NavbarDashboard/>
           <h5 style={{textAlign:'center'}}>Haryana Super 100 Dash Board-District Level</h5>
       <hr/>
-      <p style={{fontSize:'30', textAlign:'center'}}> Registration Count: {totalDistrictCount}</p>
+      {/* <p style={{fontSize:'30', textAlign:'center'}}> Registration Count: {totalDistrictCount}</p> */}
       <hr/>
             <Table responsive>
             
@@ -61,8 +61,8 @@ console.log(totalDistrictCount)
         <Accordion.Header>
         <div>
             <p style={{fontWeight:'bold', color:'red'}}>{eachDistrict.district}</p>
-            <p style={{fontWeight:'bold', color:'red'}}>Total Registrations: {eachDistrict.districtCount}</p>
-            <p style={{ fontWeight:'bold', color:'red'}}>Super 100 Level-1 Admit Card Download: {eachDistrict.totalAdmitCardCount}</p>
+            <p style={{fontWeight:'bold', color:'red'}}>HS-100 L-1 Qualified: {eachDistrict.totalQualifiedCount1}</p>
+            <p style={{ fontWeight:'bold', color:'red'}}>HS-100 L-1 Result Status: {eachDistrict.totalResultStatusCount1}</p>
             
         </div>
         </Accordion.Header>
@@ -73,8 +73,8 @@ console.log(totalDistrictCount)
         <tr>
             <th>#</th>
                           <th>Block</th>
-                          <th>Block Count</th>
-                          <th>Admit Card</th>
+                          <th>HS-100 Level-1 Qualified</th>
+                          <th>HS-100 Level-1 Result Status</th>
                         </tr>
       </thead>
       <tbody>
@@ -83,8 +83,8 @@ console.log(totalDistrictCount)
                           <tr key={blockIndex}>
                             <td>{blockIndex + 1}</td>
                             <td>{eachBlock.block}</td>
-                            <td>{eachBlock.blockCount}</td>
-                            <td>{eachBlock.totalAdmitCardCount}</td>
+                            <td>{eachBlock.totalQualifiedCount1}</td>
+                            <td>{eachBlock.totalResultStatusCount1}</td>
                           </tr>
                         ))}
         
