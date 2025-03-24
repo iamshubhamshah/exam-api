@@ -47,7 +47,7 @@ export default function DashBoardPage () {
   //made live on 20-Dec-2024 (Admit Card count class 8th)
 
   const totalAdmitCardCount8 = stateDash8.reduce((sum, eachAdmitCardCount) => {
-    return sum + eachAdmitCardCount.totalResultStatusCount2;
+    return sum + eachAdmitCardCount.totalAdmitCardCount3;
   }, 0);
 console.log(totalDistrictCount8)
   
@@ -108,7 +108,8 @@ console.log(totalDistrictCount8)
                 
             </Row>
             <Row>
-            <Col><h5 style={{fontWeight:'bold', color:'red'}}>Mission Buniyaad Level-2 Result: {totalAdmitCardCount8}</h5></Col>
+            {/* <Col><h5 style={{fontWeight:'bold', color:'red'}}>Mission Buniyaad Level-2 Result: {totalAdmitCardCount8}</h5></Col> */}
+            <Col><h5 style={{fontWeight:'bold', color:'red'}}>Mission Buniyaad Level-3 Admit Card: {totalAdmitCardCount8}</h5></Col>
 
             </Row> 
 

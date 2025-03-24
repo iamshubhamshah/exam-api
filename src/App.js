@@ -134,7 +134,7 @@ function App() {
                     {/* Routes for verifcation portal */}
 
                     <Route path='/verification-deactivated' element = {<Verification/>}/>
-
+                    
 
                     {/* Using Same form component for manual entry by users where aadahr will be optional */}
                     {/* Manual entry route */}
@@ -145,12 +145,12 @@ function App() {
 
                     {/* admit card route */}
 
-                    <Route path='/admitcard-deactivated' element = {<AdmitCard/>}/>  
+                    <Route path='/admitcard' element = {<AdmitCard/>}/>  
 
                     {/* https://registration.buniyaadhry.com/student-signin-s100 */}
 
                     {/* Attendance sheet routes */}
-                    <Route path='/pratibhakhoj-attendance/mb-deactivated' element = {<Attendance8/>}/>
+                    <Route path='/pratibhakhoj-attendance/mb' element = {<Attendance8/>}/>
                     
                     <Route path='/pratibhakhoj-attendance/s100-deactivated' element = {<Attendance10/>}/>
 

@@ -41,12 +41,12 @@ class RegistrationService {
         return axios.patch(url, formData);
     }
 
-    patchDownloadAdmitCardById (id, admitCard1,gradeForDynamicallyUpdatingResultStatusInDb) {
+    patchDownloadAdmitCardById (id, admitCard3,gradeForDynamicallyUpdatingResultStatusInDb) {
         const url = `${BaseURL}/api/MB-form/patchDownloadAdmitCardById/${id}`;
 
     // Combine the data into one object
     const data = {
-        admitCard1,  // If this is your form data (admit card)
+        // admitCard3,  // If this is your form data (admit card)
         gradeForDynamicallyUpdatingResultStatusInDb, // Pass grade as part of the body
     };
 

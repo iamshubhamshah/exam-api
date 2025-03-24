@@ -69,7 +69,7 @@ const StudentPage = () => {
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(13)
     if(student.grade==="8"){
-      pdf.text("FOR QUALIFYING MISSION BUNIYAAD ENTRANCE EXAMINATION LEVEL-2", 150, 85, {align:'center'} )
+      pdf.text("FOR QUALIFYING MISSION BUNIYAAD ENTRANCE EXAMINATION LEVEL-3", 150, 85, {align:'center'} )
 
     } else {
       pdf.text("FOR QUALIFYING HARYANA SUPER 100 ENTRANCE EXAMINATION LEVEL-1", 150, 85, {align:'center'} )
@@ -530,7 +530,7 @@ const StudentPage = () => {
                         प्रमाणपत्र डाउनलोड करने के लिए यहां क्लिक करें।)
                       </button>
                       {/* <div> <AdmitCard/></div> */}
-                      {student.grade === "8" ? (<button class="blinking-text" id={student._id}  style={{fontSize:'20px'}}>Mission Buniyaad <span style={{fontSize:"30px"}}>Level- 3 Admit Card</span> will be available for downloading soon. <br/>(मिशन बुनियाद लेवल 3 एडमिट कार्ड जल्द ही डाउनलोड के लिए उपलब्ध होगा।) </button>):(
+                      {student.grade === "8" ? ( <div> <AdmitCard/></div>):(
 
 <button class="blinking-text" id={student._id}  style={{fontSize:'20px'}}>Haryana Super 100 <span style={{fontSize:"30px"}}>Level- 1 Admit Card</span> will be available for downloading soon. <br/>(हरियाणा सुपर 100 लेवल-1 एडमिट कार्ड जल्द ही डाउनलोड के लिए उपलब्ध होगा।) </button>
                       )}

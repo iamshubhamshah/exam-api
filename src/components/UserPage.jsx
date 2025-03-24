@@ -97,8 +97,8 @@ export default function UserPage() {
       <p style={{fontSize:'25px', color:'red', fontWeight:'bold'}}>Mission Buniyaad Level 2 Result out now. (Click on below button)</p>
       <hr></hr>
       <p>Read Following Notes:<br></br>
-          1 मिशन बुनियाद लेवल 3 एडमिट कार्ड जल्द ही डाउनलोड के लिए उपलब्ध होगा।<br></br>
-          2 हरियाणा सुपर 100 लेवल 1 परीक्षा परिणाम जल्द ही जारी किया जाएगा।
+          1 मिशन बुनियाद लेवल 3 एडमिट  डाउनलोड के लिए उपलब्ध है।<br></br>
+          2 हरियाणा सुपर 100 लेवल 2 एडमिट  डाउनलोड के लिए जारी किया जाएगा।
       </p>
 
 

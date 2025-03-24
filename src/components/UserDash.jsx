@@ -13,10 +13,15 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useNavigate, useLocation } from "react-router-dom";
 import registrationServiceInstance from "../services/RegistrationFormService";
+import AdmitCard from "./AdmitCard";
+
+
 
 
 const BaseURL = process.env.REACT_APP_API_BASE_URL;
 const AllData = () => {
+
+
 
 
   const navigate = useNavigate();
@@ -44,10 +49,13 @@ const AllData = () => {
 const {setStudent} = useContext(StudentContext)
 const {student} = useContext(StudentContext)
 
-//For downloading slip
-const [downloadSlip, setDownloadSlip] = useState(false)
+// Student-wise download flag state
+const [downloadFlags, setDownloadFlags] = useState({});
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+const [isAdmitCardDownloading, setIsAdmitCardDownloading] = useState(false);
 
 //Below varibale controls the level of exam and shwos the data accordingly in dashboard.
 const examLevelMB = "Level1"
@@ -55,7 +63,7 @@ const examLevelMB = "Level1"
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-  console.log(district)
+  // console.log(district)
 
   
 
@@ -98,9 +106,9 @@ const examLevelMB = "Level1"
   //Below logic takes the srn as id from the DownloadAckSlip button to below logice
   const DownloadAckSlip = async (id, e) => { 
 
-    setTimeout(()=>{
-      setStudent('')
-    }, 5000)
+    // setTimeout(()=>{
+    //   setStudent('')
+    // }, 5000)
     const newSrn = id
 
     try {
@@ -108,7 +116,7 @@ const examLevelMB = "Level1"
       
       setStudent(response.data.data)
 
-      setDownloadSlip(true);
+      // setDownloadSlip(true);
       //sessionStorage.setItem('user', JSON.stringify(response.data.data)); // Store user data in localStorage
 
          //Hnadling below text dynamically...
@@ -131,7 +139,7 @@ if ((studentSlipData && student.grade === "8")) {
 
       
 
-      if (student === ''){
+      if (student === null){
         //alert(' i am undefined')
 
         //Below logic runs and click the "DownloadAckSlip" button again. Cause "SettimeOut" function sets the state of...
@@ -352,260 +360,59 @@ if ((studentSlipData && student.grade === "8")) {
 //Below logic for downloading admit card by users
 
 const DownloadAdmitCard = async (id, e) => {
-  setTimeout(() => {
+
+  setTimeout(()=>{
     setStudent('')
-  }, 5000)
+  }, 1000)
 
-  const newSrn = id
+  // Check if download is already in progress for this student
+  if (downloadFlags[id]) return;  // Prevent triggering if already downloading
 
-    
+  // Mark the student as downloading
+  setDownloadFlags(prev => ({ ...prev, [id]: true }));
+
+  console.log("Clicked Button ID:", e.target.id);  // Log only the button clicked ID
+
+  const newSrn = id;
 
   try {
-    const response = await registrationServiceInstance.getPostsBySrn(newSrn)
+    // Fetch student data
+    const response = await registrationServiceInstance.getPostsBySrn(newSrn);
+    setStudent(response.data.data);  // Set student data
 
-    setStudent(response.data.data)
-
-
-
-
-    if (student === '') {
-
-      document.querySelector('.triggerClickOnUndefinedAdmitCard').click();
-    } else {
-      return fetchAdmitCard ();
+    // Once student data is available, trigger the admit card download
+    if (student !== null && student !== "") {
+      // Download the admit card for the student
+      // Your code for downloading the admit card goes here
     }
 
-    
-
+    // Mark the student as no longer downloading
+    setDownloadFlags(prev => ({ ...prev, [id]: false }));
   } catch (error) {
     console.error(error);
+
+    // Mark the student as no longer downloading in case of error
+    setDownloadFlags(prev => ({ ...prev, [id]: false }));
   }
+};
 
 
-}
+// async function fetchAdmitCard () {
+
+//   // setTimeout(
+
+//   //   setTimeout(() => {
+//   //   setStudent('')
+//   // }, 5000)
 
 
+//   // )
 
-async function fetchAdmitCard () {
+//   // console.log(Object.keys(student).length);
 
+//   console.log(student)
 
-  try {
-
-    if (student.grade === "10") {
-
-      alert("Haryana Super Level 2 examination admit card coming soon. (हरियाणा सुपर लेवल 2 परीक्षा के एडमिट कार्ड जल्द ही आएंगे।)")
-
-      //alert("Admit cards are only available for Haryana Super 100. (प्रवेश पत्र केवल मिशन बुनियाद के लिए उपलब्ध हैं|)")
-      return;
-    } else if (student.grade === "8") {
-      
-      alert("Mission Buniyaad Level 3 examination admit card coming soon. (हरियाणा सुपर लेवल 2 परीक्षा के एडमिट कार्ड जल्द ही आएंगे।)")
-      return;
-    } else {}
-  
-    
-  } catch (error) {
-    alert('Try Again Please')
-  }
-
-
-  try {
-
-     //Below var updates the admit card downloading status in the mongodb on the basis of student _id
-   const admitCard2 = true
-   const studentIdFromUserDash = student._id
-   //_____________________________
-
-
-
-  const pdf = new jsPDF("p", "mm", "a4");
-
-
- 
-
-  const admitHrLogo = "/admitHrLogo.png"
-  const buniyaadLogo = "/admitBuniyaLogo.png"
-
-  
-  
-  //all the header images
-  const pratibhaKhoj = "/pratibhakhoj.png"
-  const Name = "/Name.png"
-  const Father = "/hindiFather.png"
-  const DOB = "/DOB.png"
-  const Category = "/Category.png"
-  const Srn = "/SRN.png"
-  const RollNumber = "/hindiRollnumber.png"
-  const Aadhar = "/hindiAadhar.png"
-  const Mobile = "/hindiMobile.png"
-  const District = "/District.png"
-  const Block = "/Block.png"
-  const ParikshaKendra = "/hindiParikshakendra.png"
-  const AdmitInstructions = "/admitinstructions2.png"
-  const StudentSignature = "/studentsignature.png"
-  const VikalpaStamp = "/vikalpaStamp.png"
-  
-  //pdf header image
-
-  pdf.addImage(pratibhaKhoj, "PNG",  95, 15, 18, 6 );
-
-  //Add logo hrLogo to the left side:
-  pdf.addImage(admitHrLogo, "PNG", 10, 5, 20, 20)
-  pdf.addImage(buniyaadLogo, "PNG", 180, 5, 20, 20)
-
-
-   pdf.addImage(AdmitInstructions,"PNG", 5,132,198,135)
-   pdf.addImage(StudentSignature, "PNG", 5, 280, 198, 5)
-   pdf.addImage(VikalpaStamp, "PNG", 168, 263, 25, 23)
-
-  pdf.setFontSize(10);
-  pdf.text('E-Admit Card', 105, 10, {align:'center'})
-  pdf.setFontSize(12);
-  pdf.text('Directorate of School Education (DSE) Shiksha Sadan, Haryana', 105, 15, {align: "center"})
-
-
-  let examtype
-  if (student.grade === "8") {
-      examtype = "Mission Buniyaad"
-  } else { examtype = "Haryana Super 100"}
-
-  pdf.setFontSize(14);
-  pdf.text(examtype, 105, 25, {align:'center'})
-  pdf.setFontSize(10);
-  pdf.text('Entrance Examination Level-1(2025-27)', 105, 30, {align:'center'})
-
-
-  //for examination date
-        
-  pdf.setFontSize(10);
-  pdf.text(`Examination Date: ${student.L1examDate}`, 105, 35,{align:'center'})
-  pdf.setFontSize(10);
-  pdf.text(`Reporting Time: 10:30 AM, Exam Time: ${student.L1examTime}`, 105, 40, {align:"center"})
-  
-
-  // Table data
-  const rows = [
-    ["Name", student.name.toUpperCase() ],
-    ["Father's Name", student.father.toUpperCase()],
-    ["Date of Birth", student.dob.toUpperCase()],
-    ["Category", student.category.toUpperCase()],
-    ["SRN", student.srn ],
-    ["Exam Roll Number", student.rollNumber],
-    ["Aadhar Number", student.aadhar],
-    ["Mobile Number", student.mobile],
-    ["District/Code", student.L1districtAdmitCard.toUpperCase()],
-    ["Block/Code", student.L1blockAdmitCard.toUpperCase()],
-    ["Examination Center", student.L1examinationCenter.toUpperCase()]
-
-];
-
-  // Generate table
-  autoTable(pdf, {
-      
-      body: rows,
-      startY: 43, // Adjust starting Y position
-      styles: {
-          fillColor: null, // No background color for rows
-          textColor: 0, // Black text color
-          tableLineColor: [0,0,0],
-          lineWidth: 0.5, // Set border line width
-          lineColor: 0,
-          halign: 'left', // Align text to the left
-          valign: 'middle', // Vertically align text in the middle
-      },
-      headStyles: {
-          fillColor: null, // No background color for header
-          textColor: 0, // Black text color for header
-          tableLineColor: [0,0,0],
-          fontStyle: 'normal', // Normal font for header
-          lineWidth: 0.5, // Set border line width for header
-      },
-      alternateRowStyles: {
-          fillColor: null, // Remove alternating row background
-      },
-      //tableLineColor: [0, 0, 0], // Black border color
-   //   tableLineWidth: 0.5, // Border thickness
-      columnStyles: {
-          0: { cellWidth: 50 }, // Column 1 width
-          1: { cellWidth: 100 }, // Column 2 width
-      },
-
-      
-  });
-
-  const photoText = `If no photograph
-is available, attach a 
-passport-sized photo attested 
-by the school..`
-
-
-  if (student.image === null || student.image === "" || student.imageUrl === "" || !student.image || !student.imageUrl ) {
-
-    
-
-pdf.setFontSize(8);
-pdf.text(photoText, 182, 55,{align:'center'})
-
-
-    pdf.rect(166, 42.5, 38,38)
-
-} else  {
-  console.log('I AM BEFORE STUDENT PHOTO')
-
-  //Some people uploaded pdf file for the student images, so below logic handles that.
-  if(student.imageUrl.slice(-3) === "pdf") {
-      pdf.setFontSize(8);
-      pdf.text(photoText, 182, 55,{align:'center'})
-      pdf.rect(166, 42.5, 38,38)
-  }else{pdf.addImage(student.imageUrl, "PNG", 166, 42.5, 38, 38);}
-
-}
-
-  //Save pdf
-  pdf.save(`${student.name}_${student.srn}_Admit-Card.pdf`)
-
-          //below const updates the resultStatus1 that tells us that student has checked...
-        // his or her result on portal.
-        //Logic of this is, i am assuming if student downlods his/her admit card or...
-        //level 1 qualifying certificate then we update the resultStatus1 field in ...
-        //mongoDB to True.
-
-
-        // const resultStatus1 = true; 
-        const admitCard1 = true;
-        //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
-        
-
-
-  //Below api updates the admitCard1 status to true if the card is downloaded
-
-  const formData = new FormData ();
-  formData.append("admitCard1", admitCard1)
-  // formData.append("resultStatus1", resultStatus1)
-
-  try {
-
-      const response = await registrationServiceInstance.patchDownloadAdmitCardById(
-        studentIdFromUserDash,
-          formData
-      )
-
-      console.log('Admit card downloaded')
-      
-  } catch (error) {
-      console.error("Error Downloading Admit Card:", error);
-      
-  }
-    
-  } catch (error) {
-    alert('Try Again')
-  }
-
-
-  
-
-
-}
+// }
 
 
 
@@ -702,11 +509,23 @@ pdf.text(photoText, 182, 55,{align:'center'})
                         <button className="triggerClickOnUndefined" id={eachStudent.srn} onClick={(e)=>DownloadAckSlip(eachStudent.srn,e)}>Download Slip</button>
                       </td> */}
                       <td>
-                      <button className="triggerClickOnUndefinedAdmitCard" id={eachStudent.srn} onClick={(e)=>DownloadAdmitCard(eachStudent.srn,e)}>Download Admit Card</button>
-                      </td>
+  <button
+    className="triggerClickOnUndefinedAdmitCard"
+    id={eachStudent.srn}
+    onClick={(e) => DownloadAdmitCard(eachStudent.srn, e)}
+    disabled={downloadFlags[eachStudent.srn]}  // Disable button if downloading
+  >
+    Download
+  </button>
+
+  {/* Render AdmitCard only if the student data is available */}
+  {student && student.srn === eachStudent.srn ? (
+    <div><AdmitCard studentfromUserDash={student} /></div>
+  ) : null}
+</td>
                     </tr>
                   ))
-                
+                 
               ) : (
               <tr>
                 <td colSpan="14" style={{ textAlign: "center" }}>No data available</td>
