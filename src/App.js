@@ -47,6 +47,12 @@ import DistrictDash8 from './components/DistrictDash8';
 //Attendance sheet
 import Attendance8 from './components/Attendance8';
 
+
+//For anual merit
+import StudentSignInAME from './components/StudentSigninAME';
+import StudentPageAme from "./components/StudentPageAme";
+import AttendanceAME from './components/AttendanceAME';
+
 function App() {
   return (
     <Router>
@@ -154,6 +160,12 @@ function App() {
                     
                     <Route path='/pratibhakhoj-attendance/s100-deactivated' element = {<Attendance10/>}/>
 
+
+                    {/* Route for anuual merit admit card. Temporary for batch 2024-26 */}
+                    <Route path='/download-ame-admitcard' element = {<StudentSignInAME/>}/>
+                    <Route path='/student-dash-ame' element = {<StudentPageAme/>}/>
+                    <Route path='/attendance-ame' element = {<AttendanceAME/>}/>
+                    
 
                     
 

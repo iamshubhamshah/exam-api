@@ -371,6 +371,12 @@ const DownloadAdmitCard = async (id, e) => {
   // Mark the student as downloading
   setDownloadFlags(prev => ({ ...prev, [id]: true }));
 
+
+
+
+
+
+  
   console.log("Clicked Button ID:", e.target.id);  // Log only the button clicked ID
 
   const newSrn = id;
