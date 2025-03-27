@@ -67,12 +67,13 @@ function StudentSignIn({}) {
     try {
       const response = await registrationServiceInstance.getPostsBySrn(newSrn);
       
+      console.log(' i am clicked student sign in ame')
+      console.log(response.data.data.isRegisteredBy)
 
       const SrnSlipId = response.data.srn || inputSrn;
 
       if (
-        response.data.data.srn === SrnSlipId &&
-        response.data.data.isVerified != "" && response.data.data.grade === "8" || response.data.data.grade === "10" && response.data.data.rollNumber != ""
+        response.data.data.isRegisteredBy === "AME(2024-26)"
       ) {
         setIsSrnMatched(true);
         setId(response.data.data._id);
