@@ -36,14 +36,22 @@ export default function AdmitCardAme (studentfromUserDash) {
     let admitCard1;
     let admitCard2;
     let admitCard3;
+
     //Below variables controls the level of admit card.
     const levelofAdmitCard = "Level2"
     const admitcardLevelMB = levelofAdmitCard
+                                                         
+
+                     
+
+                             
+
+                                            
+
+                                                   
+
+                                                                                                        
     // level2, level3 dynamnically changes admitcardLevel
-
-    
-    
-
     const {student} = useContext(StudentContext);
  const {setStudent} = useContext(StudentContext); 
 
