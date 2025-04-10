@@ -169,8 +169,14 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
         pdf.setFontSize(10);
         pdf.text(`Examination Date: ${student.L3examDate}`, 105, 35,{align:'center'})
         
+        let reportingTime;
+        if (student.L1blockAdmitCard === "Panchkula (16)"){
+            reportingTime = "08:00 AM"
+        } else {
+            reportingTime = "07:30 AM"
+        }
         pdf.setFontSize(10);
-        pdf.text(`Reporting Time: 07:30 AM, Exam Time: ${student.L3examTime}`, 105, 40, {align:"center"})
+        pdf.text(`Reporting Time: ${reportingTime}, Exam Time: ${student.L3examTime}`, 105, 40, {align:"center"})
 
 
         console.log(' i am just before formateDATE')
