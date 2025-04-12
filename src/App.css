@@ -36,3 +36,105 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Below is the toggle button css which is used in AttendanceMB.component.jsx*/
+
+/* Container for the toggle button */
+.toggle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* The outer container of the toggle button */
+
+
+/* Container for the toggle button */
+.toggle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* The outer container of the toggle button */
+.toggle-button {
+  width: 80px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 20px;
+  position: relative;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+/* The circle inside the toggle */
+.circle {
+  width: 26px;
+  height: 26px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  transition: transform 0.3s ease;
+}
+
+/* Text inside the button */
+.toggle-text {
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  z-index: 1; /* Ensure the text is above the circle */
+}
+
+/* When the toggle is on (circle moves to the right) */
+.toggle-button.on {
+  background-color: #4caf50;
+}
+
+.circle.move-right {
+  transform: translateX(30px);
+}
+
+/* When the toggle is off (circle moves to the left) */
+.toggle-button.off {
+  background-color: #ccc;
+}
+
+.circle.move-left {
+  transform: translateX(0);
+}
+
+/* Styles for the ON text */
+.toggle-text.on-text {
+  color: white;
+  padding-right: 5px; /* Move the text to the right */
+}
+
+/* Styles for the OFF text */
+.toggle-text.off-text {
+  color: white;
+  padding-left: 5px; /* Move the text to the left */
+}
+
+/*________________________________________________________________________________________________________________*/

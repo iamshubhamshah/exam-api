@@ -52,8 +52,22 @@ class RegistrationService {
 
         return axios.patch (url, data);
     }
+
+    patchAttendanceById(srn,  isPresentInL3Examination) {
+
+        
+        const url = `${BaseURL}/api/attendance-l3/${srn}`;
+
+    
+
+        return axios.patch (url, isPresentInL3Examination);
+    }
+
     
 }
+
+
+
 
 
 

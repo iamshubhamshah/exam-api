@@ -47,11 +47,14 @@ import DistrictDash8 from './components/DistrictDash8';
 //Attendance sheet
 import Attendance8 from './components/Attendance8';
 
+import { MBL3Attendance } from './components/Attendance/MBL3Attendance';
+
 
 //For anual merit
 import StudentSignInAME from './components/StudentSigninAME';
 import StudentPageAme from "./components/StudentPageAme";
 import AttendanceAME from './components/AttendanceAME';
+import { AMEL3Attendance } from './components/Attendance/AMEL3Attendance';
 
 function App() {
   return (
@@ -157,6 +160,8 @@ function App() {
 
                     {/* Attendance sheet routes */}
                     <Route path='/pratibhakhoj-attendance/mb' element = {<Attendance8/>}/>
+                    <Route path='/mark-attendance-mb' element = {<MBL3Attendance/>}/>
+                    <Route path='/mark-attendance-ame' element = {<AMEL3Attendance/>}/>
                     
                     <Route path='/pratibhakhoj-attendance/s100-deactivated' element = {<Attendance10/>}/>
 
