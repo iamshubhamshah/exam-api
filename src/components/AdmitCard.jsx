@@ -535,7 +535,7 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
 
         {/* <button class="blinking-text" id={student._id} onClick={DownloadAdmitCard} style={{fontSize:'20px'}}>Download <span style={{fontSize:"30px"}}>Admit Card</span> Haryana Super 100 <span style={{fontSize:"30px"}}>Level 1</span>. <br/>(हरियाणा सुपर 100 लेवल 1 एडमिट कार्ड डाउनलोड करने के लिए यहां क्लिक करें।) </button>
          */}
-         <button class="blinking-text" id={student._id}  onClick={DownloadAdmitCard} style={{fontSize:'20px'}}>Mission Buniyaad <span style={{fontSize:"30px"}}>Level- 3 Admit Card</span> will be available for downloading soon. <br/>(मिशन बुनियाद लेवल 3 एडमिट कार्ड जल्द ही डाउनलोड के लिए उपलब्ध होगा।) </button>
+         <button class="blinking-text" id={student._id}  onClick={DownloadAdmitCard} style={{fontSize:'20px'}}>Downoload Mission Buniyaad <span style={{fontSize:"30px"}}>Level- 3 Admit Card</span>. <br/>(मिशन बुनियाद लेवल 3 एडमिट कार्ड डाउनलोड करें।) </button>
         </>
 
     )

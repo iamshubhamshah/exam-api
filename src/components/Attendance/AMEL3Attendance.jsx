@@ -226,6 +226,8 @@ export const AMEL3Attendance = () => {
   return (
     <>
       <Container fluid>
+        <h1>AME-Attendance (2024-26)</h1>
+        <hr></hr>
         <div id="content-to-pdf">
           <Row>
             <Col>
@@ -278,6 +280,7 @@ export const AMEL3Attendance = () => {
               />
             </Col>
           </Row>
+          <br></br>
           <Row>
             <Col>
               <Button onClick={handleFilterSubmit}>Submit</Button>
