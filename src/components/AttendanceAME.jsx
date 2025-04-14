@@ -22,7 +22,7 @@ export default function AttendanceAME() {
   const roomNumberData = [
     { "district": "Ambala", "RoomNo": ["1", "2", "3", "4", "5", "6", "7", "8"] },
     { "district": "Bhiwani", "RoomNo": ["1", "2", "3", "4", "5"] },
-    { "district": "CharkhiDadri", "RoomNo": ["1", "2"] },
+    { "district": "Charkhi Dadri", "RoomNo": ["1", "2"] },
     { "district": "Faridabad", "RoomNo": ["1", "2", "3", "4", "5"] },
     { "district": "Fatehabad", "RoomNo": ["1", "2", "3", "4", "5", "6"] },
     { "district": "Gurugram", "RoomNo": ["1", "2", "3", "4", "5"] },
