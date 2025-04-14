@@ -4,6 +4,7 @@ import Select from "react-select";
 import { Row, Col, Container, Table, Button } from "react-bootstrap";
 import DashBoardServices from "../services/DashBoardServices";
 import { jsPDF } from "jspdf";
+import { CiNoWaitingSign } from "react-icons/ci";
 
 export default function Attendance8() {
   const [examinationCentersList, setExaminationCentersList] = useState([]);
@@ -22,7 +23,7 @@ export default function Attendance8() {
   const roomNumberData = [
     { "district": "Ambala", "RoomNo": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"] },
     { "district": "Bhiwani", "RoomNo": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"] },
-    { "district": "CharkhiDadri", "RoomNo": ["1", "2", "3", "4", "5", "6", "7"] },
+    { "district": "Charkhi Dadri", "RoomNo": ["1", "2", "3", "4", "5", "6", "7"] },
     { "district": "Faridabad", "RoomNo": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"] },
     { "district": "Fatehabad", "RoomNo": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"] },
     { "district": "Gurugram", "RoomNo": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"] },
@@ -70,12 +71,15 @@ export default function Attendance8() {
 
   console.log("i am district selected");
   console.log(selectedDistrict);
+  
+  
 
   //To filter that boject from roomNumberOjbect which was selected from district filter
   const newRoomObject = roomNumberData.find(obj => obj.district === selectedDistrict);
 
   console.log('I AM newRoomObject')
   console.log(newRoomObject);
+  
 
   console.log(roomNumber);
   //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
