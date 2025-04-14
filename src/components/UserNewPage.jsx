@@ -12,6 +12,7 @@ import UserContext from './ContextApi/UserContextAPI/UserContext';
 
 
 
+
 export default function UserPage () {
 
     const A = useContext(UserContext);
@@ -29,7 +30,6 @@ export default function UserPage () {
     const [school, setSchool] = useState('');
 //__________________________________________________________________
 //States for handling button click...
-
     const [registerClick, setRegisterClick] = useState(false);
 
     
