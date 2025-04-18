@@ -55,6 +55,7 @@ import StudentSignInAME from './components/StudentSigninAME';
 import StudentPageAme from "./components/StudentPageAme";
 import AttendanceAME from './components/AttendanceAME';
 import { AMEL3Attendance } from './components/Attendance/AMEL3Attendance';
+import IdCardS100 from "../../frontend/src/components/Super100/IdCard";
 
 function App() {
   return (
@@ -170,6 +171,7 @@ function App() {
                     <Route path='/download-ame-admitcard' element = {<StudentSignInAME/>}/>
                     <Route path='/student-dash-ame' element = {<StudentPageAme/>}/>
                     <Route path='/attendance-ame' element = {<AttendanceAME/>}/>
+                    <Route path='/id-card-s100' element = {<IdCardS100/>}/>
                     
 
                     
