@@ -505,7 +505,7 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
             const formData = new FormData ();
             if (admitcardLevelMB === "Level1") {
                 formData.append("admitCard1", admitCard1)
-            } else if (admitcardLevelMB === "Level2") {
+            } else if (student.grade === "10") {
                 formData.append("admitCard2", admitCard2)
             }
             
