@@ -26,8 +26,8 @@ function StudentSignIn({}) {
 (मिशन बुनियाद प्रवेश परीक्षा लेवल-2 परिणाम।)
     `
 } else if (location.pathname === "/student-signin-s100" ){
-  studentSignInBoxSubHeader = `Haryana Super 100 Entrance Examination Level-1 Result.
-(हरियाणा सुपर 100 प्रवेश परीक्षा लेवल-1 का परिणाम।)
+  studentSignInBoxSubHeader = `Haryana Super 100 Entrance Examination Level-2 Admit Card.
+(हरियाणा सुपर 100 प्रवेश परीक्षा स्तर-2 प्रवेश पत्र।)
     `
 }
 

@@ -313,8 +313,10 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
         //if block ends here
         
         }
+
+        //come here at super 100
         // below else if block is for super 100
-        else if (student.grade === "10" && admitcardLevelMB === "Level1") {
+        else if (student.grade === "10" ) {
             //below code generates super 100 admit card
 
 
@@ -353,7 +355,7 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
             const District = "/District.png"
             const Block = "/Block.png"
             const ParikshaKendra = "/hindiParikshakendra.png"
-            const AdmitInstructions = "/admitinstructions2.png"
+            const AdmitInstructions = "/s-100admitinstructionsLevel2.png"
             const StudentSignature = "/studentsignature.png"
             const VikalpaStamp = "/vikalpaStamp.png"
             
@@ -366,9 +368,9 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
             pdf.addImage(buniyaadLogo, "PNG", 180, 5, 20, 20)
     
          
-             pdf.addImage(AdmitInstructions, "PNG", 5,132,198,135)
-             pdf.addImage(StudentSignature, "PNG", 5, 280, 198, 5)
-             pdf.addImage(VikalpaStamp, "PNG", 168, 263, 25, 23)
+             pdf.addImage(AdmitInstructions, "PNG", 20,124,160,155)
+             pdf.addImage(StudentSignature, "PNG", 5, 285, 198, 5)
+             pdf.addImage(VikalpaStamp, "PNG", 168, 268, 25, 23)
     
         
             pdf.setFontSize(10);
@@ -390,14 +392,15 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
             pdf.setFontSize(14);
             pdf.text(examtype, 105, 25, {align:'center'})
             pdf.setFontSize(10);
-            pdf.text('Entrance Examination Level-1(2025-27)', 105, 30, {align:'center'})
+            pdf.text('Entrance Examination Level-2(2025-27)', 105, 30, {align:'center'})
     
             //for examination date
             
+            // pdf.setFontSize(10);
+            // pdf.text(`Reporting Date: ${student.L2examDate}`, 105, 35,{align:'center'})
+           
             pdf.setFontSize(10);
-            pdf.text(`Examination Date: ${student.L1examDate}`, 105, 35,{align:'center'})
-            pdf.setFontSize(10);
-            pdf.text(`Reporting Time: 10:30 AM, Exam Time: ${student.L1examTime}`, 105, 40, {align:"center"})
+            pdf.text(`Reporting Date: ${student.L2examDate}, Reporting Time: 08:00 AM, `, 105, 35, {align:"center"}) //Exam Time: ${student.L1examTime}
     
     
             // console.log(' i am just before formateDATE')
@@ -424,7 +427,8 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
                 ["Mobile Number", student.mobile],
                 ["District/Code", student.L1districtAdmitCard.toUpperCase()],
                 ["Block/Code", student.L1blockAdmitCard.toUpperCase()],
-                ["Examination Center", student.L1examinationCenter.toUpperCase()]
+                ["Examination Center", student.L2examinationCenter.toUpperCase()],
+                ["Batch", `Batch ${student.super100L2ExamBatchDivision.toUpperCase()} - (${student.super100L2BatchDateIntervals})`]
     
             ];
     
@@ -432,7 +436,7 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
             autoTable(pdf, {
                 
                 body: rows,
-                startY: 43, // Adjust starting Y position
+                startY: 36.5, // Adjust starting Y position. //43
                 styles: {
                     fillColor: null, // No background color for rows
                     textColor: 0, // Black text color
@@ -441,6 +445,7 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
                     lineColor: 0,
                     halign: 'left', // Align text to the left
                     valign: 'middle', // Vertically align text in the middle
+                    fontSize: 8
                 },
                 headStyles: {
                     fillColor: null, // No background color for header
@@ -535,7 +540,14 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
 
         {/* <button class="blinking-text" id={student._id} onClick={DownloadAdmitCard} style={{fontSize:'20px'}}>Download <span style={{fontSize:"30px"}}>Admit Card</span> Haryana Super 100 <span style={{fontSize:"30px"}}>Level 1</span>. <br/>(हरियाणा सुपर 100 लेवल 1 एडमिट कार्ड डाउनलोड करने के लिए यहां क्लिक करें।) </button>
          */}
-         <button class="blinking-text" id={student._id}  onClick={DownloadAdmitCard} style={{fontSize:'20px'}}>Downoload Mission Buniyaad <span style={{fontSize:"30px"}}>Level- 3 Admit Card</span>. <br/>(मिशन बुनियाद लेवल 3 एडमिट कार्ड डाउनलोड करें।) </button>
+         {student.grade === "8" ? (
+            <>
+            <button class="blinking-text" id={student._id}  onClick={DownloadAdmitCard} style={{fontSize:'20px'}}>Downoload Mission Buniyaad <span style={{fontSize:"30px"}}>Level- 3 Admit Card</span>. <br/>(मिशन बुनियाद लेवल 3 एडमिट कार्ड डाउनलोड करें।) </button>
+            </>
+         ):(<>
+         <button class="blinking-text" id={student._id}  onClick={DownloadAdmitCard} style={{fontSize:'20px'}}>Downoload Haryana Super 100 <span style={{fontSize:"30px"}}>Level- 2 Admit Card</span>. <br/>(हरियाणा सुपर 100 लेवल 2 एडमिट कार्ड डाउनलोड करें।) </button>
+         </>)}
+         
         </>
 
     )

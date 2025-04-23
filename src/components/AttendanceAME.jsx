@@ -33,7 +33,7 @@ export default function AttendanceAME() {
     { "district": "Karnal", "RoomNo": ["1", "2", "3", "4", "5", "6"] },
     { "district": "Kurukshetra", "RoomNo": ["1", "2", "3", "4", "5", "6", "7"] },
     { "district": "Mahendragarh", "RoomNo": ["1", "2", "3"] },
-    { "district": "NuhMewat", "RoomNo": ["1", "2", "3", "4", "5"] },
+    { "district": "Nuh Mewat", "RoomNo": ["1", "2", "3", "4", "5"] },
     { "district": "Palwal", "RoomNo": ["1", "2", "3"] },
     { "district": "Panchkula", "RoomNo": ["1", "2", "3", "4", "5", "6"] },
     { "district": "Panipat", "RoomNo": ["1", "2", "3", "4", "5", "6", "7"] },
