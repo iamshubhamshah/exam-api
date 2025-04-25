@@ -69,7 +69,7 @@ const StudentPage = () => {
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(13)
     if(student.grade==="8"){
-      pdf.text("FOR QUALIFYING MISSION BUNIYAAD ENTRANCE EXAMINATION LEVEL-3", 150, 85, {align:'center'} )
+      pdf.text("FOR QUALIFYING MISSION BUNIYAAD ENTRANCE EXAMINATION LEVEL-2", 150, 85, {align:'center'} )
 
     } else {
       pdf.text("FOR QUALIFYING HARYANA SUPER 100 ENTRANCE EXAMINATION LEVEL-1", 150, 85, {align:'center'} )
