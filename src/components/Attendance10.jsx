@@ -66,6 +66,9 @@ export default function Attendance10() {
     // );
 
 
+//Below hook for level 2;
+const [filteredGender, setFilteredGENDER] = useState("")
+const [filteredBatch, setFilteredBatch] = useState("")
 
     const handleCenterChange = (selectedOption) => {
         setSelectedCenters(selectedOption.value);
@@ -76,90 +79,114 @@ export default function Attendance10() {
 
     //Activate below for level 1
 
-    const handleFilterSubmit = async () => {
-        if (selectedDistrict && selectedBlock && selectedCenters) {
+    // const handleFilterSubmit = async () => {
+    //     if (selectedDistrict && selectedBlock && selectedCenters) {
+    //         setFilterApplied(true);
+    //     } else {
+    //         setFilterApplied(false);
+    //     }
+
+
+      // Activate below for level 2  
+
+      const handleFilterSubmit = async () => {
+        if (filteredGender && filteredBatch) {
             setFilterApplied(true);
         } else {
             setFilterApplied(false);
         }
 
 
-      // Activate below for level 2  
 
-    //   const handleFilterSubmit = async () => {
-    //     if (selectedDistrict && selectedCenters) {
-    //         setFilterApplied(true);
-    //     } else {
-    //         setFilterApplied(false);
-    //     }
 
+
+    
         //activate below query for level 1
 
        
 
-        let query = `district=${selectedDistrict}&block=${selectedBlock}&L1examinationCenter=${selectedCenters}&admitCard1=${admitCard1}&grade=10`.trim();
+       // let query = `district=${selectedDistrict}&block=${selectedBlock}&L1examinationCenter=${selectedCenters}&admitCard1=${admitCard1}&grade=10`.trim();
 
         //activate below query for level 2
 
         // let query = `district=${selectedDistrict}&L2examinationCenter=${selectedCenters}&grade=8`.trim();
 
-        try {
-            const response = await DashBoardServices.GetAllStudentData(query);
-            setAllData(response.data || []);
-        } catch (error) {
-            console.log('Error fetching data: ', error);
-            setAllData([]);
-        }
-    };
+    //     try {
+    //         const response = await DashBoardServices.GetAllStudentData(query);
+    //         setAllData(response.data || []);
+    //     } catch (error) {
+    //         console.log('Error fetching data: ', error);
+    //         setAllData([]);
+    //     }
+    // };
 
-    const sortAllData = allData.sort((a, b) => a.rollNumber.localeCompare(b.rollNumber));
+
+    //activate below query for level 3
+
+
+    let query = `L2examinationCenter=Haryana Super 100 Campus, Vill. Barna, Dhand Road, Near Teri College, Kurukshetra&super100L2ExamBatchDivision=${filteredBatch.value}&gender=${filteredGender.value}&grade=10`.trim();
+
+    //activate below query for level 2
+
+    // let query = `district=${selectedDistrict}&L2examinationCenter=${selectedCenters}&grade=8`.trim();
+
+    try {
+        const response = await DashBoardServices.GetAllStudentData(query);
+        setAllData(response.data || []);
+    } catch (error) {
+        console.log('Error fetching data: ', error);
+        setAllData([]);
+    }
+};
+
+
+
+useEffect(()=>{
+console.log(filteredGender)
+console.log(allData)
+}, [filteredGender,allData])
+
+//-----------------------------------------------------------------------------------
+
+    const sortAllData = allData.sort((a, b) => a.name.localeCompare(b.name));
 
         const admitHrLogo = "/admitHrLogo.png"
         const buniyaadLogo = "/admitBuniyaLogo.png"
 
-
-
-
         const generatePDF = async () => {
-
-
-           
-                setAttendanceSheetLoading(true);
-           
-
-            
-           
-
+            setAttendanceSheetLoading(true);
+        
             const pdf = new jsPDF('l', 'mm', 'a4');
+        
             const tableData = allData.map((student, index) => ({
                 serialNumber: index + 1,
                 srn: student.srn,
-                name: student.name,
-                father: student.father,
-                gender: student.gender,
+                name: student.name.toUpperCase(),
+                father: student.father.toUpperCase(),
+                // gender: student.gender,
+                district: student.district,
                 school: student.school,
                 rollNumber: student.rollNumber,
-                imageUrl: student.imageUrl, // Assuming imageUrl is a valid URL
+                imageUrl: student.imageUrl,
             }));
         
-            const headerOffset = 20; // Space at the top of the first page for header
-            let yPositionStart = headerOffset; // Start drawing the content after the header space
+            const headerOffset = 20;
+            let yPositionStart = headerOffset;
             const pageWidth = pdf.internal.pageSize.width;
-            const columnWidths = [25, 25, 25, 25, 25, 25, 25, 25, 25, 25]; // Set all column widths to 25
-            const imageWidth = 20; // Width of the image
-            const imageHeight = 20; // Height of the image
+            const columnWidths = [8, 20, 23, 23, 20, 25, 20, 30, 40, 40, 23]; // Adjusted column widths
+            const imageWidth = 20;
+            const imageHeight = 20;
         
-            // Compress image using Canvas (target 15KB)
             const compressImage = (imageUrl) =>
                 new Promise((resolve, reject) => {
                     const img = new Image();
-                    img.crossOrigin = "anonymous"; // Allow cross-origin
+                    img.crossOrigin = "anonymous";
                     img.src = imageUrl;
                     img.onload = () => {
                         const canvas = document.createElement("canvas");
                         const ctx = canvas.getContext("2d");
         
-                        const maxWidth = 100; // Adjust width to compress the image
+                        const maxWidth = 100;
                         const scaleFactor = maxWidth / img.width;
                         canvas.width = maxWidth;
                         canvas.height = img.height * scaleFactor;
@@ -168,9 +195,8 @@ export default function Attendance10() {
                         let quality = 0.5;
                         let compressedImage = canvas.toDataURL("image/jpeg", quality);
         
-                        // Check if the compressed image is still too large, adjust quality until it's under 15KB
                         while (compressedImage.length / 1024 > 15 && quality > 0.1) {
-                            quality -= 0.05; // Decrease quality to get the target size
+                            quality -= 0.05;
                             compressedImage = canvas.toDataURL("image/jpeg", quality);
                         }
         
@@ -179,123 +205,79 @@ export default function Attendance10() {
                     img.onerror = () => reject("Image loading failed");
                 });
         
-            // Add header to the first page
+            // HEADER
             pdf.addImage(admitHrLogo, "PNG", 10, 3, 15, 15);
             pdf.addImage(buniyaadLogo, "PNG", 270, 3, 15, 15);
-            
             pdf.setFontSize(10);
-            pdf.text('Haryana Super 100 Level-1 Attendance Sheet Batch 2025-27', 150, 8, { align: 'center' });
+            pdf.text('Haryana Super 100 Level-2 Attendance Sheet Batch 2025-27', 150, 8, { align: 'center' });
             pdf.setFontSize(12);
-            pdf.text(`District: ${selectedDistrict}, Block: ${selectedBlock}`, 150, 12, { align: "center" });
-            pdf.setFontSize(12);
-            pdf.text(`Center: ${selectedCenters}`, 150, 17, { align: "center" });
+            pdf.text(`Center: Haryana Super 100 Campus, Vill. Barna, Dhand Road, Near Teri College, Kurukshetra`, 150, 12, { align: "center" });
+            pdf.text(`Batch: ${filteredBatch.value}`, 150, 17, { align: "center" });
         
-            // Add table header
             const addTableHeader = () => {
                 pdf.setFont("helvetica", "bold");
                 pdf.setFontSize(8);
                 let xPosition = 10;
         
                 const headers = [
-                    "#", "SRN", "Name", "Father", "Gender", "School",
-                    "Roll No.", "Photo", "Paper Code", "Signature",
+                    "#", "SRN", "Name", "Father", "District", "School",
+                    "Roll No.", "Photo", "Signature1", "Signature2", "Room/Bed_No.",
                 ];
         
                 headers.forEach((header, index) => {
-                    pdf.text(header, xPosition + 6, 25);
+                    pdf.text(header, xPosition + 2, yPositionStart + 7);
                     xPosition += columnWidths[index];
                 });
         
-                yPositionStart += 10; // Move down for rows
+                yPositionStart += 10;
             };
         
-            // Draw grid lines around header and content
-            const drawGridLines = () => {
+            const drawGridLines = (rowCount) => {
                 let xPosition = 10;
-                let yPosition = yPositionStart ;
+                const yStart = headerOffset + 10;
+                const rowHeight = 35; // Increased row height for wrapping
+                const totalHeight = rowCount * rowHeight;
         
-                // Draw vertical column grid lines
-                columnWidths.forEach(width => {
-                    pdf.setLineWidth(0.5);
-                    pdf.line(xPosition, yPosition, xPosition, yPositionStart + (tableData.length * 30)); // Full column height
-                    xPosition += width ;
-                });
+                pdf.setLineWidth(0.5);
         
-                // Draw horizontal row grid lines
-                for (let i = 0; i < tableData.length + 1; i++) { // +1 for header row
-                    pdf.setLineWidth(0.5);
-                    pdf.line(10, yPosition + i * 30, pageWidth - 10, yPosition + i * 30); // Draw horizontal lines
+                // Vertical lines
+                for (let i = 0; i <= columnWidths.length; i++) {
+                    let x = 10 + columnWidths.slice(0, i).reduce((a, b) => a + b, 0);
+                    pdf.line(x, yStart, x, yStart + totalHeight);
                 }
         
-                // Draw grid lines around the header
-                xPosition = 10;
-                let headerHeight = 10; // Height of the header row
-                let headerYPosition = headerOffset; // Start position for header
+                // Horizontal lines
+                for (let i = 0; i <= rowCount; i++) {
+                    let y = yStart + i * rowHeight;
+                    pdf.line(10, y, pageWidth - 15, y);
+                }
         
-                // Vertical lines around header
-                pdf.setLineWidth(0.5);
-                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // Left side of header
-                xPosition += columnWidths[0];
-                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "#"
-                xPosition += columnWidths[1];
-                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "SRN"
-                xPosition += columnWidths[2];
-                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "Name"
-                xPosition += columnWidths[3];
-                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "Father"
-                xPosition += columnWidths[4];
-                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "Gender"
-                xPosition += columnWidths[5];
-                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "School"
-                xPosition += columnWidths[6];
-                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "Roll No."
-                xPosition += columnWidths[7];
-                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "Photo"
-                xPosition += columnWidths[8];
-                pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "Paper Code"
-                xPosition += columnWidths[9];
-                // pdf.line(xPosition, headerYPosition, xPosition, headerYPosition + headerHeight); // After "Signature"
-        
-                // Horizontal lines around header
-                pdf.line(10, headerYPosition, pageWidth - 10, headerYPosition); // Top side of header
-                pdf.line(10, headerYPosition + headerHeight, pageWidth - 10, headerYPosition + headerHeight); // Bottom side of header
+                // Border for header
+                pdf.rect(10, headerOffset, pageWidth - 25, 10);
             };
         
-            // Add table rows
             const addTableRow = async (data) => {
                 pdf.setFont("helvetica", "normal");
                 pdf.setFontSize(8);
                 let xPosition = 10;
         
-                // Wrap text for all columns
-                const wrappedSerialNumber = pdf.splitTextToSize(String(data.serialNumber), columnWidths[0] - 4);
-                pdf.text(wrappedSerialNumber, xPosition + 2, yPositionStart + 7);
-                xPosition += columnWidths[0];
+                const cellPadding = 2;
         
-                const wrappedSrn = pdf.splitTextToSize(String(data.srn), columnWidths[1] - 4);
-                pdf.text(wrappedSrn, xPosition + 2, yPositionStart + 7);
-                xPosition += columnWidths[1];
+                const writeCell = (text, width) => {
+                    const wrappedText = pdf.splitTextToSize(text, width - cellPadding * 2);
+                    pdf.text(wrappedText, xPosition + cellPadding, yPositionStart + 5, { maxWidth: width - 2 });
+                    xPosition += width;
+                };
         
-                const wrappedName = pdf.splitTextToSize(data.name, columnWidths[2] - 4);
-                pdf.text(wrappedName, xPosition + 2, yPositionStart + 7);
-                xPosition += columnWidths[2];
-        
-                const wrappedFather = pdf.splitTextToSize(data.father, columnWidths[3] - 4);
-                pdf.text(wrappedFather, xPosition + 2, yPositionStart + 7);
-                xPosition += columnWidths[3];
-        
-                const wrappedGender = pdf.splitTextToSize(data.gender, columnWidths[4] - 4);
-                pdf.text(wrappedGender, xPosition + 2, yPositionStart + 7);
-                xPosition += columnWidths[4];
-        
-                const wrappedSchool = pdf.splitTextToSize(data.school, columnWidths[5] - 4);
-                // Align school text left and move it up slightly
-                pdf.text(wrappedSchool, xPosition + 2, yPositionStart + 3);  // Move text a bit closer to the row line
-                xPosition += columnWidths[5];
-        
-                const wrappedRollNumber = pdf.splitTextToSize(String(data.rollNumber), columnWidths[6] - 4);
-                pdf.text(wrappedRollNumber, xPosition + 2, yPositionStart + 7);
-                xPosition += columnWidths[6];
+                writeCell(String(data.serialNumber), columnWidths[0]);
+                writeCell(data.srn, columnWidths[1]);
+                writeCell(data.name, columnWidths[2]);
+                writeCell(data.father, columnWidths[3]);
+               
+                writeCell(data.district, columnWidths[4]);
+                writeCell(data.school, columnWidths[5]);
+                writeCell(String(data.rollNumber), columnWidths[6]);
+                // writeCell(data.gender, columnWidths[7]);
         
                 if (data.imageUrl) {
                     try {
@@ -305,39 +287,40 @@ export default function Attendance10() {
                         console.error("Error loading image:", error);
                     }
                 }
-                xPosition += columnWidths[7];
-                pdf.text("", xPosition + 2, yPositionStart + 7); // Paper Code Column
                 xPosition += columnWidths[8];
-                pdf.text("", xPosition + 2, yPositionStart + 7); // Signature Column
-                xPosition += columnWidths[9];
         
-                yPositionStart += 30; // Adjust for the next row
+                writeCell("", columnWidths[9]); // Signature1
+                writeCell("", columnWidths[10]); // Signature2
+        
+                yPositionStart += 35; // Increased row height
             };
         
             addTableHeader();
-            drawGridLines(); // Draw grid lines for the header and content
         
+            let currentRow = 0;
             for (const data of tableData) {
-                if (yPositionStart > pdf.internal.pageSize.height - 30) {
+                if (yPositionStart > pdf.internal.pageSize.height - 40) {
+                    drawGridLines(currentRow);
+        
                     pdf.addPage();
-                    yPositionStart = headerOffset; // Reset the Y position for the new page with header space
+                    yPositionStart = headerOffset;
                     addTableHeader();
-                    drawGridLines(); // Draw grid lines on the new page
+                    currentRow = 0;
                 }
                 await addTableRow(data);
+                currentRow++;
             }
-           
-            alert('You file is downloaded')
-            setAttendanceSheetLoading(false);
-
         
-            pdf.save(`${selectedCenters}_HS100-L1-Attendance.pdf`);
+            drawGridLines(currentRow);
+        
+            alert('Your file is downloaded');
+            setAttendanceSheetLoading(false);
+        
+            pdf.save(`Batch_${filteredBatch.value}_HS100-L2-Attendance.pdf`);
         };
         
         
-        
-        
-        
+    //---------------------------------------------------------------------------------    
     
     
     
@@ -347,7 +330,7 @@ export default function Attendance10() {
             <Container fluid>
                 <div id="content-to-pdf">
                     <Row>
-                        <Col>
+                        {/* <Col>
                             <label>District</label>
                             <Select
                                 placeholder="District"
@@ -360,18 +343,18 @@ export default function Attendance10() {
                         {/* activate below dropdown at the time of level1 */}
 
 
-                        <Col>
+                        {/* <Col>
                             <label>Block</label>
                             <Select
                                 placeholder="Block"
                                 options={unqFilteredBlock.map(block => ({ value: block, label: block }))}
                                 onChange={handleBlockChange}
                             />
-                        </Col>
+                        </Col> */}
 
 
 
-                        <Col>
+                        {/* <Col>
                             <label>Center</label>
                             <Select
                                 placeholder="Center"
@@ -381,8 +364,37 @@ export default function Attendance10() {
                                 }))}
                                 onChange={handleCenterChange}
                             />
+                        </Col>  */}
+
+                        <Col>
+                        <label>Select Gender</label>
+                                <Select
+                                
+                                    options ={
+                                        [{value: "Female", label: "Female"},
+                                        {value: "Male", label: "Male"}]
+                                    }
+                                onChange={(selectedOption)=>setFilteredGENDER(selectedOption)}
+                                
+                                />
+                        </Col>
+
+                        <Col>
+                        <label>Select Batch</label>
+                                <Select
+                                
+                                    options ={
+                                        [{value: "1", label: "1"},
+                                        {value: "2", label: "2"},
+                                        {value:"3", label:"3"}
+                                    ]
+                                    }
+                                onChange={(selectedOption)=>setFilteredBatch(selectedOption)}
+                                
+                                />
                         </Col>
                     </Row>
+
                     <Row>
                         <Col>
                             <Button onClick={handleFilterSubmit}>Submit</Button>

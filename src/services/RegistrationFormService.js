@@ -2,7 +2,7 @@
 
 
 
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 const BaseURL = process.env.REACT_APP_API_BASE_URL;
 
 class RegistrationService {
@@ -53,14 +53,14 @@ class RegistrationService {
         return axios.patch (url, data);
     }
 
-    patchAttendanceById(srn,  isPresentInL3Examination) {
-
+    patchAttendanceById(srn,  updateData) {
+        console.log( "i am in service", updateData)
         
         const url = `${BaseURL}/api/attendance-l3/${srn}`;
 
     
 
-        return axios.patch (url, isPresentInL3Examination);
+        return axios.patch (url, updateData);
     }
 
     

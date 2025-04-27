@@ -19,6 +19,16 @@ class DashBoardService {
         const url = `${BaseURL}/api/Students-data?${query}`
         return axios.get(url);
     }
-}
+
+    GetAllStudentDataWithRoomAndBedNo (query){
+        const url = `${BaseURL}/api/Student-data-roomandbed?${query}`
+        return axios.get(url);
+    }
+
+    GetRoomStatisticsByBatchDivision (query){
+        const url = `${BaseURL}/api/room-statistics?${query}`
+        return axios.get(url);
+    }
+} 
 
 export default new DashBoardService();

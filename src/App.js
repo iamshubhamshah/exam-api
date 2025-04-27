@@ -48,6 +48,8 @@ import DistrictDash8 from './components/DistrictDash8';
 import Attendance8 from './components/Attendance8';
 
 import { MBL3Attendance } from './components/Attendance/MBL3Attendance';
+import { Super100L2Attendance } from './components/Attendance/Super100Attendance';
+import { Super100L2AttendanceFemale } from './components/Attendance/Super100AttendanceFemale';
 
 
 //For anual merit
@@ -162,9 +164,12 @@ function App() {
                     {/* Attendance sheet routes */}
                     <Route path='/pratibhakhoj-attendance/mb' element = {<Attendance8/>}/>
                     <Route path='/mark-attendance-mb' element = {<MBL3Attendance/>}/>
+                    <Route path='/mark-attendance-s100-boys' element = {<Super100L2Attendance/>}/>
+                    <Route path='/mark-attendance-s100-girls' element = {<Super100L2AttendanceFemale/>}/>
                     <Route path='/mark-attendance-ame' element = {<AMEL3Attendance/>}/>
+
                     
-                    <Route path='/pratibhakhoj-attendance/s100-deactivated' element = {<Attendance10/>}/>
+                    <Route path='/pratibhakhoj-attendance/s100' element = {<Attendance10/>}/>
 
 
                     {/* Route for anuual merit admit card. Temporary for batch 2024-26 */}
