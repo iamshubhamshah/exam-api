@@ -57,7 +57,7 @@ import StudentSignInAME from './components/StudentSigninAME';
 import StudentPageAme from "./components/StudentPageAme";
 import AttendanceAME from './components/AttendanceAME';
 import { AMEL3Attendance } from './components/Attendance/AMEL3Attendance';
-import IdCardS100 from "../../frontend/src/components/Super100/IdCard";
+import IdCardS100 from "./components/Super100/IdCard";
 
 function App() {
   return (
