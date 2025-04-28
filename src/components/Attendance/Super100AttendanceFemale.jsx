@@ -212,165 +212,71 @@ console.log(dbRoomStats?.roomStatistics?.female?.[0]?.count !== undefined ? dbRo
     a.name.localeCompare(b.name)
   );
 
-  // Function to handle attendance update (marking attendance)
   const handleAttendanceUpdate = async (srn, isMarked) => {
-    setTrigger(true)
-    
-    // alert(roomNo)
-
-
-
-    //Fetching student by srn and then using its room number to udpate rooms and beds
-
-
-    let query = `srn=${srn}`
-
-    let roomNumber;
-
     try {
-        const response = await DashBoardServices.GetAllStudentData(query);
-        console.log("i am unmarked attendance")
-        console.log(response?.data?.[0]?.roomNo || []);
-        
-        roomNumber = response?.data?.[0]?.roomNo
-       
-      } catch (error) {
-        console.log("Error fetching data: ", error);
-     
-      }
-    
-
-
-
-    //________________________________________________
-    
-    console.log(isMarked);
-    console.log(`Student SRN: ${srn}, Currently Marked: ${isMarked ? "Present" : "Absent"}`);
-    
-    if (isMarked === true) {
-      // If currently marked as present, update to absent.
-      console.log("marked absent");
-    //   const isPresentInL2Examination = { isPresentInL2Examination: false };
-    //   console.log(isPresentInL2Examination);
-    //   const bedNo = {bedNo: 1}
-
-
-
-
-        
-const bedNoFemale = availableRooms?.femaleRoom?.occupied - 1
-
-// const bedNoMale = availableRooms?.maleRoom?.occupied - 1
-
-// let selectedBedNo;
-// if(filteredGender.value === "Female"){selectedBedNo=bedNoFemale}
-// else{selectedBedNo = bedNoMale }
-
-// let selectedRoomNo;
-
-// if(filteredGender.value === "Female"){selectedRoomNo = availableRooms?.femaleRoom?.roomNo }
-// else {selectedRoomNo = availableRooms?.maleRoom?.roomNo }
-
-
-const selectedRoomNo = availableRooms?.femaleRoom?.roomNo
-
-      const updateData = {
-        isPresentInL2Examination: false,
-        roomNo: null,
-        bedNo: null
-      };
+      // Fetch the student's current data
+      const studentQuery = `srn=${srn}`;
+      const studentResponse = await DashBoardServices.GetAllStudentData(studentQuery);
+      const studentData = studentResponse?.data?.[0];
+      const roomNumber = studentData?.roomNo;
+  
+      // Fetch the latest room availability data
+      const roomsResponse = await roomServiceInstance.getAvailableRoomsByGender();
+      const latestAvailableRooms = roomsResponse.data.data;
       
-      try {
+      if (isMarked) {
+        // Marking absent - free up the room/bed
+        const updateData = {
+          isPresentInL2Examination: false,
+          roomNo: null,
+          bedNo: null
+        };
+  
+        // Update local state first
+        setAttendanceState(prev => ({ ...prev, [srn]: false }));
         
-        // Update local state
-        setAttendanceState((prevState) => ({
-          ...prevState,
-          [srn]: !isMarked,
-        }));
+        // Update student record
         await registrationServiceInstance.patchAttendanceById(srn, updateData);
-
-        setTrigger(false)
-
-
-
-
-        // Updating roomandbeds db occupancy
-
-        const roomNo = roomNumber;
-        // alert(roomNo)
-
-       const updatedOccupancy = {
-        occupied: 0,
-        logic: false
-       }
-
-        await roomServiceInstance.putOccupancyOfRooms(roomNo, updatedOccupancy)
-
-
-      } catch (error) {
-        console.error("Error updating attendance", error.message);
+  
+        // Update room occupancy (decrement)
+        if (roomNumber) {
+          const currentOccupancy = latestAvailableRooms.femaleRoom.occupied;
+          const updatedOccupancy = {
+            occupied: currentOccupancy - 1,
+            logic: false
+          };
+          await roomServiceInstance.putOccupancyOfRooms(roomNumber, updatedOccupancy);
+        }
+      } else {
+        // Marking present - assign room/bed
+        const selectedRoomNo = latestAvailableRooms.femaleRoom.roomNo;
+        const newBedNo = latestAvailableRooms.femaleRoom.occupied + 1;
+  
+        const updateData = {
+          isPresentInL2Examination: true,
+          roomNo: selectedRoomNo,
+          bedNo: newBedNo
+        };
+  
+        // Update local state first
+        setAttendanceState(prev => ({ ...prev, [srn]: true }));
+        
+        // Update student record
+        await registrationServiceInstance.patchAttendanceById(srn, updateData);
+  
+        // Update room occupancy (increment)
+        const updatedOccupancy = {
+          occupied: newBedNo
+        };
+        await roomServiceInstance.putOccupancyOfRooms(selectedRoomNo, updatedOccupancy);
       }
-    } else {
-      // If currently marked as absent, update to present.
-      console.log("marked present");
-    //   const isPresentInL2Examination = { isPresentInL2Examination: true };
-    //   const bedNo = {bedNo: 1}
-// const bedNoFemale = dbRoomStats?.roomStatistics?.female?.[0]?.count !== undefined ? dbRoomStats.roomStatistics.female[0].count + 1 : 1
-
-// const bedNoMale = dbRoomStats?.roomStatistics?.male?.[0]?.count !== undefined ? dbRoomStats.roomStatistics.male[0].count + 1 : 1
-
-// console.log(availableRooms?.maleRoom?.occupied)
-
-// console.log(availableRooms?.femaleRoom?.occupied)
-
-const bedNoFemale = availableRooms?.femaleRoom?.occupied + 1
-
-// const bedNoMale = availableRooms?.maleRoom?.occupied + 1
-
-// let selectedBedNo;
-// if(filteredGender.value === "Female"){selectedBedNo=bedNoFemale}
-// else{selectedBedNo = bedNoMale }
-
-// let selectedRoomNo;
-
-// if(filteredGender.value === "Female"){selectedRoomNo = availableRooms?.femaleRoom?.roomNo }
-// else {selectedRoomNo = availableRooms?.maleRoom?.roomNo }
-
-
-const selectedRoomNo = availableRooms?.femaleRoom?.roomNo
-
-
-const updateData = {
-        isPresentInL2Examination: true,
-        roomNo: selectedRoomNo,
-        bedNo: bedNoFemale 
-      };
+  
+      // Refresh the room data after update
+      fetchAvailableRooms();
+      fetchRoomadnBedStatInStudentDb();
       
-
-
-      try {
-        // Update local state
-        setAttendanceState((prevState) => ({
-          ...prevState,
-          [srn]: !isMarked,
-        }));
-        await registrationServiceInstance.patchAttendanceById(srn, updateData);
-        setTrigger(false)
-
-        // Updating roomandbeds db occupancy
-
-        const roomNo = selectedRoomNo;
-
-       const updatedOccupancy = {
-        occupied: bedNoFemale
-       }
-
-        await roomServiceInstance.putOccupancyOfRooms(roomNo, updatedOccupancy)
-
-
-      } catch (error) {
-        console.error("Error updating attendance", error.message);
-      }
+    } catch (error) {
+      console.error("Error updating attendance", error);
     }
   };
 
