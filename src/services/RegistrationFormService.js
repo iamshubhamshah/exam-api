@@ -63,6 +63,16 @@ class RegistrationService {
         return axios.patch (url, updateData);
     }
 
+    patchCounsellingBySrn(srn,  formData) {
+        console.log( "i am in service", formData)
+        
+        const url = `${BaseURL}/api/counselling-l3/${srn}`;
+
+    
+
+        return axios.patch (url, formData);
+    }
+
     
 }
 

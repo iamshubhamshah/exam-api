@@ -121,7 +121,7 @@ const [filteredBatch, setFilteredBatch] = useState("")
     // };
 
 
-    //activate below query for level 3
+    //activate below query for level 2
 
 
     let query = `L2examinationCenter=Haryana Super 100 Campus, Vill. Barna, Dhand Road, Near Teri College, Kurukshetra&super100L2ExamBatchDivision=${filteredBatch.value}&gender=${filteredGender.value}&grade=10`.trim();

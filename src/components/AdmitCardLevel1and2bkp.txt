@@ -120,7 +120,6 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
         const Block = "/Block.png"
         const ParikshaKendra = "/hindiParikshakendra.png"
         const AdmitInstructions = "/admitinstructionsLevel3.png"
-        const AdmitInstructionsCounselling = '/counsellingInstructions.png'
     
         const StudentSignature = "/studentsignature.png"
         const VikalpaStamp = "/vikalpaStamp.png"
@@ -134,7 +133,7 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
         pdf.addImage(buniyaadLogo, "PNG", 180, 5, 20, 20)
 
      
-         pdf.addImage(AdmitInstructionsCounselling, "PNG", 5,135,198,135)
+         pdf.addImage(AdmitInstructions, "PNG", 5,135,198,135)
          pdf.addImage(StudentSignature, "PNG", 5, 280, 198, 5)
          pdf.addImage(VikalpaStamp, "PNG", 168, 263, 25, 23)
 
@@ -161,14 +160,14 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
         if (admitcardLevelMB === "Level1"){
             pdf.text('Level-1 Entrance Exam (2025-27)', 105, 30, {align:'center'})
         } else if (admitcardLevelMB === "Level2") {
-            pdf.text('Counselling Session (2025-27)', 105, 30, {align:'center'})
+            pdf.text('Entrance Examination Level-3 (2025-27)', 105, 30, {align:'center'})
         }
        
 
         //for examination date
-        pdf.setFont("helvetica", "bold")
-        pdf.setFontSize(12);
-        pdf.text(`Couselling Date: ${student.counsellingDate}`, 105, 35,{align:'center'})
+        
+        pdf.setFontSize(10);
+        pdf.text(`Examination Date: ${student.L3examDate}`, 105, 35,{align:'center'})
         
         // if (student.L1blockAdmitCard === "Panchkula (16)"){
         //     reportingTime = "07:30 AM"
@@ -177,19 +176,9 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
         // }
 
 
-        
-        if (student.finalShortListOrWaitListStudents === "Selected"){
-            pdf.setFont("helvetica", "bold")
-            pdf.setFontSize(12);
-            pdf.text(`Reporting Time: 8:00 AM - 12:00 PM, (Batch-1)`, 105, 40, {align:"center"})
+        pdf.setFontSize(10);
+        pdf.text(`Reporting Time: ${student.L3examReportingTime} , Exam Time: ${student.L3examTime}`, 105, 40, {align:"center"})
 
-        } else {
-            pdf.setFont("helvetica", "bold")
-            pdf.setFontSize(12);
-            pdf.text(`Reporting Time: 12:00 PM - 02:30 PM, (Batch-2)`, 105, 40, {align:"center"})
-
-        }
-        
 
         console.log(' i am just before formateDATE')
 
@@ -215,8 +204,8 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
             ["Mobile Number", student.mobile],
             ["District/Code", student.L1districtAdmitCard.toUpperCase()],
             ["Block/Code", student.L1blockAdmitCard.toUpperCase()],
-            ["Counselling Center", student.counsellingVenue.toUpperCase()],
-            ["Result Status", student.finalShortListOrWaitListStudents.toUpperCase()] // Added Room Number
+            ["Examination Center", student.L3examinationCenter.toUpperCase()],
+            ["Room Number", student.Level3StudentsRoomNumber.toUpperCase()] // Added Room Number
         ];
         
         // Generate table
@@ -553,7 +542,7 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
          */}
          {student.grade === "8" ? (
             <>
-            <button class="blinking-text" id={student._id}  onClick={DownloadAdmitCard} style={{fontSize:'20px'}}>Downoload Mission Buniyaad <span style={{fontSize:"30px"}}>Counselling Admit Card</span>. <br/>(मिशन बुनियाद लेवल 3 एडमिट कार्ड डाउनलोड करें।) </button>
+            <button class="blinking-text" id={student._id}  onClick={DownloadAdmitCard} style={{fontSize:'20px'}}>Downoload Mission Buniyaad <span style={{fontSize:"30px"}}>Level- 3 Admit Card</span>. <br/>(मिशन बुनियाद लेवल 3 एडमिट कार्ड डाउनलोड करें।) </button>
             </>
          ):(<>
          <button class="blinking-text" id={student._id}  onClick={DownloadAdmitCard} style={{fontSize:'20px'}}>Downoload Haryana Super 100 <span style={{fontSize:"30px"}}>Level- 2 Admit Card</span>. <br/>(हरियाणा सुपर 100 लेवल 2 एडमिट कार्ड डाउनलोड करें।) </button>

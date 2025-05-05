@@ -22,8 +22,8 @@ function StudentSignIn({}) {
   let studentSignInBoxSubHeader;
 
   if (location.pathname === "/student-signin") {
-    studentSignInBoxSubHeader = `Mission Buniyaad Entrance Examination Level-2 Result.
-(मिशन बुनियाद प्रवेश परीक्षा लेवल-2 परिणाम।)
+    studentSignInBoxSubHeader = `Mission Buniyaad Entrance Examination Level-3 Result.
+(मिशन बुनियाद प्रवेश परीक्षा लेवल-3 परिणाम।)
     `
 } else if (location.pathname === "/student-signin-s100" ){
   studentSignInBoxSubHeader = `Haryana Super 100 Entrance Examination Level-2 Admit Card.
@@ -69,7 +69,7 @@ function StudentSignIn({}) {
 
       if (
         response.data.data.srn === SrnSlipId &&
-        response.data.data.isVerified != "" && response.data.data.grade === "8" || response.data.data.grade === "10" && response.data.data.rollNumber != ""
+        response.data.data.isVerified != "" && response.data.data.grade === "8" && response.data.data.finalShortListOrWaitListStudents !== "" || response.data.data.grade === "10" && response.data.data.rollNumber != ""
       ) {
         setIsSrnMatched(true);
         setId(response.data.data._id);
@@ -93,7 +93,7 @@ function StudentSignIn({}) {
 
   if (isSrnMatched == true) {
     return <Navigate to="/Student-dash" state={{ srn: inputSrn, id: id }} />;
-  }
+  } 
 
   return (
     <>

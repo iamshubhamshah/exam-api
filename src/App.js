@@ -58,6 +58,8 @@ import StudentPageAme from "./components/StudentPageAme";
 import AttendanceAME from './components/AttendanceAME';
 import { AMEL3Attendance } from './components/Attendance/AMEL3Attendance';
 import IdCardS100 from "./components/Super100/IdCard";
+import IdCardS100SelectAndDownload from './components/Super100/SelectAndDownloadIdCard';
+import { Mbprecounselling } from './components/counselling/Mbprecounselling';
 
 function App() {
   return (
@@ -177,6 +179,10 @@ function App() {
                     <Route path='/student-dash-ame' element = {<StudentPageAme/>}/>
                     <Route path='/attendance-ame' element = {<AttendanceAME/>}/>
                     <Route path='/id-card-s100' element = {<IdCardS100/>}/>
+                    <Route path='/id-card-s100-select' element = {<IdCardS100SelectAndDownload/>}/>
+
+                    {/* Counselling Routes */}
+                    <Route path='/counselling-mb' element = {<Mbprecounselling/>}/>
                     
 
                     

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { Row, Col, Container, Table, Button, Spinner, Form } from 'react-bootstrap';
+import { Row, Col, Container, Table, Button } from 'react-bootstrap';
 import DistrictBlockCentersService from "../../services/DistrictBlockCentersService";
 import DashBoardServices from "../../services/DashBoardServices";
 import { jsPDF } from "jspdf";
@@ -8,16 +8,12 @@ import roomData from "./roomNo.json";
 
 export default function IdCardS100() {
     const [examinationCentersList, setExaminationCentersList] = useState([]);
-    const [selectedDistrict, setSelectedDistrict] = useState("");
-    const [selectedBlock, setSelectedBlock] = useState("");
-    const [selectedCenters, setSelectedCenters] = useState("");
     const [allData, setAllData] = useState([]);
     const [filterApplied, setFilterApplied] = useState(false);
     const [attendanceSheetLoading, setAttendanceSheetLoading] = useState(false);
     const [filteredGender, setFilteredGENDER] = useState("");
     const [filteredBatch, setFilteredBatch] = useState("");
     const [roomNumber, setRoomNumber] = useState("");
-    const [selectedStudents, setSelectedStudents] = useState([]);
     const [filteredRooms, setFilteredRooms] = useState([]);
 
     const fetchExaminationCentersData = async () => {
@@ -34,56 +30,32 @@ export default function IdCardS100() {
     }, []);
 
     useEffect(() => {
-        // Filter rooms based on selected gender
         if (filteredGender && filteredGender.value) {
             const filtered = roomData.filter(room => room.gender === filteredGender.value);
             setFilteredRooms(filtered.sort((a, b) => a.roomNo - b.roomNo));
         } else {
             setFilteredRooms([]);
         }
-        setRoomNumber(""); // Reset room number when gender changes
+        setRoomNumber("");
     }, [filteredGender]);
 
-    const unqDistricts = [...new Set(examinationCentersList.map(item => item.district))];
-
-    const handleDistrictChange = (selectedOption) => {
-        setSelectedDistrict(selectedOption.value);
-    };
-
-    const filteredBlock = examinationCentersList.filter(
-        (eachBlock) => eachBlock.district === selectedDistrict
-    );
-
-    const unqFilteredBlock = [...new Set(filteredBlock.map(item => item.blockName))];
-
-    const handleBlockChange = (selectedOption) => {
-        setSelectedBlock(selectedOption.value);
-    };
-
-    const filteredCenters = examinationCentersList.filter(
-        (eachCenter) =>
-            eachCenter.blockName === selectedBlock &&
-            eachCenter.examinationLevel === "1" &&
-            eachCenter.examType === "S100"
-    );
-
-    const handleCenterChange = (selectedOption) => {
-        setSelectedCenters(selectedOption.value);
-    };
-
     const handleFilterSubmit = async () => {
-        if (filteredGender && filteredBatch && roomNumber) {
+        if (filteredGender && filteredBatch) {
             setFilterApplied(true);
         } else {
             setFilterApplied(false);
+            return;
         }
 
-        let query = `L2examinationCenter=Haryana Super 100 Campus, Vill. Barna, Dhand Road, Near Teri College, Kurukshetra&super100L2ExamBatchDivision=${filteredBatch.value}&gender=${filteredGender.value}&grade=10&roomNo=${roomNumber}`.trim();
+        const isPresentInL2Examination = true;
+        const query = `L2examinationCenter=Haryana Super 100 Campus, Vill. Barna, Dhand Road, Near Teri College, Kurukshetra&super100L2ExamBatchDivision=${filteredBatch.value}&gender=${filteredGender.value}&grade=10&isPresentInL2Examination=${isPresentInL2Examination}`;
 
         try {
             const response = await DashBoardServices.GetAllStudentData(query);
-            setAllData(response.data || []);
-            setSelectedStudents([]); // Reset selected students when new data is loaded
+            const sortedData = (response.data || []).sort((a, b) =>
+                parseInt(a.s100L2RollNumber) - parseInt(b.s100L2RollNumber)
+            );
+            setAllData(sortedData);
         } catch (error) {
             console.log('Error fetching data: ', error);
             setAllData([]);
@@ -96,45 +68,30 @@ export default function IdCardS100() {
         setRoomNumber("");
         setFilterApplied(false);
         setAllData([]);
-        setSelectedStudents([]);
     };
-
-    const handleStudentSelection = (studentId) => {
-        setSelectedStudents(prev => {
-            if (prev.includes(studentId)) {
-                return prev.filter(id => id !== studentId);
-            } else {
-                return [...prev, studentId];
-            }
-        });
-    };
-
-    const sortAllData = allData.sort((a, b) => a.rollNumber.localeCompare(b.rollNumber));
 
     const admitHrLogo = "/admitHrLogo.png";
-    const buniyaadLogo = "/admitBuniyaLogo.png";
     const viklapaLogo = "/vikalpalogo.png";
 
     const generatePDF = async () => {
-        if (selectedStudents.length === 0) {
-            alert("Please select at least one student to generate ID cards.");
+        if (allData.length === 0) {
+            alert("No students found to generate ID cards.");
             return;
         }
 
         setAttendanceSheetLoading(true);
-
         const doc = new jsPDF("p", "mm", "a4");
-
-        const cardWidth = 100; // mm
-        const cardHeight = 65; // mm
+        const cardWidth = 100;
+        const cardHeight = 65;
         const marginX = 4.2;
         const marginY = 5;
 
         const leftLogo = await toDataURL(admitHrLogo);
         const rightLogo = await toDataURL(viklapaLogo);
 
-        // Filter students to only include selected ones
-        const studentsToPrint = allData.filter(student => selectedStudents.includes(student._id));
+        const studentsToPrint = [...allData].sort((a, b) =>
+            parseInt(a.s100L2RollNumber) - parseInt(b.s100L2RollNumber)
+        );
 
         for (let i = 0; i < studentsToPrint.length; i++) {
             const student = studentsToPrint[i];
@@ -177,7 +134,6 @@ export default function IdCardS100() {
                     const image = await toDataURL(student.imageUrl);
                     doc.addImage(image, "JPEG", imageX, imageY, imageWidth, imageHeight);
                 } catch (err) {
-                    console.warn("Image load error for", student.name);
                     drawPlaceholderBox();
                 }
             } else {
@@ -214,12 +170,11 @@ export default function IdCardS100() {
             renderField("Name:", student.name);
             renderField("Father Name:", student.father);
             renderField("District:", student.district || "");
-            renderField("Roll Number:", student.rollNumber);
+            renderField("Roll Number:", student.s100L2RollNumber);
             renderField("Batch:", filteredBatch ? filteredBatch.label : "");
-            renderField("Room No.:", student.roomNo.toString());
-            renderField("Bed No.:", student.bedNo.toString());
+            renderField("Room No.:", student.roomNo?.toString() || "");
+            renderField("Bed No.:", student.bedNo?.toString() || "");
             renderField("Contact:", student.mobile);
-
 
             if ((i + 1) % 8 === 0 && i !== studentsToPrint.length - 1) {
                 doc.addPage();
@@ -242,135 +197,103 @@ export default function IdCardS100() {
             }));
 
     return (
-        <>
-            <Container fluid>
-                <div id="content-to-pdf">
-                    <Row>
-                        <Col>
-                            <label>Select Gender</label>
-                            <Select
-                                options={[
-                                    {value: "Female", label: "Female"},
-                                    {value: "Male", label: "Male"}
-                                ]}
-                                onChange={(selectedOption) => setFilteredGENDER(selectedOption)}
-                                value={filteredGender}
-                            />
-                        </Col>
-
-                        <Col>
-                            <label>Select Batch</label>
-                            <Select
-                                options={[
-                                    {value: "1", label: "1"},
-                                    {value: "2", label: "2"},
-                                    {value: "3", label: "3"}
-                                ]}
-                                onChange={(selectedOption) => setFilteredBatch(selectedOption)}
-                                value={filteredBatch}
-                            />
-                        </Col>
-
-                        {filteredGender && (
-                            <Col>
-                                <label>Select Room Number</label>
-                                <Select
-                                    options={filteredRooms.map(room => ({
-                                        value: room.roomNo,
-                                        label: room.roomNo
-                                    }))}
-                                    onChange={(selectedOption) => setRoomNumber(selectedOption.value)}
-                                    placeholder="Select Room"
-                                    value={roomNumber ? {value: roomNumber, label: roomNumber} : null}
-                                />
-                            </Col>
-                        )}
-                    </Row>
-                    <Row className="mt-3">
-                        <Col>
-                            <Button onClick={handleFilterSubmit}>Submit</Button>
-                        </Col>
-                        <Col>
-                            <Button variant="secondary" onClick={handleClearFilter}>Clear Filter</Button>
-                        </Col>
-                    </Row>
-                    <br/>
-                    <Row>
-                        <Col>
-                            {attendanceSheetLoading ? (
-                                <h1 style={{color:'red'}}>Please Wait! Your File is Downloading...</h1>
-                            ) : (
-                                <Button 
-                                    onClick={generatePDF} 
-                                    disabled={selectedStudents.length === 0 || selectedStudents.length > 8}
-                                >
-                                    {selectedStudents.length > 0 ? 
-                                        `Download ID Cards (${selectedStudents.length} selected)` : 
-                                        "Download ID Cards (Select 1-8 students)"}
-                                </Button>
-                            )}
-                        </Col>
-                    </Row>
-                    <hr />
-                    <Row>
-                        {filterApplied ? (
-                            <Row>
-                                <Col>
-                                    <Table responsive>
-                                        <thead>
-                                            <tr>
-                                                <th>Select</th>
-                                                <th>#</th>
-                                                <th>SRN</th>
-                                                <th>Name</th>
-                                                <th>Father</th>
-                                                <th>Gender</th>
-                                                <th>Category</th>
-                                                <th>School</th>
-                                                <th>RollNo.</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {allData.length > 0 ? (
-                                                allData.map((eachStudent, index) => (
-                                                    <tr key={index}>
-                                                        <td>
-                                                            <Form.Check
-                                                                type="checkbox"
-                                                                checked={selectedStudents.includes(eachStudent._id)}
-                                                                onChange={() => handleStudentSelection(eachStudent._id)}
-                                                                disabled={selectedStudents.length >= 8 && !selectedStudents.includes(eachStudent._id)}
-                                                            />
-                                                        </td>
-                                                        <td>{index + 1}</td>
-                                                        <td>{eachStudent.srn}</td>
-                                                        <td>{eachStudent.name}</td>
-                                                        <td>{eachStudent.father}</td>
-                                                        <td>{eachStudent.gender}</td>
-                                                        <td>{eachStudent.category}</td>
-                                                        <td>{eachStudent.school}</td>
-                                                        <td>{eachStudent.rollNumber}</td>
-                                                    </tr>
-                                                ))
-                                            ) : (
-                                                <tr>
-                                                    <td colSpan="14" style={{ textAlign: "center" }}>
-                                                        No students found.
-                                                    </td>
-                                                </tr>
-                                            )}
-                                        </tbody>
-                                    </Table>
-                                </Col>
-                            </Row>
-                        ) : (
-                            <div>
-                                <h1>Select Gender, Batch, and Room No.</h1>
-                            </div>
-                        )}
-                    </Row>
-                </div>
-            </Container>
-        </>
+        <Container fluid>
+            <Row>
+                <Col>
+                    <label>Select Gender</label>
+                    <Select
+                        options={[{ value: "Female", label: "Female" }, { value: "Male", label: "Male" }]}
+                        onChange={(selectedOption) => setFilteredGENDER(selectedOption)}
+                        value={filteredGender}
+                    />
+                </Col>
+                <Col>
+                    <label>Select Batch</label>
+                    <Select
+                        options={[{ value: "1", label: "1" }, { value: "2", label: "2" }, { value: "3", label: "3" }]}
+                        onChange={(selectedOption) => setFilteredBatch(selectedOption)}
+                        value={filteredBatch}
+                    />
+                </Col>
+                {filteredGender && (
+                    <Col>
+                        <label>Select Room Number</label>
+                        <Select
+                            options={filteredRooms.map(room => ({ value: room.roomNo, label: room.roomNo }))}
+                            onChange={(selectedOption) => setRoomNumber(selectedOption.value)}
+                            placeholder="Select Room"
+                            value={roomNumber ? { value: roomNumber, label: roomNumber } : null}
+                        />
+                    </Col>
+                )}
+            </Row>
+            <Row className="mt-3">
+                <Col>
+                    <Button onClick={handleFilterSubmit}>Submit</Button>
+                </Col>
+                <Col>
+                    <Button variant="secondary" onClick={handleClearFilter}>Clear Filter</Button>
+                </Col>
+            </Row>
+            <br />
+            <Row>
+                <Col>
+                    {attendanceSheetLoading ? (
+                        <h1 style={{ color: 'red' }}>Please Wait! Your File is Downloading...</h1>
+                    ) : (
+                        <Button onClick={generatePDF} disabled={allData.length === 0}>
+                            Download ID Cards ({allData.length})
+                        </Button>
+                    )}
+                </Col>
+            </Row>
+            <hr />
+            <Row>
+                {filterApplied ? (
+                    <Col>
+                        <Table responsive>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>SRN</th>
+                                    <th>Name</th>
+                                    <th>Father</th>
+                                    <th>Gender</th>
+                                    <th>Category</th>
+                                    <th>School</th>
+                                    <th>RollNo.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {allData.length > 0 ? (
+                                    [...allData].sort((a, b) =>
+                                        parseInt(a.s100L2RollNumber) - parseInt(b.s100L2RollNumber)
+                                    ).map((eachStudent, index) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            <td>{eachStudent.srn}</td>
+                                            <td>{eachStudent.name}</td>
+                                            <td>{eachStudent.father}</td>
+                                            <td>{eachStudent.gender}</td>
+                                            <td>{eachStudent.category}</td>
+                                            <td>{eachStudent.school}</td>
+                                            <td>{eachStudent.s100L2RollNumber}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="8" style={{ textAlign: "center" }}>
+                                            No students found.
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </Table>
+                    </Col>
+                ) : (
+                    <Col><h1>Select Gender, Batch, and Room No.</h1></Col>
+                )}
+            </Row>
+        </Container>
     );
 }
