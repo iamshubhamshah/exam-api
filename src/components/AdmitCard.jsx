@@ -69,7 +69,7 @@ if (Object.keys(studentfromUserDash).length !== 0 ){
 
         console.log('I AM INSIDE ')
         console.log(student.isL3AdmitCardActive)
-        if (student.isL3AdmitCardActive === false){
+        if (student.finalShortListOrWaitListStudents === ""){
             alert("Dear Student your admit card will be available for downloading soon! (प्रिय छात्र, आपका प्रवेश पत्र जल्द ही डाउनलोड के लिए उपलब्ध होगा!)")
             return;
         }

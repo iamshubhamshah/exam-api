@@ -67,18 +67,18 @@ export default function LandingPage() {
             <hr></hr>
             <br />
 
-            <Link  to="/student-signin-s100 " style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
+            {/* <Link  to="/student-signin-s100 " style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
             <p><BsArrowRight className="blinking-link" />Click here for Haryana Super 100 Entrance Examination Level-2 Admit Card.<br/>(हरियाणा सुपर 100 प्रवेश परीक्षा लेवल 2 प्रवेश पत्र के लिए यहां क्लिक करें।)</p> 
             </Link>
             <hr></hr>
-            <br />
+            <br /> */}
 
-
+{/* 
             <Link  to="/student-signin" style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
             <p><BsArrowRight className="blinking-link" />Click here for Mission Buniyaad Entrance Examination Level-2 Result.<br/>(मिशन बुनियाद प्रवेश परीक्षा लेवल 2 परिणाम के लिए यहां क्लिक करें।)</p> 
             </Link>
             <br />
-
+ */}
 
 
 
@@ -96,10 +96,10 @@ export default function LandingPage() {
             <br />
 
 
-            <Link  to="/student-signin-s100" style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
+            {/* <Link  to="/student-signin-s100" style={{textDecoration:'none', fontSize:'25px', color:'red', fontWeight:'bold'}}>
             <p><BsArrowRight className="blinking-link" />Click here for Haryana Super 100 Entrance Examination Level-1 Result. <br/> (हरियाणा सुपर 100 प्रवेश परीक्षा लेवल-1 परिणाम के लिए यहां क्लिक करें।)</p> 
             </Link>
-            <br />
+            <br /> */}
 
 
 
