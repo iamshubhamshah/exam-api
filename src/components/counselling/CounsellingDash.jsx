@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import DashBoardServices from "../../services/DashBoardServices";
 import { Row, Col, Table, Container, Accordion } from "react-bootstrap";
+import NavbarCounselling from "../NavbarCounselling";
 
 export const CounsellingDash = () => {
   //Hooks
@@ -26,7 +27,8 @@ export const CounsellingDash = () => {
   }, []);
 
   return (
-    <Container>
+    <Container fluid>
+        <NavbarCounselling/>
       <Table striped bordered hover>
         {/* <thead>
         <tr>
@@ -51,11 +53,14 @@ export const CounsellingDash = () => {
                     </tr> */}
                         <div key={index} id={index}>
                           <p>District: {eachDistrict.district}</p>
-                          <p>District: {eachDistrict.totalEnrolled}</p>
-                          <p>District: {eachDistrict.totalProvision}</p>
+                          <p>Total Student: {eachDistrict.districtTotal}</p>
+                          <p>Present: {eachDistrict.totalCounsellingPresent}</p> 
+                          <p>Enrolled: {eachDistrict.totalEnrolled}</p>
+                          <p>Provision: {eachDistrict.totalProvision}</p>
+                           
                           <hr />
                           <p>
-                            Total Present:{" "}
+                            Total Documented:{" "}
                             {eachDistrict.totalEnrolled +
                               eachDistrict.totalProvision}
                           </p>
@@ -67,8 +72,11 @@ export const CounsellingDash = () => {
                                 <tr>
                                   <th>#</th>
                                   <th>Center Name</th>
+                                  <th>Total Student</th>
+                                  <th>Present</th>
                                   <th>Enrolled</th>
                                   <th>Provision</th>
+                                  <th>Documented</th>
                                 </tr>
                               </thead>
                         {eachDistrict.centers.map((eachCenter, index) => {
@@ -76,13 +84,16 @@ export const CounsellingDash = () => {
                             
                               <tbody>
                                 <tr>
-                                  <td>1</td>
+                                  <td>{index + 1}</td>
                                   <td>
                                     {" "}
                                     {eachCenter.counsellingCenterAllocation}
                                   </td>
-                                  <td>{eachCenter.selectedCount}</td>
+                                  <td>{eachCenter.totalStudents}</td>
+                                  <td>{eachCenter.counsellingPresentCount}</td>
+                                  <td>{eachCenter.enrolledCount}</td>
                                   <td>{eachCenter.provisionCount}</td>
+                                  <td>{eachCenter.enrolledCount + eachCenter.provisionCount}</td>
                                 </tr>
                               </tbody>
                            
