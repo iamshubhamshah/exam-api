@@ -63,17 +63,37 @@ class RegistrationService {
         return axios.patch (url, updateData);
     }
 
-    patchCounsellingBySrn(srn,  formData) {
+
+   //counselling services below 
+    patchCounsellingBySrn(srn, district,  formData) {
         console.log( "i am in service", formData)
         
-        const url = `${BaseURL}/api/counselling-l3/${srn}`;
+        const url = `${BaseURL}/api/counselling-l3/${srn}/${district}`;
 
     
 
         return axios.patch (url, formData);
+
+        
     }
 
+
+    getStudentDataBySrnTokenDistrict(query) {
+        console.log("i am inside service", query)
+
+        const url = `${BaseURL}/api/student-by-token?${query}`
+        return axios.get(url);
+    }
     
+    patchCounsellingDocumentationBySrn (query, formData){
+        console.log(" i am inside service of documentation", formData, query)
+
+        const url = `${BaseURL}/api/documentation?${query}`
+
+        return axios.patch(url, formData)
+    }
+
+
 }
 
 

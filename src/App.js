@@ -60,6 +60,8 @@ import { AMEL3Attendance } from './components/Attendance/AMEL3Attendance';
 import IdCardS100 from "./components/Super100/IdCard";
 import IdCardS100SelectAndDownload from './components/Super100/SelectAndDownloadIdCard';
 import { Mbprecounselling } from './components/counselling/Mbprecounselling';
+import { CounsellingAttendance } from './components/counselling/CounsellingAttendance';
+import { CounsellingDocumentation } from './components/counselling/CounsellingDocumentation';
 
 function App() {
   return (
@@ -183,8 +185,8 @@ function App() {
 
                     {/* Counselling Routes */}
                     <Route path='/counselling-mb' element = {<Mbprecounselling/>}/>
-                    
-
+                    <Route path='/counselling-attendance' element = {<CounsellingAttendance/>}/>
+                    <Route path='/counselling-documentation' element = {<CounsellingDocumentation/>}/>
                     
 
             </Routes>

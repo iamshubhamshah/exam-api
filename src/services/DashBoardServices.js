@@ -29,6 +29,13 @@ class DashBoardService {
         const url = `${BaseURL}/api/room-statistics?${query}`
         return axios.get(url);
     }
+
+
+  GetDataFor8DashboardCounselling () {
+        const url = `${BaseURL}/api/counselling-dash`
+        return axios.get(url)
+    }
+
 } 
 
 export default new DashBoardService();

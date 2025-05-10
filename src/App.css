@@ -138,3 +138,175 @@
 }
 
 /*________________________________________________________________________________________________________________*/
+
+
+
+
+/* counselling documentation css */
+
+
+.counselling-doc-main{
+  display: flex;
+  align-items: center;
+  align-content: center;
+flex-direction: column;
+margin-top: 0%;
+}
+
+
+
+
+
+.counselling-wrapper {
+  padding: 2rem;
+}
+
+.select-dropdown {
+  font-size: 16px;
+}
+
+.student-details {
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+}
+
+.section-title {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.student-info p {
+  margin: 0.4rem 0;
+}
+
+.center-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.checkbox-item {
+  flex: 1 1 45%;
+}
+
+.submission-card-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.submission-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.status-text {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: green;
+}
+
+.no-selection-text {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #888;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .checkbox-item {
+    flex: 1 1 100%;
+  }
+}
+
+
+
+.center-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-left: 0.5rem;
+}
+
+.checkbox-item-vertical {
+  display: flex;
+  align-items: center;
+}
+
+.form-check-label {
+  font-size: 1rem;
+  color: #333;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.form-check-input {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.doc-distance-input{
+  width: 5rem;
+  height: 1rem;
+}
+
+/* counselling attendance main */
+
+.counselling-attendance-main{
+  display: flex;
+  align-items: center;
+  align-content: center;
+flex-direction: column;
+margin-top: 0%;
+}
+
+.attendance-select{
+  width: 50rem;
+}
+
+
+.counselling-logo{
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25%;
+
+}
+
+
+@media (max-width: 768px){
+  .counselling-attendance-main{
+    display: flex;
+    align-items: center;
+    align-content: center;
+  flex-direction: column;
+  margin-top: 0%;
+  }
+  
+  .attendance-select{
+    width: 20rem;
+  }
+
+  .counselling-logo{
+    border: solid;
+    display: flex;
+    gap: 12vw;
+  
+  }
+}
+
+
