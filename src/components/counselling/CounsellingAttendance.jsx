@@ -167,12 +167,9 @@ export const CounsellingAttendance = () => {
                 
 
                 <h3>{attendanceMarkedStatus}</h3>
-                {changedTokenType === "selected" && (
-                    <h3>Token Number: S{finalToken}</h3>
-                )}
-                {changedTokenType === "waiting" && (
-                    <h3>Token Number: W{finalToken}</h3>
-                )}
+             
+                    <h3>Token Number: {finalToken}</h3>
+                
 
                 <Card className="counselling-attendance-card">
                     <div className="counselling-logo">
