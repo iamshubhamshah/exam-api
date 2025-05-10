@@ -42,7 +42,8 @@ export default function NavbarCounselling() {
             fontSize:'48'
        
         
-          }}>Counselling</h4>
+          }}
+          >Counselling</h4>
           <h4
            style={{
             color:'#F2FFD7',
@@ -51,11 +52,19 @@ export default function NavbarCounselling() {
           }}
           
           >Batch 2025-27</h4>
+
+           <div >
+            <button style={{width:'30%', height:'10px', fontSize:'10px', textAlign:'center'}}>Documentation</button>
+            </div>
           </div>
             <img src="/Buniyaad.png" style={{ width: '100px', height: 'auto' }} />
+
+           
           </nav>
           
-      
+             
+          
+     
           <style>
           <style>
                 {`

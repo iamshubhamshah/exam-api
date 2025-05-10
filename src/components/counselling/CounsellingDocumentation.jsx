@@ -171,6 +171,14 @@ if (matchedDistrictData) {
 
     const docSubmission = async (e) => {
 
+// alert(selectedSchool.length)
+      if (documents.length === 0 ){
+        alert('Fill Documents')
+        return;
+ 
+      } else if(
+        selectedSchool.length === 0
+      ) { alert('Select Center')}
 
         setTimeout(()=>{
             setStudentData([])

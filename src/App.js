@@ -62,6 +62,7 @@ import IdCardS100SelectAndDownload from './components/Super100/SelectAndDownload
 import { Mbprecounselling } from './components/counselling/Mbprecounselling';
 import { CounsellingAttendance } from './components/counselling/CounsellingAttendance';
 import { CounsellingDocumentation } from './components/counselling/CounsellingDocumentation';
+import { CounsellingDash } from './components/counselling/CounsellingDash';
 
 function App() {
   return (
@@ -187,7 +188,7 @@ function App() {
                     <Route path='/counselling-mb' element = {<Mbprecounselling/>}/>
                     <Route path='/counselling-attendance' element = {<CounsellingAttendance/>}/>
                     <Route path='/counselling-documentation' element = {<CounsellingDocumentation/>}/>
-                    
+                    <Route path='/counselling-dashboard' element = {<CounsellingDash/>}/>
 
             </Routes>
             </StudentProvider>
