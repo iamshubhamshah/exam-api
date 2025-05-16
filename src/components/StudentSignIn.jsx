@@ -71,6 +71,12 @@ function StudentSignIn({}) {
         response.data.data.srn === SrnSlipId &&
         response.data.data.isVerified != "" && response.data.data.grade === "8" && response.data.data.finalShortListOrWaitListStudents !== "" || response.data.data.grade === "10" && response.data.data.isQualifiedL2 === true
       ) {
+
+         if(response.data.data.grade === "10"){
+        alert('Invalid Srn')
+        return;
+    } 
+
         setIsSrnMatched(true);
         setId(response.data.data._id);
         setStudent(response.data.data);
@@ -94,7 +100,10 @@ function StudentSignIn({}) {
   };
 
   if (isSrnMatched == true) {
-    return <Navigate to="/Student-dash" state={{ srn: inputSrn, id: id }} />;
+   
+      return <Navigate to="/Student-dash" state={{ srn: inputSrn, id: id }} />;
+   
+    
   } 
 
   return (
