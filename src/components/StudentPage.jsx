@@ -93,7 +93,7 @@ const StudentPage = () => {
       }
       
     } else {
-      pdf.text("FOR QUALIFYING HARYANA SUPER 100 ENTRANCE EXAMINATION LEVEL-1", 150, 85, {align:'center'} )
+      pdf.text("FOR QUALIFYING HARYANA SUPER 100 ENTRANCE EXAMINATION LEVEL-2", 150, 85, {align:'center'} )
 
 
     }
@@ -226,7 +226,7 @@ const StudentPage = () => {
     } else {
 
       pdf.text(
-        `Haryana Super 100 Entrance Examination  Level-1 for the batch of 2025-27.`,
+        `Haryana Super 100 Entrance Examination  Level-2 for the batch of 2025-27.`,
         40,
         138,
         { align: "left" }
@@ -619,13 +619,13 @@ const StudentPage = () => {
             <Row >
                 {/* below snippet checks if the student is qualified or not, in exam. if yes then show download certificate, other wise notqalified text */}
 
-                {student.isQualifiedL1 === true ? (
+                {student.isQualifiedL2 === true ? (
                   <div>
                     <Container style={{ width: "60%" }}>
                       <Row className="border mb-3 rounded-2">
                         <h3 style={{ textAlign: "center", color: "red" }}>
                           You have qualified Haryana Super 100 Entrance
-                          Examination Level-1
+                          Examination Level-2
                         </h3>
                         <hr />
                         <h4 style={{ textAlign: "center" }}>
@@ -633,7 +633,7 @@ const StudentPage = () => {
                           <u>{student.father.toUpperCase()}</u> from district{" "}
                           {student.L1districtAdmitCard} and block{" "}
                           {student.L1blockAdmitCard} for qualifying Haryana 
-                          Super 100 Entrance Examination Level-1.
+                          Super 100 Entrance Examination Level-2.
                           <br />
                         </h4>
                       </Row>
@@ -682,7 +682,7 @@ const StudentPage = () => {
                     <Container style={{ width: "60%" }}>
                       <Row className="border mb-3 rounded-2">
                         <h3 style={{ textAlign: "center", color: "red" }}>
-                          You have not qualified Harayana Super 100 Level-1
+                          You have not qualified Harayana Super 100 Level-2
                           Entrance Examination
                         </h3>
                         <hr />
@@ -699,11 +699,11 @@ const StudentPage = () => {
                        {/* below text to be shown when student don't pass the level 2 examination. uncomment in level 2 */}
 
 
-                         <h4 style={{ textAlign: "center" }}>
-                        Dear Student, You put in commendable effort in the Haryana Super 100 Level 1 Entrance Exam. You did not qualify because your rank is higher than the 2243 selected students. Keep striving for success!<br/><br/>
-                          (प्रिय छात्र, आपने हरियाणा सुपर 100 प्रवेश परीक्षा लेवल-1 परीक्षा में सराहनीय प्रयास किया। हालाँकि आप उत्तीर्ण नहीं हुए क्योंकि आपकी रैंक 2243 चयनित छात्रों से अधिक है। सफलता के लिए प्रयास करते रहें।)
+                         {/* <h4 style={{ textAlign: "center" }}>
+                        Dear Student, You put in commendable effort in the Haryana Super 100 Level 2 Entrance Exam. You did not qualify because your rank is higher than the 401 selected students. Keep striving for success!<br/><br/>
+                          (प्रिय छात्र, आपने हरियाणा सुपर 100 प्रवेश परीक्षा लेवल-2 परीक्षा में सराहनीय प्रयास किया। हालाँकि आप उत्तीर्ण नहीं हुए क्योंकि आपकी रैंक 401 चयनित छात्रों से अधिक है। सफलता के लिए प्रयास करते रहें।)
                           <br />
-                        </h4>
+                        </h4> */}
 
 
                       </Row>

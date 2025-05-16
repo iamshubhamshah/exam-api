@@ -26,8 +26,8 @@ function StudentSignIn({}) {
 (मिशन बुनियाद प्रवेश परीक्षा लेवल-3 परिणाम।)
     `
 } else if (location.pathname === "/student-signin-s100" ){
-  studentSignInBoxSubHeader = `Haryana Super 100 Entrance Examination Level-2 Admit Card.
-(हरियाणा सुपर 100 प्रवेश परीक्षा स्तर-2 प्रवेश पत्र।)
+  studentSignInBoxSubHeader = `Haryana Super 100 Entrance Examination Level-2 Result.
+(हरियाणा सुपर 100 प्रवेश परीक्षा स्तर-2 परिणाम।)
     `
 }
 
@@ -69,7 +69,7 @@ function StudentSignIn({}) {
 
       if (
         response.data.data.srn === SrnSlipId &&
-        response.data.data.isVerified != "" && response.data.data.grade === "8" && response.data.data.finalShortListOrWaitListStudents !== "" || response.data.data.grade === "10" && response.data.data.rollNumber != ""
+        response.data.data.isVerified != "" && response.data.data.grade === "8" && response.data.data.finalShortListOrWaitListStudents !== "" || response.data.data.grade === "10" && response.data.data.isQualifiedL2 === true
       ) {
         setIsSrnMatched(true);
         setId(response.data.data._id);
@@ -80,14 +80,16 @@ function StudentSignIn({}) {
       } else {
         setErrorRedirect(true);
         setIsSrnMatched(false);
-        alert('Your SRN is not registered on the examination portal. Please verify your SRN and try again. (आपका SRN परीक्षा पोर्टल पर पंजीकृत नहीं है। कृपया अपना SRN सत्यापित करें और पुनः प्रयास करें।)')
+        //alert('Your SRN is not registered on the examination portal. Please verify your SRN and try again. (आपका SRN परीक्षा पोर्टल पर पंजीकृत नहीं है। कृपया अपना SRN सत्यापित करें और पुनः प्रयास करें।)')
+        alert('Invalid')
       }
     } catch (error) {
       console.error(error);
       setError("Correct SRN needed"); // Set error state for exceptions
       setErrorRedirect(true); // It gives the message if error arrives then says register first.
       setRegisterFrist(true);
-      alert('Your SRN is not registered on the examination portal. Please verify your SRN and try again. (आपका SRN परीक्षा पोर्टल पर पंजीकृत नहीं है। कृपया अपना SRN सत्यापित करें और पुनः प्रयास करें।)')
+      //alert('Your SRN is not registered on the examination portal. Please verify your SRN and try again. (आपका SRN परीक्षा पोर्टल पर पंजीकृत नहीं है। कृपया अपना SRN सत्यापित करें और पुनः प्रयास करें।)')
+      alert("Invalid")
     }
   };
 
