@@ -12,6 +12,8 @@ import registrationServiceInstance from '../services/RegistrationFormService';
 
 //Importing admit card
 import AdmitCard from "./AdmitCard";
+import DownloadDocument from "./Super100/documents100";
+
 
 const StudentPage = () => {
   //Using StudentContext API. Only works if the user logs in. other wise doesn't work.
@@ -327,9 +329,8 @@ const StudentPage = () => {
 
   return (
     <div>
-         <StudentNavbar />
+      <StudentNavbar />
       <Container fluid>
-       
         <br />
         {switchLevel === "Level1" ? (
           <div>
@@ -472,7 +473,7 @@ const StudentPage = () => {
         ) : (
           <div>
             {student.grade === "8" ? (
-              <Row >
+              <Row>
                 {/* below snippet checks if the student is qualified or not, in exam. if yes then show download certificate, other wise notqalified text */}
 
                 {student.finalShortListOrWaitListStudents === "Selected" ? (
@@ -480,32 +481,38 @@ const StudentPage = () => {
                     <Container style={{ width: "60%" }}>
                       <Row className="border mb-3 rounded-2">
                         <h3 style={{ textAlign: "center", color: "red" }}>
-                        Congratulations! You have been selected for Mission Buniyaad Programme!
+                          Congratulations! You have been selected for Mission
+                          Buniyaad Programme!
                         </h3>
                         <hr />
                         <h4 style={{ textAlign: "center" }}>
-                          Congratulations <u>{student.name.toUpperCase()}</u>, son/daughter of{" "}
-                          <u>{student.father.toUpperCase()}</u> from district{" "}
-                          {student.L1districtAdmitCard} and block{" "}
-                          {student.L1blockAdmitCard}. You have been selected for the Mission Buniyaad 
-                          Programme based on your performance in the entrance examination level-3. Download your
-                          Level- 3 certificate and counselling admit card from below link.
+                          Congratulations <u>{student.name.toUpperCase()}</u>,
+                          son/daughter of <u>{student.father.toUpperCase()}</u>{" "}
+                          from district {student.L1districtAdmitCard} and block{" "}
+                          {student.L1blockAdmitCard}. You have been selected for
+                          the Mission Buniyaad Programme based on your
+                          performance in the entrance examination level-3.
+                          Download your Level- 3 certificate and counselling
+                          admit card from below link.
                           <br />
                         </h4>
                         <h4 style={{ textAlign: "center" }}>
-                        बधाई हो <u>{student.name.toUpperCase()}</u>, पुत्र/पुत्री श्री{" "}
+                          बधाई हो <u>{student.name.toUpperCase()}</u>,
+                          पुत्र/पुत्री श्री{" "}
                           <u>{student.father.toUpperCase()}</u> जिला{" "}
                           {student.L1districtAdmitCard} और ब्लॉक{" "}
-                          {student.L1blockAdmitCard} से।. आप प्रवेश परीक्षा स्तर 3 में अपने प्रदर्शन के आधार पर मिशन बुनियाद कार्यक्रम के लिए चयनित हुए हैं। 
-                          नीचे दिए गए लिंक से अपनी योग्यता प्रमाण पत्र और काउंसलिंग प्रवेश पत्र डाउनलोड करें।
+                          {student.L1blockAdmitCard} से।. आप प्रवेश परीक्षा स्तर
+                          3 में अपने प्रदर्शन के आधार पर मिशन बुनियाद कार्यक्रम
+                          के लिए चयनित हुए हैं। नीचे दिए गए लिंक से अपनी योग्यता
+                          प्रमाण पत्र और काउंसलिंग प्रवेश पत्र डाउनलोड करें।
                           <br />
                         </h4>
                       </Row>
                     </Container>
-                    
-                    <br/>
-                    <br/>
-                    <br/>
+
+                    <br />
+                    <br />
+                    <br />
 
                     {/* Below button has a css in index.css  */}
                     <div
@@ -516,47 +523,55 @@ const StudentPage = () => {
                         height: "8vh",
                       }}
                     >
-
                       <button
                         class="blinking-text"
                         onClick={downloadCertificate}
-                        style={{fontSize:'18px'}}
+                        style={{ fontSize: "18px" }}
                       >
-                        Click here to downloady your <span style={{fontSize: "30px"}}>Certificate</span>. <br/>(अपना
-                        प्रमाणपत्र डाउनलोड करने के लिए यहां क्लिक करें।)
+                        Click here to downloady your{" "}
+                        <span style={{ fontSize: "30px" }}>Certificate</span>.{" "}
+                        <br />
+                        (अपना प्रमाणपत्र डाउनलोड करने के लिए यहां क्लिक करें।)
                       </button>
-                      <div> <AdmitCard /></div>
-                     
+                      <div>
+                        {" "}
+                        <AdmitCard />
+                      </div>
                     </div>
-                   
-              <div>
-                
-              </div>
+
+                    <div></div>
                   </div>
                 ) : (
                   <div>
                     <Container style={{ width: "60%" }}>
                       <Row className="border mb-3 rounded-2">
                         <h3 style={{ textAlign: "center", color: "red" }}>
-                        You have been placed on the waiting list for the Mission Buniyaad Programme.
+                          You have been placed on the waiting list for the
+                          Mission Buniyaad Programme.
                         </h3>
                         <hr />
 
                         <h4 style={{ textAlign: "center" }}>
-                          Dear <u>{student.name.toUpperCase()}</u>, son/daughter of{" "}
-                          <u>{student.father.toUpperCase()}</u> from district{" "}
+                          Dear <u>{student.name.toUpperCase()}</u>, son/daughter
+                          of <u>{student.father.toUpperCase()}</u> from district{" "}
                           {student.L1districtAdmitCard} and block{" "}
-                          {student.L1blockAdmitCard}. You are currently on the waiting list for the
-                          Mission Buniyaad programme based on your performance in the entrance examination level-3. Download your
-                          Level 3 certificate and counselling admit card from below link.
+                          {student.L1blockAdmitCard}. You are currently on the
+                          waiting list for the Mission Buniyaad programme based
+                          on your performance in the entrance examination
+                          level-3. Download your Level 3 certificate and
+                          counselling admit card from below link.
                           <br />
                         </h4>
                         <h4 style={{ textAlign: "center" }}>
-                        बधाई हो <u>{student.name.toUpperCase()}</u>, पुत्र/पुत्री श्री{" "}
+                          बधाई हो <u>{student.name.toUpperCase()}</u>,
+                          पुत्र/पुत्री श्री{" "}
                           <u>{student.father.toUpperCase()}</u> जिला{" "}
                           {student.L1districtAdmitCard} और ब्लॉक{" "}
-                          {student.L1blockAdmitCard} से।. आप प्रवेश परीक्षा स्तर 3 में अपने प्रदर्शन के आधार पर मिशन बुनियाद कार्यक्रम की प्रतीक्षा सूची में हैं। 
-                          नीचे दिए गए लिंक से अपना लेवल 3 प्रमाण पत्र और काउंसलिंग प्रवेश पत्र डाउनलोड करें।
+                          {student.L1blockAdmitCard} से।. आप प्रवेश परीक्षा स्तर
+                          3 में अपने प्रदर्शन के आधार पर मिशन बुनियाद कार्यक्रम
+                          की प्रतीक्षा सूची में हैं। नीचे दिए गए लिंक से अपना
+                          लेवल 3 प्रमाण पत्र और काउंसलिंग प्रवेश पत्र डाउनलोड
+                          करें।
                           <br />
                         </h4>
 
@@ -568,24 +583,19 @@ const StudentPage = () => {
                           <br />
                         </h4> */}
 
+                        {/* below text to be shown when student don't pass the level 2 examination. uncomment in level 2 */}
 
-                       {/* below text to be shown when student don't pass the level 2 examination. uncomment in level 2 */}
-
-
-                         {/* <h4 style={{ textAlign: "center" }}>
+                        {/* <h4 style={{ textAlign: "center" }}>
                         Dear Student, You put in commendable effort in the Mission Buniyad Level 2 Entrance Exam. You did not qualify because your rank is higher than the 6672 selected students. Keep striving for success!<br/><br/>
                           (प्रिय छात्र, आपने मिशन बुनियाद लेवल 2 प्रवेश परीक्षा में सराहनीय प्रयास किया। हालाँकि आप उत्तीर्ण नहीं हुए क्योंकि आपकी रैंक 6672 चयनित छात्रों से अधिक है। सफलता के लिए प्रयास करते रहें।)
                           <br />
                         </h4> */}
-
-
                       </Row>
-                      
                     </Container>
 
-                    <br/>
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
+                    <br />
 
                     {/* Below button has a css in index.css  */}
                     <div
@@ -596,27 +606,30 @@ const StudentPage = () => {
                         height: "8vh",
                       }}
                     >
-
                       <button
                         class="blinking-text"
                         onClick={downloadCertificate}
-                        style={{fontSize:'18px'}}
+                        style={{ fontSize: "18px" }}
                       >
-                        Click here to downloady your <span style={{fontSize: "30px"}}>Level 3 Certificate</span>. <br/>(अपना
-                        प्रमाणपत्र डाउनलोड करने के लिए यहां क्लिक करें।)
+                        Click here to downloady your{" "}
+                        <span style={{ fontSize: "30px" }}>
+                          Level 3 Certificate
+                        </span>
+                        . <br />
+                        (अपना प्रमाणपत्र डाउनलोड करने के लिए यहां क्लिक करें।)
                       </button>
-                      <div> <AdmitCard /></div>
-                     
+                      <div>
+                        {" "}
+                        <AdmitCard />
+                      </div>
                     </div>
                   </div>
                 )}
               </Row>
-            ) : 
-            
-            
-            // for level1 and super 100
-            
-            <Row >
+            ) : (
+              // for level1 and super 100
+
+              <Row>
                 {/* below snippet checks if the student is qualified or not, in exam. if yes then show download certificate, other wise notqalified text */}
 
                 {student.isQualifiedL2 === true ? (
@@ -628,54 +641,88 @@ const StudentPage = () => {
                           Examination Level-2
                         </h3>
                         <hr />
-                        <h4 style={{ textAlign: "center" }}>
-                          Congratulations <u>{student.name.toUpperCase()}</u>, son/daughter of{" "}
-                          <u>{student.father.toUpperCase()}</u> from district{" "}
-                          {student.L1districtAdmitCard} and block{" "}
-                          {student.L1blockAdmitCard} for qualifying Haryana 
+                        <h4 style={{ textAlign: "center", color:'green', fontWeight:'bold' }}>
+                          Congratulations <u>{student.name.toUpperCase()}</u>,
+                          son/daughter of <u>{student.father.toUpperCase()}</u>{" "}
+                          from district {student.L1districtAdmitCard} and block{" "}
+                          {student.L1blockAdmitCard} for qualifying Haryana
                           Super 100 Entrance Examination Level-2.
                           <br />
                         </h4>
+                        <hr />
+                        <div>
+                          <h3>General Guidelines for Admission Process:</h3>
+                          <p style={{ fontWeight: "bold" }}>
+                            1. Admission Date: 25th May 2005. (प्रवेश तिथि: 25
+                            मई 2005)
+                          </p>
+                          <p style={{ fontWeight: "bold" }}>
+                            2. Reporting time: 8:00 AM to 10:00 AM. (रिपोर्टिंग
+                            समय: सुबह 8:00 बजे से 10:00 बजे तक)
+                          </p>
+                          <p style={{ fontWeight: "bold" }}>
+                            3. Admission Centre: Super 100 Campus addressed at
+                            "Super 100 Campus", Vill. Barna, Dhand Kurukshetra
+                            Road, Near Teri College, Kurukshetra (प्रवेश केंद्र:
+                            "सुपर 100 कैंपस", गांव बरना, ढांड कुरुक्षेत्र रोड,
+                            टेरी कॉलेज के पास, कुरुक्षेत्र)
+                          </p>
+
+                          <p style={{ fontWeight: "bold" }}>
+                            4. Students have to come along with his/her
+                            parent/guardian for admission. (प्रवेश के लिए
+                            छात्रों को अपने माता-पिता/अभिभावक के साथ आना
+                            अनिवार्य है)
+                          </p>
+
+                          {<DownloadDocument />}
+                        </div>
+
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "left",
+                            alignItems: "center",
+                            height: "8vh",
+                          }}
+                        >
+                          <button
+                            class="blinking-text"
+                            onClick={downloadCertificate}
+                            style={{ fontSize: "18px" }}
+                          >
+                            Click here to downloady your{" "}
+                            <span style={{ fontSize: "30px" }}>
+                              Certificate
+                            </span>
+                            . <br />
+                            (अपना प्रमाणपत्र डाउनलोड करने के लिए यहां क्लिक
+                            करें।)
+                          </button>
+
+                          {/* <div> <AdmitCard/></div> */}
+                          {student.grade === "8" ? (
+                            <div>
+                              {" "}
+                              <AdmitCard />
+                            </div>
+                          ) : (
+                            <div>
+                              {" "}
+                              <AdmitCard />
+                            </div>
+                          )}
+                        </div>
                       </Row>
                     </Container>
-                    
-                    <br/>
-                    <br/>
-                    <br/>
+
+                    <br />
+                    <br />
+                    <br />
 
                     {/* Below button has a css in index.css  */}
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "8vh",
-                      }}
-                    >
 
-                      <button
-                        class="blinking-text"
-                        onClick={downloadCertificate}
-                        style={{fontSize:'18px'}}
-                      >
-                        
-
-
-                        Click here to downloady your <span style={{fontSize: "30px"}}>Certificate</span>. <br/>(अपना
-                        प्रमाणपत्र डाउनलोड करने के लिए यहां क्लिक करें।)
-                      </button>
-                      {/* <div> <AdmitCard/></div> */}
-                      {student.grade === "8" ? ( <div> <AdmitCard/></div>):(
-
-<div> <AdmitCard/></div>
-                      )}
-                      
-            
-                    </div>
-                   
-              <div>
-                
-              </div>
+                    <div></div>
                   </div>
                 ) : (
                   <div>
@@ -695,36 +742,29 @@ const StudentPage = () => {
                           <br />
                         </h4> */}
 
+                        {/* below text to be shown when student don't pass the level 2 examination. uncomment in level 2 */}
 
-                       {/* below text to be shown when student don't pass the level 2 examination. uncomment in level 2 */}
-
-
-                         {/* <h4 style={{ textAlign: "center" }}>
+                        {/* <h4 style={{ textAlign: "center" }}>
                         Dear Student, You put in commendable effort in the Haryana Super 100 Level 2 Entrance Exam. You did not qualify because your rank is higher than the 401 selected students. Keep striving for success!<br/><br/>
                           (प्रिय छात्र, आपने हरियाणा सुपर 100 प्रवेश परीक्षा लेवल-2 परीक्षा में सराहनीय प्रयास किया। हालाँकि आप उत्तीर्ण नहीं हुए क्योंकि आपकी रैंक 401 चयनित छात्रों से अधिक है। सफलता के लिए प्रयास करते रहें।)
                           <br />
                         </h4> */}
-
-
                       </Row>
-                      
                     </Container>
                   </div>
                 )}
               </Row>
-            
-            }
+            )}
           </div>
         )}
 
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </Container>
-      <br/>
+      <br />
       <Footer />
     </div>
   );
